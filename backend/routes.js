@@ -1,3 +1,5 @@
+import { getUsers } from "./controllers/user-controller.js";
+
 export default function router(app) {
     // allow cross origin resource sharing.
     app.use((req, res, next) => {
@@ -10,4 +12,6 @@ export default function router(app) {
         );
         next();
     });
+
+    app.get("/get-users", getUsers);
 }
