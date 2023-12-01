@@ -1,42 +1,42 @@
 [
     {
-        "TransactionID": "T0001",
-        "ProductID": "P001",
-        "OrderQuantity": 10,
-        "OrderStatus": 1,
-        "Email": "ajturing@g.c",
-        "DateOrdered": "2023-12-01T10:15:00.000Z"
+        "fname": "Alan",
+        "mname": "Jay",
+        "lname": "Turing",
+        "usertype": "user",
+        "email": "ajturing@g.c",
+        "password": "turing123"
+    }, 
+    {
+        "fname": "Dan",
+        "mname": "Jes",
+        "lname": "Ferrer",
+        "usertype": "user",
+        "email": "djferrer@g.c",
+        "password": "ferrer123"
     },
     {
-        "TransactionID": "T0002",
-        "ProductID": "P003",
-        "OrderQuantity": 5,
-        "OrderStatus": 1,
-        "Email": "djferrer@g.c",
-        "DateOrdered": "2023-12-01T12:30:00.000Z"
+        "fname": "Steph",
+        "mname": "Curry",
+        "lname": "Tanig",
+        "usertype": "user",
+        "email": "sctanig@g.c",
+        "password": "tanig123"
+    }, 
+    {
+        "fname": "Eric",
+        "mname": "Coy",
+        "lname": "Panga",
+        "usertype": "user",
+        "email": "ecpanga@g.c",
+        "password": "panga123"
     },
     {
-        "TransactionID": "T0003",
-        "ProductID": "P002",
-        "OrderQuantity": 20,
-        "OrderStatus": 0,
-        "Email": "sctanig@g.c",
-        "DateOrdered": "2023-12-02T09:45:00.000Z"
-    },
-    {
-        "TransactionID": "T0004",
-        "ProductID": "P004",
-        "OrderQuantity": 2,
-        "OrderStatus": 2,
-        "Email": "ecpanga@g.c",
-        "DateOrdered": "2023-12-02T14:00:00.000Z"
-    },
-    {
-        "TransactionID": "T0005",
-        "ProductID": "P005",
-        "OrderQuantity": 15,
-        "OrderStatus": 1,
-        "Email": "klmercado@g.c",
-        "DateOrdered": "2023-12-03T11:20:00.000Z"
+        "fname": "Karl",
+        "mname": "Lark",
+        "lname": "Mercado",
+        "usertype": "user",
+        "email": "klmercado@g.c",
+        "password": "mercado123"
     }
 ]

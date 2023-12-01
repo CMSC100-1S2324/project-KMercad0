@@ -1,42 +1,37 @@
 [
     {
-        "TransactionID": "T0001",
-        "ProductID": "P001",
-        "OrderQuantity": 10,
-        "OrderStatus": 1,
-        "Email": "ajturing@g.c",
-        "DateOrdered": "2023-12-01T10:15:00.000Z"
+      "ProductID": "P001",
+      "ProductTitle": "Brown Rice",
+      "ProductName": "Soft and delicious",
+      "ProductType": 1,
+      "ProductQuantity": 150
     },
     {
-        "TransactionID": "T0002",
-        "ProductID": "P003",
-        "OrderQuantity": 5,
-        "OrderStatus": 1,
-        "Email": "djferrer@g.c",
-        "DateOrdered": "2023-12-01T12:30:00.000Z"
+      "ProductID": "P002",
+      "ProductTitle": "Eggs",
+      "ProductName": "Brown Eggs",
+      "ProductType": 2,
+      "ProductQuantity": 500
     },
     {
-        "TransactionID": "T0003",
-        "ProductID": "P002",
-        "OrderQuantity": 20,
-        "OrderStatus": 0,
-        "Email": "sctanig@g.c",
-        "DateOrdered": "2023-12-02T09:45:00.000Z"
+      "ProductID": "P003",
+      "ProductTitle": "Manggos",
+      "ProductName": "Sweet Manggos",
+      "ProductType": 1,
+      "ProductQuantity": 100
     },
     {
-        "TransactionID": "T0004",
-        "ProductID": "P004",
-        "OrderQuantity": 2,
-        "OrderStatus": 2,
-        "Email": "ecpanga@g.c",
-        "DateOrdered": "2023-12-02T14:00:00.000Z"
+      "ProductID": "P004",
+      "ProductTitle": "Fresh Chicken",
+      "ProductName": "Submissive and Breedable Chicken",
+      "ProductType": 2,
+      "ProductQuantity": 50
     },
     {
-        "TransactionID": "T0005",
-        "ProductID": "P005",
-        "OrderQuantity": 15,
-        "OrderStatus": 1,
-        "Email": "klmercado@g.c",
-        "DateOrdered": "2023-12-03T11:20:00.000Z"
+      "ProductID": "P005",
+      "ProductTitle": "Fresh Honey",
+      "ProductName": "Honey Honey I love you",
+      "ProductType": 1,
+      "ProductQuantity": 200
     }
-]
+  ]
