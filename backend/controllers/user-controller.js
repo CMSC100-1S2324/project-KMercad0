@@ -8,4 +8,20 @@ const getUsers = async (req, res) => {
     res.send(users);
 };
 
-export { getUsers };
+const addUser = async (req, res) => {
+    const id = new mongoose.Types.ObjectId();
+    const newUser = new User({
+        _id: id,
+        fname: req.body.fname,
+        mname: req.body.mname,
+        lname: req.body.lname,
+        usertype: req.body.usertype,
+        email: req.body.email,
+        password: req.body.password,
+    });
+
+    await newUser.save();
+    res.send({ success: true });
+};
+
+export { getUsers, addUser };
