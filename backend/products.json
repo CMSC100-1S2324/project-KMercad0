@@ -1,0 +1,37 @@
+[
+  {
+    "ProductID": "P001",
+    "ProductTitle": "Brown Rice",
+    "ProductName": "Soft and delicious",
+    "ProductType": 1,
+    "ProductQuantity": 150
+  },
+  {
+    "ProductID": "P002",
+    "ProductTitle": "Eggs",
+    "ProductName": "Brown Eggs",
+    "ProductType": 2,
+    "ProductQuantity": 500
+  },
+  {
+    "ProductID": "P003",
+    "ProductTitle": "Manggos",
+    "ProductName": "Sweet Manggos",
+    "ProductType": 1,
+    "ProductQuantity": 100
+  },
+  {
+    "ProductID": "P004",
+    "ProductTitle": "Fresh Chicken",
+    "ProductName": "Submissive and Breedable Chicken",
+    "ProductType": 2,
+    "ProductQuantity": 50
+  },
+  {
+    "ProductID": "P005",
+    "ProductTitle": "Fresh Honey",
+    "ProductName": "Honey Honey I love you",
+    "ProductType": 1,
+    "ProductQuantity": 200
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "TransactionID": "T0001",
+    "ProductID": "P001",
+    "OrderQuantity": 10,
+    "OrderStatus": 1,
+    "Email": "ajturing@g.c",
+    "DateOrdered": "2023-12-01T10:15:00.000Z"
+  },
+  {
+    "TransactionID": "T0002",
+    "ProductID": "P003",
+    "OrderQuantity": 5,
+    "OrderStatus": 1,
+    "Email": "djferrer@g.c",
+    "DateOrdered": "2023-12-01T12:30:00.000Z"
+  },
+  {
+    "TransactionID": "T0003",
+    "ProductID": "P002",
+    "OrderQuantity": 20,
+    "OrderStatus": 0,
+    "Email": "sctanig@g.c",
+    "DateOrdered": "2023-12-02T09:45:00.000Z"
+  },
+  {
+    "TransactionID": "T0004",
+    "ProductID": "P004",
+    "OrderQuantity": 2,
+    "OrderStatus": 2,
+    "Email": "ecpanga@g.c",
+    "DateOrdered": "2023-12-02T14:00:00.000Z"
+  },
+  {
+    "TransactionID": "T0005",
+    "ProductID": "P005",
+    "OrderQuantity": 15,
+    "OrderStatus": 1,
+    "Email": "klmercado@g.c",
+    "DateOrdered": "2023-12-03T11:20:00.000Z"
+  }
+]
+
