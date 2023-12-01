@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
-import router from "./routes";
+import router from "./routes.js";
 
 // connect to the database.
 await mongoose.connect("mongodb://127.0.0.1:27017/FarmToTable");
