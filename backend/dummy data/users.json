@@ -5,7 +5,8 @@
         "lname": "Turing",
         "type": "user",
         "email": "ajturing@g.c",
-        "password": "turing123"
+        "password": "turing123",
+        "cart": []
     }, 
     {
         "fname": "Dan",
@@ -13,7 +14,8 @@
         "lname": "Ferrer",
         "type": "user",
         "email": "djferrer@g.c",
-        "password": "ferrer123"
+        "password": "ferrer123",
+        "cart": []
     },
     {
         "fname": "Steph",
@@ -21,7 +23,8 @@
         "lname": "Tanig",
         "type": "user",
         "email": "sctanig@g.c",
-        "password": "tanig123"
+        "password": "tanig123",
+        "cart": []
     }, 
     {
         "fname": "Eric",
@@ -29,7 +32,8 @@
         "lname": "Panga",
         "type": "user",
         "email": "ecpanga@g.c",
-        "password": "panga123"
+        "password": "panga123",
+        "cart": []
     },
     {
         "fname": "Karl",
@@ -37,6 +41,7 @@
         "lname": "Mercado",
         "type": "user",
         "email": "klmercado@g.c",
-        "password": "mercado123"
+        "password": "mercado123",
+        "cart": []
     }
 ]
