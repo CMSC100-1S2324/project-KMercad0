@@ -18,10 +18,21 @@ const addUser = async (req, res) => {
         type: req.body.type,
         email: req.body.email,
         password: req.body.password,
+        cart: [],
     });
 
     await newUser.save();
     res.send({ success: true });
 };
 
-export { getUsers, addUser };
+const addToCart = async (req, res) => {
+    await User.updateOne({ _id: req.body._id }, { $push: { cart: req.body.productID } });
+    res.send({ success: true });
+};
+
+const removefromCart = async (req, res) => {
+    await User.updateOne({ _id: req.body._id }, { $pull: { cart: req.body.productID } });
+    res.send({ success: true });
+};
+
+export { getUsers, addUser, addToCart, removefromCart };

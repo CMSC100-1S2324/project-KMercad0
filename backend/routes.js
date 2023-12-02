@@ -1,4 +1,4 @@
-import { getUsers, addUser } from "./controllers/user-controller.js";
+import { getUsers, addUser, addToCart, removefromCart } from "./controllers/user-controller.js";
 import { getProducts, addProduct } from "./controllers/product-controller.js";
 import { getOrders, addOrder } from "./controllers/order-controller.js";
 
@@ -21,4 +21,6 @@ export default function router(app) {
     app.post("/add-user", addUser);
     app.post("/add-product", addProduct);
     app.post("/add-order", addOrder);
+    app.post("/add-to-cart", addToCart);
+    app.post("/remove-from-cart", removefromCart);
 }
