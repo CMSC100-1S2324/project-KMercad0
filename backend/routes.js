@@ -1,5 +1,5 @@
 import { getUsers, addUser } from "./controllers/user-controller.js";
-import { getProducts } from "./controllers/product-controller.js";
+import { getProducts, addProduct } from "./controllers/product-controller.js";
 
 export default function router(app) {
     // allow cross origin resource sharing.
@@ -17,4 +17,5 @@ export default function router(app) {
     app.get("/get-users", getUsers);
     app.get("/get-products", getProducts);
     app.post("/add-user", addUser);
+    app.post("/add-product", addProduct);
 }
