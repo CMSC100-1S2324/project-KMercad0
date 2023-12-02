@@ -15,7 +15,7 @@ const addUser = async (req, res) => {
         fname: req.body.fname,
         mname: req.body.mname,
         lname: req.body.lname,
-        usertype: req.body.usertype,
+        type: req.body.type,
         email: req.body.email,
         password: req.body.password,
     });

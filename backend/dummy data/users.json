@@ -3,7 +3,7 @@
         "fname": "Alan",
         "mname": "Jay",
         "lname": "Turing",
-        "usertype": "user",
+        "type": "user",
         "email": "ajturing@g.c",
         "password": "turing123"
     }, 
@@ -11,7 +11,7 @@
         "fname": "Dan",
         "mname": "Jes",
         "lname": "Ferrer",
-        "usertype": "user",
+        "type": "user",
         "email": "djferrer@g.c",
         "password": "ferrer123"
     },
@@ -19,7 +19,7 @@
         "fname": "Steph",
         "mname": "Curry",
         "lname": "Tanig",
-        "usertype": "user",
+        "type": "user",
         "email": "sctanig@g.c",
         "password": "tanig123"
     }, 
@@ -27,7 +27,7 @@
         "fname": "Eric",
         "mname": "Coy",
         "lname": "Panga",
-        "usertype": "user",
+        "type": "user",
         "email": "ecpanga@g.c",
         "password": "panga123"
     },
@@ -35,7 +35,7 @@
         "fname": "Karl",
         "mname": "Lark",
         "lname": "Mercado",
-        "usertype": "user",
+        "type": "user",
         "email": "klmercado@g.c",
         "password": "mercado123"
     }

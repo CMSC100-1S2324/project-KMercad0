@@ -10,7 +10,7 @@ needle.post(
         fname: "Jessie",
         mname: "Jay",
         lname: "Jose",
-        usertype: "user",
+        type: "user",
         email: "jjjose@g.c",
         password: "jose123",
     },
