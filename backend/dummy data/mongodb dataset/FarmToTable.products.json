@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642bf"
+  },
+  "title": "Eggs",
+  "name": "Brown Eggs",
+  "type": 2,
+  "quantity": 500,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642c1"
+  },
+  "title": "Fresh Chicken",
+  "name": "Submissive and Breedable Chicken",
+  "type": 2,
+  "quantity": 50,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642c3"
+  },
+  "title": "Fresh Honey",
+  "name": "Honey Honey I love you",
+  "type": 1,
+  "quantity": 200,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642bb"
+  },
+  "title": "Brown Rice",
+  "name": "Soft and delicious",
+  "type": 1,
+  "quantity": 150,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642bd"
+  },
+  "title": "Manggos",
+  "name": "Sweet Manggos",
+  "type": 1,
+  "quantity": 100,
+  "__v": 0
+}]

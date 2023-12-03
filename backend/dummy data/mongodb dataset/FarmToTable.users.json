@@ -1,0 +1,78 @@
+[{
+  "_id": {
+    "$oid": "656aeaa452160f7b11b839de"
+  },
+  "fname": "Alan",
+  "mname": "Jay",
+  "lname": "Turing",
+  "type": "user",
+  "email": "ajturing@g.c",
+  "password": "turing123",
+  "cart": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aeaa452160f7b11b839e0"
+  },
+  "fname": "Dan",
+  "mname": "Jes",
+  "lname": "Ferrer",
+  "type": "user",
+  "email": "djferrer@g.c",
+  "password": "ferrer123",
+  "cart": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aeaa452160f7b11b839e6"
+  },
+  "fname": "Karl",
+  "mname": "Lark",
+  "lname": "Mercado",
+  "type": "user",
+  "email": "klmercado@g.c",
+  "password": "mercado123",
+  "cart": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aeaa452160f7b11b839e8"
+  },
+  "fname": "Jessie",
+  "mname": "Jay",
+  "lname": "Jose",
+  "type": "user",
+  "email": "jjjose@g.c",
+  "password": "jose123",
+  "cart": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aeaa452160f7b11b839e2"
+  },
+  "fname": "Steph",
+  "mname": "Curry",
+  "lname": "Tanig",
+  "type": "user",
+  "email": "sctanig@g.c",
+  "password": "tanig123",
+  "cart": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aeaa452160f7b11b839e4"
+  },
+  "fname": "Eric",
+  "mname": "Coy",
+  "lname": "Panga",
+  "type": "user",
+  "email": "ecpanga@g.c",
+  "password": "panga123",
+  "cart": [],
+  "__v": 0
+}]
