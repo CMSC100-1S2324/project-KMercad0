@@ -1,47 +1,73 @@
-[
-    {
-        "fname": "Alan",
-        "mname": "Jay",
-        "lname": "Turing",
-        "type": "user",
-        "email": "ajturing@g.c",
-        "password": "turing123",
-        "cart": []
-    }, 
-    {
-        "fname": "Dan",
-        "mname": "Jes",
-        "lname": "Ferrer",
-        "type": "user",
-        "email": "djferrer@g.c",
-        "password": "ferrer123",
-        "cart": []
-    },
-    {
-        "fname": "Steph",
-        "mname": "Curry",
-        "lname": "Tanig",
-        "type": "user",
-        "email": "sctanig@g.c",
-        "password": "tanig123",
-        "cart": []
-    }, 
-    {
-        "fname": "Eric",
-        "mname": "Coy",
-        "lname": "Panga",
-        "type": "user",
-        "email": "ecpanga@g.c",
-        "password": "panga123",
-        "cart": []
-    },
-    {
-        "fname": "Karl",
-        "mname": "Lark",
-        "lname": "Mercado",
-        "type": "user",
-        "email": "klmercado@g.c",
-        "password": "mercado123",
-        "cart": []
-    }
-]
+[{
+  "_id": {
+    "$oid": "656ce4dc3eb11affb60237c9"
+  },
+  "fname": "user",
+  "mname": "user",
+  "lname": "user",
+  "type": "user",
+  "email": "user",
+  "password": "$2b$10$EYviuVFEKtlX0qevG3HAmO4DKnUJq6wzM6N9enu2g89rHFB10IJzy",
+  "cart": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "656ce807a80c9ba39a4dc33a"
+  },
+  "fname": "Alan",
+  "mname": "Jay",
+  "lname": "Turing",
+  "type": "user",
+  "email": "ajturing@g.c",
+  "password": "$2b$10$Z3/bxjpmg85weO/QLKmbfu3PY4dVxKdXo1qQMrFra7N7sYmz.z65.",
+  "cart": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "656ce831a80c9ba39a4dc33c"
+  },
+  "fname": "Dan",
+  "mname": "Jes",
+  "lname": "Ferrer",
+  "type": "user",
+  "email": "djferrer@g.c",
+  "password": "$2b$10$f3CXrhhd7f/EGGlqaJbuGuUQSbFFvhPPhYSWToyl2y.FlGL5C5mou",
+  "cart": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "656ce83fa80c9ba39a4dc33e"
+  },
+  "fname": "Steph",
+  "mname": "Curry",
+  "lname": "Tanig",
+  "type": "user",
+  "email": "sctanig@g.c",
+  "password": "$2b$10$IaS1xNBBFPjgnVT40bVGR.yEUjoN7gTtwYG/QTtLiKCNhWRdyRUxC",
+  "cart": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "656ce853a80c9ba39a4dc340"
+  },
+  "fname": "Eric",
+  "mname": "Coy",
+  "lname": "Panga",
+  "type": "user",
+  "email": "ecpanga@g.c",
+  "password": "$2b$10$40AnscscKI/pjny9PhnzaOifqElCKwWXb4NhN5wW581h6obd7flam",
+  "cart": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "656ce861a80c9ba39a4dc342"
+  },
+  "fname": "Karl",
+  "mname": "Lark",
+  "lname": "Mercado",
+  "type": "user",
+  "email": "klmercado@g.c",
+  "password": "$2b$10$iC4uySx1UBn0LDGI6IAyWOaAc4CDwKZwP029w6liKJX1O6/EI2gmu",
+  "cart": [],
+  "__v": 0
+}]
