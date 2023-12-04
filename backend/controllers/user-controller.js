@@ -8,7 +8,6 @@ const getUsers = async (req, res) => {
     res.send(users);
 };
 
-
 const addToCart = async (req, res) => {
     await User.updateOne({ _id: req.body._id }, { $push: { cart: req.body.productID } });
     res.send({ success: true });

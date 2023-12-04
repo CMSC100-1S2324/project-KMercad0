@@ -3,7 +3,6 @@ import { getProducts, addProduct } from "./controllers/product-controller.js";
 import { getOrders, addOrder } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
-
 export default function router(app) {
     // allow cross origin resource sharing.
     app.use((req, res, next) => {
@@ -16,7 +15,10 @@ export default function router(app) {
         );
         next();
     });
-    app.get("/", (req, res) => { res.send("API Home") });
+
+    app.get("/", (req, res) => {
+        res.send("API Home");
+    });
     app.post("/signup", signUp);
     app.post("/login", login);
     app.post("/checkifloggedin", checkIfLoggedIn);
