@@ -5,10 +5,7 @@ import router from "./routes.js";
 import "./models/user.js";
 
 // connect to the database.
-await mongoose.connect("mongodb://127.0.0.1:27017/FarmToTable", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+await mongoose.connect("mongodb://127.0.0.1:27017/FarmToTable");
 
 // initialize server.
 const app = express();
