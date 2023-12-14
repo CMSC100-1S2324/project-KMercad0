@@ -6,7 +6,7 @@ export default function Root() {
             <nav>
                 <ul>
                     <li>
-                        <Link to={`/`}>Home</Link>
+                        <Link to={`/`}>Dashboard</Link>
                     </li>
                     <li>
                         <Link to={`/subjects`}>Subjects</Link>

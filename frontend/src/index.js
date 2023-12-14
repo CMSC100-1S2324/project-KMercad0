@@ -4,7 +4,7 @@ import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom"
 import "./index.css";
 
 import Root from "./pages/Root";
-import Home from "./pages/Home";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Subjects from "./pages/Subjects";
 
@@ -39,13 +39,13 @@ const checkIfLoggedInOnDash = async () => {
 };
 
 const router = createBrowserRouter([
+    { path: "/", element: <Auth />, loader: checkIfLoggedInOnHome },
     {
         path: "/",
         element: <Root />,
         children: [
-            { path: "/", element: <Home />, loader: checkIfLoggedInOnHome },
-            { path: "subjects", element: <Subjects /> },
             { path: "/dashboard", element: <Dashboard />, loader: checkIfLoggedInOnDash },
+            { path: "/subjects", element: <Subjects /> },
         ],
     },
 ]);
