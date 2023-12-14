@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+
+import { Container, Navbar } from "react-bootstrap";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -79,22 +80,31 @@ export default function Home() {
 
     return (
         <>
-            <h1>Sign Up</h1>
-            <form id="sign-up">
-                <input id="s-fname" placeholder="First Name" />
-                <input id="s-mname" placeholder="Middle Name" />
-                <input id="s-lname" placeholder="Last Name" />
-                <input id="s-email" placeholder="email" />
-                <input id="s-password" type="password" placeholder="password" />
-                <button onClick={signUp}>Sign Up</button>
-            </form>
+            <Navbar className="bg-body-tertiary">
+                <Container>
+                    <Navbar.Brand>
+                        <Link to={`/`}>Saka Sa Lasa</Link>{" "}
+                    </Navbar.Brand>
+                </Container>
+            </Navbar>
+            <Container>
+                <h1>Sign Up</h1>
+                <form id="sign-up">
+                    <input id="s-fname" placeholder="First Name" />
+                    <input id="s-mname" placeholder="Middle Name" />
+                    <input id="s-lname" placeholder="Last Name" />
+                    <input id="s-email" placeholder="email" />
+                    <input id="s-password" type="password" placeholder="password" />
+                    <button onClick={signUp}>Sign Up</button>
+                </form>
 
-            <h1>Log In</h1>
-            <form id="log-in">
-                <input id="l-email" placeholder="email" />
-                <input id="l-password" type="password" placeholder="password" />
-                <button onClick={logIn}>Log In</button>
-            </form>
+                <h1>Log In</h1>
+                <form id="log-in">
+                    <input id="l-email" placeholder="email" />
+                    <input id="l-password" type="password" placeholder="password" />
+                    <button onClick={logIn}>Log In</button>
+                </form>
+            </Container>
         </>
     );
 }
