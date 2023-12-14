@@ -34,6 +34,10 @@ export default function Dashboard() {
             });
     });
 
+    /*
+    TODO:
+    1. Edit only this part.
+    */
     return (
         <>
             Welcome to the dashboard, {username} !<br />

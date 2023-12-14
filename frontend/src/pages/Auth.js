@@ -78,6 +78,11 @@ export default function Home() {
             });
     }
 
+    /*
+    TODO:
+    1. Edit only this part.
+    2. Convert the fields to Form field from bootstrap but retain the id for each input field.
+    */
     return (
         <>
             <Navbar className="bg-body-tertiary">
