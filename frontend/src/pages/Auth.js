@@ -72,6 +72,7 @@ export default function Home() {
                     });
 
                     localStorage.setItem("username", body.username);
+                    localStorage.setItem("type", body.type);
                 } else {
                     alert("Log in failed");
                 }

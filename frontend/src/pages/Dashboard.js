@@ -6,6 +6,7 @@ import { Card, Button } from "react-bootstrap";
 
 export default function Dashboard() {
     const username = localStorage.getItem("username");
+    const type = localStorage.getItem("type");
     const [isLoggedIn, setIsLoggedIn] = useState(useLoaderData());
     const navigate = useNavigate();
 
@@ -37,8 +38,11 @@ export default function Dashboard() {
     /*
     TODO:
     1. Edit only this part.
+    Note: Following codes used ternary operator for determining what dashboard should appear for
+    the user and admin.
     */
-    return (
+    return type === "user" ? (
+        // user
         <>
             Welcome to the dashboard, {username} !<br />
             <button onClick={logout}>Log Out</button>
@@ -54,6 +58,12 @@ export default function Dashboard() {
                     </Card.Body>
                 </Card>
             ))}
+        </>
+    ) : (
+        // admin
+        <>
+            Welcome to the dashboard, {username} !<br />
+            <button onClick={logout}>Log Out</button>
         </>
     );
 }
