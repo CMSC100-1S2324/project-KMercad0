@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Container, Row } from "react-bootstrap";
 
 export default function Dashboard() {
     const username = localStorage.getItem("username");
@@ -46,18 +46,22 @@ export default function Dashboard() {
         <>
             Welcome to the dashboard, {username} !<br />
             <button onClick={logout}>Log Out</button>
-            {products.map((product, index) => (
-                <Card key={index} style={{ width: "18rem" }}>
-                    <Card.Img variant="top" src="https://picsum.photos/100" />
-                    <Card.Body>
-                        <Card.Title>{product.title}</Card.Title>
-                        <Card.Text>{product.name}</Card.Text>
-                        <Card.Text>{product.price}</Card.Text>
-                        <Card.Text>{product.quantity}</Card.Text>
-                        <Button variant="primary">Add to Cart</Button>
-                    </Card.Body>
-                </Card>
-            ))}
+            <Container>
+                <Row>
+                    {products.map((product, index) => (
+                        <Card key={index} style={{ width: "18rem" }}>
+                            <Card.Img variant="top" src="https://picsum.photos/100" />
+                            <Card.Body>
+                                <Card.Title>{product.title}</Card.Title>
+                                <Card.Text>{product.name}</Card.Text>
+                                <Card.Text>{product.price}</Card.Text>
+                                <Card.Text>{product.quantity}</Card.Text>
+                                <Button variant="primary">Add to Cart</Button>
+                            </Card.Body>
+                        </Card>
+                    ))}
+                </Row>
+            </Container>
         </>
     ) : (
         // admin
