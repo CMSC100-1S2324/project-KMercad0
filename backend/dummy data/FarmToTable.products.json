@@ -5,6 +5,7 @@
   "title": "Eggs",
   "name": "Brown Eggs",
   "type": 2,
+  "price": 40.5,
   "quantity": 500,
   "__v": 0
 },
@@ -15,6 +16,7 @@
   "title": "Fresh Chicken",
   "name": "Submissive and Breedable Chicken",
   "type": 2,
+  "price": 100.5,
   "quantity": 50,
   "__v": 0
 },
@@ -25,6 +27,7 @@
   "title": "Fresh Honey",
   "name": "Honey Honey I love you",
   "type": 1,
+  "price": 65.25,
   "quantity": 200,
   "__v": 0
 },
@@ -35,6 +38,7 @@
   "title": "Brown Rice",
   "name": "Soft and delicious",
   "type": 1,
+  "price": 345.4,
   "quantity": 150,
   "__v": 0
 },
@@ -45,6 +49,7 @@
   "title": "Manggos",
   "name": "Sweet Manggos",
   "type": 1,
-  "quantity": 100,
+  "price": 125.3,
+  "quantity": 96,
   "__v": 0
 }]
