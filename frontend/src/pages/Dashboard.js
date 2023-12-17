@@ -62,7 +62,15 @@ export default function Dashboard() {
             });
     }
 
-    useEffect(() => {}, [cart]);
+    function updateProducts() {
+        fetch("http://localhost:3001/get-products")
+            .then((response) => response.json())
+            .then((body) => {
+                setProducts(body);
+            });
+    }
+
+    useEffect(() => {}, [products, cart]);
 
     function addToCart(productID) {
         fetch("http://localhost:3001/add-to-cart", {
@@ -76,6 +84,7 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
+                    updateQuantity(productID, -1);
                     console.log("Successfully added to cart!");
                 } else {
                     console.log("Add to cart failed");
@@ -95,9 +104,29 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
+                    updateQuantity(productID, +1);
                     console.log("Successfully remove from cart!");
                 } else {
                     console.log("Remove from cart failed");
+                }
+            });
+    }
+
+    function updateQuantity(productID, update) {
+        fetch("http://localhost:3001/update-quantity", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: productID, number: update }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                if (body.success) {
+                    updateProducts();
+                    console.log("Successfully updated quantity!");
+                } else {
+                    console.log("Update quantity failed");
                 }
             });
     }
