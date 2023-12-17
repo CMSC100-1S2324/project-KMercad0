@@ -3,6 +3,7 @@ import { useNavigate, useLoaderData } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import { Card, Button } from "react-bootstrap";
+import Login from "../components/login.js";
 
 export default function Dashboard() {
     const username = localStorage.getItem("username");
@@ -41,29 +42,37 @@ export default function Dashboard() {
     Note: Following codes used ternary operator for determining what dashboard should appear for
     the user and admin.
     */
-    return type === "user" ? (
-        // user
-        <>
-            Welcome to the dashboard, {username} !<br />
-            <button onClick={logout}>Log Out</button>
-            {products.map((product, index) => (
-                <Card key={index} style={{ width: "18rem" }}>
-                    <Card.Img variant="top" src="https://picsum.photos/100" />
-                    <Card.Body>
-                        <Card.Title>{product.title}</Card.Title>
-                        <Card.Text>{product.name}</Card.Text>
-                        <Card.Text>{product.price}</Card.Text>
-                        <Card.Text>{product.quantity}</Card.Text>
-                        <Button variant="primary">Add to Cart</Button>
-                    </Card.Body>
-                </Card>
-            ))}
+    // return type === "user" ? (
+    //     // user
+    //     <>
+    //         Welcome to the dashboard, {username} !<br />
+    //         <button onClick={logout}>Log Out</button>
+    //         {products.map((product, index) => (
+    //             <Card key={index} style={{ width: "18rem" }}>
+    //                 <Card.Img variant="top" src="https://picsum.photos/100" />
+    //                 <Card.Body>
+    //                     <Card.Title>{product.title}</Card.Title>
+    //                     <Card.Text>{product.name}</Card.Text>
+    //                     <Card.Text>{product.price}</Card.Text>
+    //                     <Card.Text>{product.quantity}</Card.Text>
+    //                     <Button variant="primary">Add to Cart</Button>
+    //                 </Card.Body>
+    //             </Card>
+    //         ))}
+    //     </>
+    // ) : (
+    //     // admin
+    //     <>
+    //         Welcome to the dashboard, {username} !<br />
+    //         <button onClick={logout}>Log Out</button>
+    //     </>
+    // );
+
+    return ( 
+        <> 
+        <Login logout = {logout}>
+
+        </Login>
         </>
-    ) : (
-        // admin
-        <>
-            Welcome to the dashboard, {username} !<br />
-            <button onClick={logout}>Log Out</button>
-        </>
-    );
+    )
 }
