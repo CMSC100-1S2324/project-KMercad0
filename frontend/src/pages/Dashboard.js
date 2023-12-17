@@ -145,8 +145,25 @@ export default function Dashboard() {
             });
     }
 
-    function updateTotal(price) {
-        setTotal((total) => total + price);
+
+    function removeAllFromCart() {
+        fetch("http://localhost:3001/remove-all-from-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                if (body.success) {
+                    retrieveItemsFromCart();
+                    updateTotal();
+                    console.log("Successfully updated quantity!");
+                } else {
+                    console.log("Update quantity failed");
+                }
+            });
     }
 
     function checkoutAll() {
@@ -178,6 +195,7 @@ export default function Dashboard() {
                     .then((response) => response.json())
                     .then((body) => {
                         if (body.success) {
+                            removeAllFromCart();
                             console.log("Successfully added order!");
                         } else {
                             console.log("Checkout failed");

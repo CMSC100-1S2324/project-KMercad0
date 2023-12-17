@@ -4,6 +4,7 @@ import {
     removeFromCart,
     retrieveItemsFromCart,
     getCartTotalPrice,
+    removeAllFromCart,
 } from "./controllers/user-controller.js";
 import { getProducts, addProduct, updateQuantity } from "./controllers/product-controller.js";
 import { getOrders, addOrder, getOrderProduct, changeOrderStatus } from "./controllers/order-controller.js";
@@ -40,4 +41,5 @@ export default function router(app) {
     app.post("/get-cart-total-price", getCartTotalPrice);
     app.post("/get-order-product", getOrderProduct);
     app.post("/change-order-status", changeOrderStatus);
+    app.post("/remove-all-from-cart", removeAllFromCart);
 }

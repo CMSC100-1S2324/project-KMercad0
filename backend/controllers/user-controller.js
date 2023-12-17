@@ -42,4 +42,9 @@ const getCartTotalPrice = async (req, res) => {
     res.send({ total: total });
 };
 
-export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart, getCartTotalPrice };
+const removeAllFromCart = async (req, res) => {
+    await User.updateOne({ _id: req.body._id }, { $set: { cart: [] } });
+    res.send({ success: true });
+};
+
+export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart, getCartTotalPrice, removeAllFromCart };
