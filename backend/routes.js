@@ -1,4 +1,11 @@
-import { getUsers, addToCart, removeFromCart, retrieveItemsFromCart } from "./controllers/user-controller.js";
+import {
+    getUsers,
+    addToCart,
+    removeFromCart,
+    retrieveItemsFromCart,
+    retrieveUserName,
+    retrieveType,
+} from "./controllers/user-controller.js";
 import { getProducts, addProduct } from "./controllers/product-controller.js";
 import { getOrders, addOrder } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
@@ -30,4 +37,6 @@ export default function router(app) {
     app.post("/add-to-cart", addToCart);
     app.post("/remove-from-cart", removeFromCart);
     app.post("/retrieve-items-from-cart", retrieveItemsFromCart);
+    app.post("/retrieve-username", retrieveUserName);
+    app.post("/retrieve-type", retrieveType);
 }

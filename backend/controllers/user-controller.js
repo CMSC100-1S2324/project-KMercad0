@@ -22,9 +22,24 @@ const retrieveItemsFromCart = async (req, res) => {
     const cart = await User.findOne({ _id: req.body._id }, "cart")
         .populate("cart")
         .then((docs) => docs.cart);
-    console.log(cart);
 
     res.send({ success: true, cart: cart });
 };
 
-export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart };
+const retrieveUserName = async (req, res) => {
+    const username = await User.findOne({ _id: req.body._id }, "fname lname").then(
+        (docs) => `${docs.fname} ${docs.lname}`
+    );
+    console.log(username);
+
+    res.send({ sucess: true, username: username });
+};
+
+const retrieveType = async (req, res) => {
+    const type = await User.findOne({ _id: req.body._id }, "type").then((docs) => docs.type);
+    console.log(type);
+
+    res.send({ sucess: true, type: type });
+};
+
+export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart, retrieveUserName, retrieveType };

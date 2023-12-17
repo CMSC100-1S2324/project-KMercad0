@@ -249,3 +249,23 @@ needle.post(
         console.log(res.body);
     }
 );
+
+needle.post(
+    "http://localhost:3001/retrieve-username",
+    {
+        _id: "657b05117ebc3fdb6a14ab80",
+    },
+    (err, res) => {
+        console.log(res.body);
+    }
+);
+
+needle.post(
+    "http://localhost:3001/retrieve-type",
+    {
+        _id: "657b05117ebc3fdb6a14ab80",
+    },
+    (err, res) => {
+        console.log(res.body);
+    }
+);
