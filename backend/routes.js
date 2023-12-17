@@ -6,7 +6,7 @@ import {
     getCartTotalPrice,
 } from "./controllers/user-controller.js";
 import { getProducts, addProduct, updateQuantity } from "./controllers/product-controller.js";
-import { getOrders, addOrder, getOrderProduct } from "./controllers/order-controller.js";
+import { getOrders, addOrder, getOrderProduct, changeStatus } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
 export default function router(app) {
@@ -39,4 +39,5 @@ export default function router(app) {
     app.post("/update-quantity", updateQuantity);
     app.post("/get-cart-total-price", getCartTotalPrice);
     app.post("/get-order-product", getOrderProduct);
+    app.post("/change-status", changeStatus);
 }

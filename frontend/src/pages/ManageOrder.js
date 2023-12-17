@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Container, Row } from "react-bootstrap";
+import { Card, Button, Container, Row } from "react-bootstrap";
 
 export default function ManageOrder() {
     const [orders, setOrders] = useState([]);
@@ -11,6 +11,16 @@ export default function ManageOrder() {
                 setOrders(body);
             });
     }, []);
+
+    function updateOrders() {
+        fetch("http://localhost:3001/get-orders")
+            .then((response) => response.json())
+            .then((body) => {
+                setOrders(body);
+            });
+    }
+
+    useEffect(() => {}, [orders]);
 
     const [productNames, setProductNames] = useState([]);
 
@@ -30,6 +40,25 @@ export default function ManageOrder() {
         });
     }, [orders]);
 
+    function changeStatus(orderID, status) {
+        fetch("http://localhost:3001/change-status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: orderID, status: status }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                if (body.success) {
+                    updateOrders();
+                    console.log("Successfully changed status!");
+                } else {
+                    console.log("Change status failed");
+                }
+            });
+    }
+
     return (
         <>
             <Container>
@@ -44,9 +73,9 @@ export default function ManageOrder() {
                                     <Card.Text>Quantity: {order.quantity}</Card.Text>
                                     <Card.Text>Status: {order.status}</Card.Text>
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
-                                    {/* <Button variant="primary" onClick={() => addToCart(product._id, product.price)}>
-                                    Add to Cart
-                                </Button> */}
+                                    <Button variant="primary" onClick={() => changeStatus(order._id, 2)}>
+                                        Cancel Order
+                                    </Button>
                                 </Card.Body>
                             </Card>
                         );
