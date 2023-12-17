@@ -14,8 +14,9 @@ const addOrder = async (req, res) => {
         _id: id,
         productID: req.body.productID,
         quantity: req.body.quantity,
+        price: req.body.price,
         status: req.body.status,
-        email: req.body.email,
+        userID: req.body.userID,
         dateOrdered: req.body.dateOrdered,
     });
 
