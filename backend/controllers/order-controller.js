@@ -24,4 +24,12 @@ const addOrder = async (req, res) => {
     res.send({ success: true });
 };
 
-export { getOrders, addOrder };
+const getOrderProduct = async (req, res) => {
+    const product = await Order.findOne({ _id: req.body._id }, "productID")
+        .populate("productID")
+        .then((docs) => docs.productID);
+
+    res.send(product);
+};
+
+export { getOrders, addOrder, getOrderProduct };

@@ -240,10 +240,20 @@ needle.get("http://localhost:3001/get-products", (err, res) => {
 //     }
 // );
 
+// needle.post(
+//     "http://localhost:3001/retrieve-items-from-cart",
+//     {
+//         _id: "657b05117ebc3fdb6a14ab80",
+//     },
+//     (err, res) => {
+//         console.log(res.body);
+//     }
+// );
+
 needle.post(
-    "http://localhost:3001/retrieve-items-from-cart",
+    "http://localhost:3001/get-order-product",
     {
-        _id: "657b05117ebc3fdb6a14ab80",
+        _id: "656adf0d83e5ea0081bda2c7",
     },
     (err, res) => {
         console.log(res.body);
