@@ -137,18 +137,26 @@ export default function Dashboard() {
             CART ITEM <br />
             <Container>
                 <Row>
-                    {cart.map((item, index) => (
-                        <Card key={index} style={{ width: "18rem" }}>
-                            <Card.Img variant="top" src="https://picsum.photos/30" />
-                            <Card.Body>
-                                <Card.Title>{item.title}</Card.Title>
-                                <Card.Text>{item.price}</Card.Text>
-                                <Button variant="primary" onClick={() => removeFromCart(item._id)}>
-                                    Remove from Cart
-                                </Button>
-                            </Card.Body>
-                        </Card>
-                    ))}
+                    {products.map((product, index) => {
+                        let total = 0;
+                        cart.forEach((item) => {
+                            if (item.name === product.name) total++;
+                        });
+
+                        return total !== 0 ? (
+                            <Card key={index} style={{ width: "18rem" }}>
+                                <Card.Img variant="top" src="https://picsum.photos/30" />
+                                <Card.Body>
+                                    <Card.Title>Title: {product.title}</Card.Title>
+                                    <Card.Text>Price: {product.price}</Card.Text>
+                                    <Card.Text>Quantity: {total}</Card.Text>
+                                    <Button variant="primary" onClick={() => removeFromCart(product._id)}>
+                                        Remove from Cart
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        ) : null;
+                    })}
                 </Row>
             </Container>
         </>
