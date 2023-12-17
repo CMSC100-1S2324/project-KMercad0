@@ -29,4 +29,17 @@ const retrieveItemsFromCart = async (req, res) => {
     res.send(cart);
 };
 
-export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart };
+const getCartTotalPrice = async (req, res) => {
+    const cart = await User.findOne({ _id: req.body._id }, "cart")
+        .populate("cart")
+        .then((docs) => docs.cart);
+
+    let total = 0;
+    cart.forEach((item) => {
+        total += item.price;
+    });
+
+    res.send({ total: total });
+};
+
+export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart, getCartTotalPrice };
