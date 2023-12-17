@@ -15,6 +15,7 @@ const addProduct = async (req, res) => {
         title: req.body.title,
         name: req.body.name,
         type: req.body.type,
+        price: req.body.price,
         quantity: req.body.quantity,
     });
 
@@ -22,4 +23,12 @@ const addProduct = async (req, res) => {
     res.send({ success: true });
 };
 
-export { getProducts, addProduct };
+const updateQuantity = async (req, res) => {
+    const product = await Product.findOne({ _id: req.body._id });
+    let quantity = product.quantity + req.body.number;
+
+    await Product.findOneAndUpdate({ _id: req.body._id }, { quantity: quantity });
+    res.send({ success: true });
+};
+
+export { getProducts, addProduct, updateQuantity };

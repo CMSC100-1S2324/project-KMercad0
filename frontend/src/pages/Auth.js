@@ -71,6 +71,7 @@ export default function Home() {
                         sameSite: false,
                     });
 
+                    localStorage.setItem("_id", body._id);
                     localStorage.setItem("username", body.username);
                     localStorage.setItem("type", body.type);
                 } else {

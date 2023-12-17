@@ -7,7 +7,7 @@ import "./index.css";
 import Root from "./pages/Root";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
-import Subjects from "./pages/Subjects";
+import ManageOrder from "./pages/ManageOrder";
 
 // Send a POST request to API to check if the user is logged in. Redirect the user to /dashboard if already logged in
 const checkIfLoggedInOnHome = async () => {
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         element: <Root />,
         children: [
             { path: "/dashboard", element: <Dashboard />, loader: checkIfLoggedInOnDash },
-            { path: "/subjects", element: <Subjects /> },
+            { path: "/manage-order", element: <ManageOrder /> },
         ],
     },
 ]);

@@ -1,6 +1,13 @@
-import { getUsers, addToCart, removefromCart } from "./controllers/user-controller.js";
-import { getProducts, addProduct } from "./controllers/product-controller.js";
-import { getOrders, addOrder } from "./controllers/order-controller.js";
+import {
+    getUsers,
+    addToCart,
+    removeFromCart,
+    retrieveItemsFromCart,
+    getCartTotalPrice,
+    removeAllFromCart,
+} from "./controllers/user-controller.js";
+import { getProducts, addProduct, updateQuantity } from "./controllers/product-controller.js";
+import { getOrders, addOrder, getOrderProduct, changeOrderStatus } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
 export default function router(app) {
@@ -28,5 +35,11 @@ export default function router(app) {
     app.post("/add-product", addProduct);
     app.post("/add-order", addOrder);
     app.post("/add-to-cart", addToCart);
-    app.post("/remove-from-cart", removefromCart);
+    app.post("/remove-from-cart", removeFromCart);
+    app.post("/retrieve-items-from-cart", retrieveItemsFromCart);
+    app.post("/update-quantity", updateQuantity);
+    app.post("/get-cart-total-price", getCartTotalPrice);
+    app.post("/get-order-product", getOrderProduct);
+    app.post("/change-order-status", changeOrderStatus);
+    app.post("/remove-all-from-cart", removeAllFromCart);
 }
