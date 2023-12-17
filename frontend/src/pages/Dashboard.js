@@ -149,9 +149,9 @@ export default function Dashboard() {
                             <Card.Img variant="top" src="https://picsum.photos/100" />
                             <Card.Body>
                                 <Card.Title>{product.title}</Card.Title>
-                                <Card.Text>{product.name}</Card.Text>
-                                <Card.Text>{product.price}</Card.Text>
-                                <Card.Text>{product.quantity}</Card.Text>
+                                <Card.Text>Description: {product.name}</Card.Text>
+                                <Card.Text>Price: {product.price}</Card.Text>
+                                <Card.Text>Quantity: {product.quantity}</Card.Text>
                                 <Button variant="primary" onClick={() => addToCart(product._id)}>
                                     Add to Cart
                                 </Button>
@@ -167,18 +167,22 @@ export default function Dashboard() {
             <Container>
                 <Row>
                     {products.map((product, index) => {
-                        let total = 0;
+                        let quantity = 0;
+                        let price = 0;
                         cart.forEach((item) => {
-                            if (item.name === product.name) total++;
+                            if (item.name === product.name) {
+                                quantity++;
+                                price += product.price;
+                            }
                         });
 
-                        return total !== 0 ? (
+                        return quantity !== 0 ? (
                             <Card key={index} style={{ width: "18rem" }}>
                                 <Card.Img variant="top" src="https://picsum.photos/30" />
                                 <Card.Body>
-                                    <Card.Title>Title: {product.title}</Card.Title>
-                                    <Card.Text>Price: {product.price}</Card.Text>
-                                    <Card.Text>Quantity: {total}</Card.Text>
+                                    <Card.Title>{product.title}</Card.Title>
+                                    <Card.Text>Price: {price}</Card.Text>
+                                    <Card.Text>Quantity: {quantity}</Card.Text>
                                     <Button variant="primary" onClick={() => removeFromCart(product._id)}>
                                         Remove from Cart
                                     </Button>
