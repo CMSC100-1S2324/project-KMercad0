@@ -41,7 +41,7 @@ export default function ManageOrder() {
     }, [orders]);
 
     function changeStatus(orderID, status) {
-        fetch("http://localhost:3001/change-status", {
+        fetch("http://localhost:3001/change-order-status", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

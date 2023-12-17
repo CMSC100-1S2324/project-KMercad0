@@ -32,10 +32,10 @@ const getOrderProduct = async (req, res) => {
     res.send(product);
 };
 
-const changeStatus = async (req, res) => {
+const changeOrderStatus = async (req, res) => {
     await Order.findOneAndUpdate({ _id: req.body._id }, { status: req.body.status });
 
     res.send({ success: true });
 };
 
-export { getOrders, addOrder, getOrderProduct, changeStatus };
+export { getOrders, addOrder, getOrderProduct, changeOrderStatus };
