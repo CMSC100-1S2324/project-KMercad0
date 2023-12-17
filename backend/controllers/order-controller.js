@@ -17,7 +17,6 @@ const addOrder = async (req, res) => {
         price: req.body.price,
         status: req.body.status,
         userID: req.body.userID,
-        dateOrdered: req.body.dateOrdered,
     });
 
     await newOrder.save();

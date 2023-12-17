@@ -149,6 +149,43 @@ export default function Dashboard() {
         setTotal((total) => total + price);
     }
 
+    function checkoutAll() {
+        products.map((product) => {
+            let quantity = 0;
+            let price = 0;
+            const status = 0;
+            cart.forEach((item) => {
+                if (item.name === product.name) {
+                    quantity++;
+                    price += product.price;
+                }
+            });
+
+            if (quantity !== 0) {
+                fetch("http://localhost:3001/add-order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        productID: product._id,
+                        quantity: quantity,
+                        price: price,
+                        status: status,
+                        userID: _id,
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((body) => {
+                        if (body.success) {
+                            console.log("Successfully added order!");
+                        } else {
+                            console.log("Checkout failed");
+                        }
+                    });
+            }
+        });
+    }
     /*
     TODO:
     1. Edit only this part.
@@ -158,8 +195,10 @@ export default function Dashboard() {
     return type === "user" ? (
         // user
         <>
-            Welcome to the dashboard, {username} !<br />
-            <button onClick={logout}>Log Out</button>
+            <Container>
+                Welcome to the dashboard, {username} !<br />
+                <button onClick={logout}>Log Out</button>
+            </Container>
             <Container>
                 <Row>
                     {products.map((product, index) => (
@@ -181,7 +220,14 @@ export default function Dashboard() {
             <br />
             <br />
             <br />
-            <Container>CART ITEM {total.toFixed(2)}</Container>
+            <Container>
+                <Row>
+                    CART ITEM {total.toFixed(2)}
+                    <Button variant="primary" onClick={() => checkoutAll()}>
+                        Checkout all
+                    </Button>
+                </Row>
+            </Container>
             <br />
             <Container>
                 <Row>

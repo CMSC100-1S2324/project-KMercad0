@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     status: { type: Number, required: true },
     userID: { type: mongoose.Types.ObjectId, ref: "User", required: true },
-    dateOrdered: { type: Date, required: true },
+    dateOrdered: { type: Date, default: Date.now, required: true },
 });
 
 const OrderModel = mongoose.model("Order", OrderSchema);
