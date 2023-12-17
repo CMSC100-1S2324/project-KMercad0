@@ -1,6 +1,6 @@
 const subjects = [{ code: "CMSC 100" }, { code: "CMSC 23" }];
 
-export default function Subjects() {
+export default function ManageOrder() {
     return (
         <>
             <ol>
