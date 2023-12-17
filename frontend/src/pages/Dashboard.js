@@ -84,7 +84,7 @@ export default function Dashboard() {
 
     useEffect(() => {}, [products, cart]);
 
-    function addToCart(productID, price) {
+    function addToCart(productID) {
         fetch("http://localhost:3001/add-to-cart", {
             method: "POST",
             headers: {
@@ -96,7 +96,7 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
-                    updateTotal(+1 * price);
+                    updateTotal();
                     updateQuantity(productID, -1);
                     console.log("Successfully added to cart!");
                 } else {
@@ -105,7 +105,7 @@ export default function Dashboard() {
             });
     }
 
-    function removeFromCart(productID, price) {
+    function removeFromCart(productID) {
         fetch("http://localhost:3001/remove-from-cart", {
             method: "POST",
             headers: {
@@ -117,7 +117,7 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
-                    updateTotal(-1 * price);
+                    updateTotal();
                     updateQuantity(productID, +1);
                     console.log("Successfully remove from cart!");
                 } else {
@@ -145,6 +145,19 @@ export default function Dashboard() {
             });
     }
 
+    function updateTotal() {
+        fetch("http://localhost:3001/get-cart-total-price", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                setTotal(body.total);
+            });
+    }
 
     function removeAllFromCart() {
         fetch("http://localhost:3001/remove-all-from-cart", {
@@ -227,7 +240,7 @@ export default function Dashboard() {
                                 <Card.Text>Description: {product.name}</Card.Text>
                                 <Card.Text>Price: {product.price}</Card.Text>
                                 <Card.Text>Quantity: {product.quantity}</Card.Text>
-                                <Button variant="primary" onClick={() => addToCart(product._id, product.price)}>
+                                <Button variant="primary" onClick={() => addToCart(product._id)}>
                                     Add to Cart
                                 </Button>
                             </Card.Body>
@@ -266,10 +279,7 @@ export default function Dashboard() {
                                     <Card.Title>{product.title}</Card.Title>
                                     <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                     <Card.Text>Quantity: {quantity}</Card.Text>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => removeFromCart(product._id, product.price)}
-                                    >
+                                    <Button variant="primary" onClick={() => removeFromCart(product._id)}>
                                         Remove from Cart
                                     </Button>
                                 </Card.Body>
