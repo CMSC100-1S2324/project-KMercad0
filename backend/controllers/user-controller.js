@@ -14,7 +14,10 @@ const addToCart = async (req, res) => {
 };
 
 const removeFromCart = async (req, res) => {
-    await User.updateOne({ _id: req.body._id }, { $pull: { cart: req.body.productID } });
+    const user = await User.findOne({ _id: req.body._id });
+    user.cart.splice(user.cart.indexOf(req.body.productID), 1);
+
+    await User.findOneAndUpdate({ _id: req.body._id }, { cart: user.cart });
     res.send({ success: true });
 };
 

@@ -76,9 +76,28 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
-                    alert("Successfully added to cart!");
+                    console.log("Successfully added to cart!");
                 } else {
-                    alert("Add to cart failed");
+                    console.log("Add to cart failed");
+                }
+            });
+    }
+
+    function removeFromCart(productID) {
+        fetch("http://localhost:3001/remove-from-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id, productID: productID }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                if (body.success) {
+                    retrieveItemsFromCart();
+                    console.log("Successfully remove from cart!");
+                } else {
+                    console.log("Remove from cart failed");
                 }
             });
     }
@@ -124,6 +143,9 @@ export default function Dashboard() {
                             <Card.Body>
                                 <Card.Title>{item.title}</Card.Title>
                                 <Card.Text>{item.price}</Card.Text>
+                                <Button variant="primary" onClick={() => removeFromCart(item._id)}>
+                                    Remove from Cart
+                                </Button>
                             </Card.Body>
                         </Card>
                     ))}
