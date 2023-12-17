@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, Button, Container, Row } from "react-bootstrap";
 
 export default function ManageOrder() {
+    const orderStatus = ["Pending", "Completed", "Cancelled"];
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -71,9 +72,13 @@ export default function ManageOrder() {
                                     <Card.Title>{productNames[index]}</Card.Title>
                                     <Card.Text>Price: {order.price}</Card.Text>
                                     <Card.Text>Quantity: {order.quantity}</Card.Text>
-                                    <Card.Text>Status: {order.status}</Card.Text>
+                                    <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
-                                    <Button variant="primary" onClick={() => changeStatus(order._id, 2)}>
+                                    <Button
+                                        variant="primary"
+                                        disabled={order.status === 2}
+                                        onClick={() => changeStatus(order._id, 2)}
+                                    >
                                         Cancel Order
                                     </Button>
                                 </Card.Body>
