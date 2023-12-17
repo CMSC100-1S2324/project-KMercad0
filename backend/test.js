@@ -166,74 +166,84 @@ needle.get("http://localhost:3001/get-products", (err, res) => {
 // );
 
 // TEST CASES FOR ORDERS
-needle.get("http://localhost:3001/get-orders", (err, res) => {
-    // console.log(res.body);
-});
+// needle.get("http://localhost:3001/get-orders", (err, res) => {
+//     // console.log(res.body);
+// });
+
+// needle.post(
+//     "http://localhost:3001/add-order",
+//     {
+//         productID: "656aa76148fceacf75a642bb",
+//         quantity: 10,
+//         status: 1,
+//         email: "ajturing@g.c",
+//         dateOrdered: "2023-12-01T10:15:00.000Z",
+//     },
+//     (err, res) => {
+//         console.log(res.body);
+//     }
+// );
+
+// needle.post(
+//     "http://localhost:3001/add-order",
+//     {
+//         productID: "656aa76148fceacf75a642bd",
+//         quantity: 5,
+//         status: 1,
+//         email: "djferrer@g.c",
+//         dateOrdered: "2023-12-01T12:30:00.000Z",
+//     },
+//     (err, res) => {
+//         console.log(res.body);
+//     }
+// );
+
+// needle.post(
+//     "http://localhost:3001/add-order",
+//     {
+//         productID: "656aa76148fceacf75a642bf",
+//         quantity: 20,
+//         status: 0,
+//         email: "sctanig@g.c",
+//         dateOrdered: "2023-12-02T09:45:00.000Z",
+//     },
+//     (err, res) => {
+//         console.log(res.body);
+//     }
+// );
+
+// needle.post(
+//     "http://localhost:3001/add-order",
+//     {
+//         productID: "656aa76148fceacf75a642c1",
+//         quantity: 2,
+//         status: 2,
+//         email: "ecpanga@g.c",
+//         dateOrdered: "2023-12-02T14:00:00.000Z",
+//     },
+//     (err, res) => {
+//         console.log(res.body);
+//     }
+// );
+
+// needle.post(
+//     "http://localhost:3001/add-order",
+//     {
+//         productID: "656aa76148fceacf75a642c3",
+//         quantity: 15,
+//         status: 1,
+//         email: "klmercado@g.c",
+//         dateOrdered: "2023-12-03T11:20:00.000Z",
+//     },
+//     (err, res) => {
+//         console.log(res.body);
+//     }
+// );
 
 needle.post(
-    "http://localhost:3001/add-order",
+    "http://localhost:3001/retrieve-items-from-cart",
     {
-        productID: "656aa76148fceacf75a642bb",
-        quantity: 10,
-        status: 1,
-        email: "ajturing@g.c",
-        dateOrdered: "2023-12-01T10:15:00.000Z",
-    },
-    (err, res) => {
-        console.log(res.body);
-    }
-);
-
-needle.post(
-    "http://localhost:3001/add-order",
-    {
-        productID: "656aa76148fceacf75a642bd",
-        quantity: 5,
-        status: 1,
-        email: "djferrer@g.c",
-        dateOrdered: "2023-12-01T12:30:00.000Z",
-    },
-    (err, res) => {
-        console.log(res.body);
-    }
-);
-
-needle.post(
-    "http://localhost:3001/add-order",
-    {
-        productID: "656aa76148fceacf75a642bf",
-        quantity: 20,
-        status: 0,
-        email: "sctanig@g.c",
-        dateOrdered: "2023-12-02T09:45:00.000Z",
-    },
-    (err, res) => {
-        console.log(res.body);
-    }
-);
-
-needle.post(
-    "http://localhost:3001/add-order",
-    {
-        productID: "656aa76148fceacf75a642c1",
-        quantity: 2,
-        status: 2,
-        email: "ecpanga@g.c",
-        dateOrdered: "2023-12-02T14:00:00.000Z",
-    },
-    (err, res) => {
-        console.log(res.body);
-    }
-);
-
-needle.post(
-    "http://localhost:3001/add-order",
-    {
-        productID: "656aa76148fceacf75a642c3",
-        quantity: 15,
-        status: 1,
-        email: "klmercado@g.c",
-        dateOrdered: "2023-12-03T11:20:00.000Z",
+        _id: "657b05117ebc3fdb6a14ab80",
     },
     (err, res) => {
         console.log(res.body);

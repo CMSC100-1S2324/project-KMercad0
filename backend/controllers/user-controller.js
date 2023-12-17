@@ -13,9 +13,18 @@ const addToCart = async (req, res) => {
     res.send({ success: true });
 };
 
-const removefromCart = async (req, res) => {
+const removeFromCart = async (req, res) => {
     await User.updateOne({ _id: req.body._id }, { $pull: { cart: req.body.productID } });
     res.send({ success: true });
 };
 
-export { getUsers, addToCart, removefromCart };
+const retrieveItemsFromCart = async (req, res) => {
+    const cart = await User.findOne({ _id: req.body._id }, "cart")
+        .populate("cart")
+        .then((docs) => docs.cart);
+    console.log(cart);
+
+    res.send({ success: true, cart: cart });
+};
+
+export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart };
