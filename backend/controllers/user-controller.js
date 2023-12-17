@@ -22,9 +22,8 @@ const retrieveItemsFromCart = async (req, res) => {
     const cart = await User.findOne({ _id: req.body._id }, "cart")
         .populate("cart")
         .then((docs) => docs.cart);
-    console.log(cart);
 
-    res.send({ success: true, cart: cart });
+    res.send(cart);
 };
 
 export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart };
