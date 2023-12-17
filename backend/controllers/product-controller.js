@@ -15,6 +15,7 @@ const addProduct = async (req, res) => {
         title: req.body.title,
         name: req.body.name,
         type: req.body.type,
+        price: req.body.price,
         quantity: req.body.quantity,
     });
 
