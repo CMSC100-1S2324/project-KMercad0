@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Outlet, Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Button, Form, Row, Col } from 'react-bootstrap';
 
@@ -92,7 +93,7 @@ export default function Login(props) {  //component for login page
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Enter your password" />
                             </Form.Group>
-                            <Button variant="primary" type="submit" style={buttonStyle}>
+                            <Button variant="primary" type="submit" style={buttonStyle} >
                                 Sign In
                             </Button>
                         </Form>
@@ -101,6 +102,8 @@ export default function Login(props) {  //component for login page
                 <Row>
                     <Col xs={12} className="mb-3" style={text}>
                         <h6>Don't have an account? Sign up.</h6>
+                        {/* <Link to={`/signup`}>Sign up.</Link> */}
+
                     </Col>
                 </Row>
             </Container>

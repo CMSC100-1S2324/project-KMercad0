@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 
 import { Card, Button } from "react-bootstrap";
 import Login from "../components/login.js";
+import SignUp from "../components/signup.js";
 
 export default function Dashboard() {
     const username = localStorage.getItem("username");
@@ -70,9 +71,7 @@ export default function Dashboard() {
 
     return ( 
         <> 
-        <Login logout = {logout}>
-
-        </Login>
+        <SignUp></SignUp>
         </>
     )
 }
