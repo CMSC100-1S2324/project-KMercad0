@@ -59,7 +59,7 @@ export default function SignUp() {  //component for signup page
     };
 
 
-    return (
+    return ( //return signup page
         <div style={backgroundImageStyle}> {/* background image */}
         <Container style={informationContainerStyle}>
           <h4 className="mt-5 mb-4" style ={text}>Create an Account</h4>
