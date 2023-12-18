@@ -47,4 +47,17 @@ const removeAllFromCart = async (req, res) => {
     res.send({ success: true });
 };
 
-export { getUsers, addToCart, removeFromCart, retrieveItemsFromCart, getCartTotalPrice, removeAllFromCart };
+const viewAllAccount = async (req, res) => {
+    const users = await User.find({ type: "user" });
+    res.send(users);
+};
+
+export {
+    getUsers,
+    addToCart,
+    removeFromCart,
+    retrieveItemsFromCart,
+    getCartTotalPrice,
+    removeAllFromCart,
+    viewAllAccount,
+};
