@@ -7,7 +7,7 @@ import {
     removeAllFromCart,
     viewAllAccount,
 } from "./controllers/user-controller.js";
-import { getProducts, addProduct, updateQuantity } from "./controllers/product-controller.js";
+import { getProducts, addProduct, updateQuantity, updateProduct } from "./controllers/product-controller.js";
 import {
     getOrders,
     addOrder,
@@ -53,4 +53,5 @@ export default function router(app) {
     app.get("/view-all-account", viewAllAccount);
     app.get("/get-all-orders", getAllOrders);
     app.post("/get-order-user", getOrderUser);
+    app.put("/update-product/:productId", updateProduct);
 }
