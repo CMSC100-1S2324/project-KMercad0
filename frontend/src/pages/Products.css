@@ -1,5 +1,5 @@
 
-.container {
+.product-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,7 @@
   margin: 0 auto;
 }
 
-h2 {
+.product-list {
   background-color: #227125; /* Set background color to match the button */
   color: white;
   padding: 10px; /* Add padding to the heading */

@@ -106,8 +106,8 @@ export default function ManageProduct() {
 
     return (
         <>
-            <div className="container">
-                <h2>Product List</h2>
+            <div className="product-container">
+                <h2 className="product-list">Product List</h2>
 
                 <table className="input-table">
                     <tbody>
