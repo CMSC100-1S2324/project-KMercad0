@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-import { Card, Button, Container, Row } from "react-bootstrap";
+import "../dashboard.css";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
 
 export default function Dashboard() {
     const _id = localStorage.getItem("_id");
@@ -226,40 +227,37 @@ export default function Dashboard() {
     return type === "user" ? (
         // user
         <>
-            <Container>
-                Welcome to the dashboard, {username} !<br />
-                <button onClick={logout}>Log Out</button>
+            <Container className="welcome-container">
+                <div>Welcome to the dashboard, <strong>{username}</strong>!</div>
+                <Button  className="logout-button" onClick={logout}>Log Out</Button>
             </Container>
             <Container>
                 <Row>
                     {products.map((product, index) => (
-                        <Card key={index} style={{ width: "18rem" }}>
-                            <Card.Img variant="top" src="https://picsum.photos/100" />
-                            <Card.Body>
-                                <Card.Title>{product.title}</Card.Title>
-                                <Card.Text>Description: {product.name}</Card.Text>
-                                <Card.Text>Price: {product.price}</Card.Text>
-                                <Card.Text>Quantity: {product.quantity}</Card.Text>
-                                <Button variant="primary" onClick={() => addToCart(product._id)}>
-                                    Add to Cart
-                                </Button>
-                            </Card.Body>
-                        </Card>
+                        <Card key={index} style={{ width: "18rem", display: "flex", flexDirection: "column" }}>
+                        <Card.Img className="card-img" variant="top" src="https://picsum.photos/100" />
+                        <Card.Body className="card-body">
+                            <Card.Title>{product.title}</Card.Title>
+                            <Card.Text>Description: {product.name}</Card.Text>
+                            <Card.Text>Price: {product.price}</Card.Text>
+                            <Card.Text>Quantity: {product.quantity}</Card.Text>
+                            <Button variant="primary" className="add-button" onClick={() => addToCart(product._id)}>
+                                Add to Cart
+                            </Button>
+                        </Card.Body>
+                    </Card>
                     ))}
                 </Row>
             </Container>
-            <br />
-            <br />
-            <br />
-            <Container>
-                <Row>
-                    CART ITEM {total.toFixed(2)}
-                    <Button variant="primary" onClick={() => checkoutAll()}>
-                        Checkout all
-                    </Button>
-                </Row>
+            <br/>
+            <br/>
+            <br/>
+            <Container className="checkout-container">
+                <div>Cart Item: <strong>{total.toFixed(2)}</strong></div>
+                <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
+                    Checkout All
+                </Button>
             </Container>
-            <br />
             <Container>
                 <Row>
                     {products.map((product, index) => {
@@ -274,12 +272,12 @@ export default function Dashboard() {
 
                         return quantity !== 0 ? (
                             <Card key={index} style={{ width: "18rem" }}>
-                                <Card.Img variant="top" src="https://picsum.photos/30" />
-                                <Card.Body>
+                                <Card.Img className="card-img" variant="top" src="https://picsum.photos/30" />
+                                <Card.Body className="card-body">
                                     <Card.Title>{product.title}</Card.Title>
                                     <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                     <Card.Text>Quantity: {quantity}</Card.Text>
-                                    <Button variant="primary" onClick={() => removeFromCart(product._id)}>
+                                    <Button variant="primary" className="remove-button" onClick={() => removeFromCart(product._id)}>
                                         Remove from Cart
                                     </Button>
                                 </Card.Body>
@@ -292,8 +290,10 @@ export default function Dashboard() {
     ) : (
         // admin
         <>
-            Welcome to the dashboard, {username} !<br />
-            <button onClick={logout}>Log Out</button>
+            <Container className="welcome-container">
+                <div>Welcome to the dashboard, <strong>{username}</strong>!</div>
+                <Button  className="logout-button" onClick={logout}>Log Out</Button>
+            </Container>
         </>
     );
 }
