@@ -75,7 +75,7 @@ export default function ManageOrder() {
             })
                 .then((response) => response.json())
                 .then((body) => {
-                    setUserNames((userNames) => [...userNames, `${body.fname} ${body.lname}`]);
+                    setUserNames((prevUserNames) => [...prevUserNames, `${body.fname} ${body.lname}`]);
                 });
         });
     }, [orders]);
