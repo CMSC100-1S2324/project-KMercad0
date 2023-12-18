@@ -60,32 +60,41 @@ useEffect(() => {
       }
     }
   }
-
   function addNewProduct() {
-    const newTitle = document.getElementById("newTitle").value || "Title";
-    const newName = document.getElementById("newName").value || "Name";
-    const newType = document.getElementById("newType").value || "Type";
-    const newPrice = document.getElementById("newPrice").value || "Price";
-    const newQuantity = document.getElementById("newQuantity").value || "Quantity";
-
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-      <td>${newTitle}</td>
-      <td>${newName}</td>
-      <td>${newType}</td>
-      <td>${newPrice}</td>
-      <td>${newQuantity}</td>
-    `;
-    // Remove this line, as it is not needed
-    // tableBody.appendChild(newRow);
-
-    // Clear input fields
-    document.getElementById("newTitle").value = "";
-    document.getElementById("newName").value = "";
-    document.getElementById("newType").value = "";
-    document.getElementById("newPrice").value = "";
-    document.getElementById("newQuantity").value = "";
+    const newTitle = document.getElementById("newTitle")?.value || "Title";
+    const newName = document.getElementById("newName")?.value || "Name";
+    const newType = document.getElementById("newType")?.value || "Type";
+    const newPrice = document.getElementById("newPrice")?.value || "Price";
+    const newQuantity = document.getElementById("newQuantity")?.value || "Quantity";
+  
+    console.log("New Product Values:", newTitle, newName, newType, newPrice, newQuantity);
+  
+    // Make a POST request to add the new product
+    fetch("http://localhost:3001/add-product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: newTitle,
+        name: newName,
+        type: newType,
+        price: newPrice,
+        quantity: newQuantity,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Optionally, you can handle the response data here
+        console.log("New product added:", data);
+  
+        // Reload the page after adding the new product
+        window.location.reload();
+      })
+      .catch((error) => console.error("Error adding new product:", error));
   }
+  
+
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -109,7 +118,7 @@ useEffect(() => {
                 <input type="text" id="newTitle" placeholder="Title" />
               </td>
               <td>
-                <input type="text" id="newPrice" placeholder="Name" />
+                <input type="text" id="newName" placeholder="Name" />
               </td>
               <td>
                 <input type="text" id="newType" placeholder="Type" />
@@ -139,10 +148,10 @@ useEffect(() => {
                 <div className="sort-arrow" id="title-arrow"></div>
               </th>
               <th>
-                <button className="action-button" onClick={() => handleButtonClick("Name")}>
+                <button className="action-button" onClick={() => handleButtonClick("name")}>
                   Name &#8645;
                 </button>
-                <div className="sort-arrow" id="title-arrow"></div>
+                <div className="sort-arrow" id="name-arrow"></div>
               </th>
               <th>
                 <button className="action-button" onClick={() => handleButtonClick("type")}>
@@ -165,15 +174,15 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-            {tableRows.map((product, index) => (
-              <tr key={index}>
-                <td>{product.title}</td>
-                <td>{product.name}</td>
-                <td>{product.type}</td>
-                <td>{product.price}</td>
-                <td>{product.quantity}</td>
-              </tr>
-            ))}
+          {tableRows.map((product, index) => (
+            <tr key={index}>
+              <td>{product.title || "N/A"}</td>
+              <td>{product.name || "N/A"}</td>
+              <td>{product.type || "N/A"}</td>
+              <td>{product.price || "N/A"}</td>
+              <td>{product.quantity || "N/A"}</td>
+            </tr>
+          ))}
           </tbody>
         </table>
       </div>
