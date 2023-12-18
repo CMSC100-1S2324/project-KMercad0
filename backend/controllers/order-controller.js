@@ -37,4 +37,8 @@ const changeOrderStatus = async (req, res) => {
     res.send({ success: true });
 };
 
-export { getOrders, addOrder, getOrderProduct, changeOrderStatus };
+const getAllOrders = async (req, res) => {
+    const orders = await Order.find();
+    res.send(orders);
+};
+export { getOrders, addOrder, getOrderProduct, changeOrderStatus, getAllOrders };

@@ -8,7 +8,13 @@ import {
     viewAllAccount,
 } from "./controllers/user-controller.js";
 import { getProducts, addProduct, updateQuantity } from "./controllers/product-controller.js";
-import { getOrders, addOrder, getOrderProduct, changeOrderStatus } from "./controllers/order-controller.js";
+import {
+    getOrders,
+    addOrder,
+    getOrderProduct,
+    changeOrderStatus,
+    getAllOrders,
+} from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
 export default function router(app) {
@@ -44,4 +50,5 @@ export default function router(app) {
     app.post("/change-order-status", changeOrderStatus);
     app.post("/remove-all-from-cart", removeAllFromCart);
     app.get("/view-all-account", viewAllAccount);
+    app.get("/get-all-orders", getAllOrders);
 }

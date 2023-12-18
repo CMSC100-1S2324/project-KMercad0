@@ -3,35 +3,48 @@ import { Card, Button, Container, Row } from "react-bootstrap";
 
 export default function ManageOrder() {
     const _id = localStorage.getItem("_id");
+    const type = localStorage.getItem("type");
     const orderStatus = ["Pending", "Completed", "Cancelled"];
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3001/get-orders", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ _id: _id }),
-        })
-            .then((response) => response.json())
-            .then((body) => {
-                setOrders(body);
-            });
-    }, [_id]);
+        type !== "admin"
+            ? fetch("http://localhost:3001/get-orders", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ _id: _id }),
+              })
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body);
+                  })
+            : fetch("http://localhost:3001/get-all-orders")
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body);
+                  });
+    }, [_id, type]);
 
     function updateOrders() {
-        fetch("http://localhost:3001/get-orders", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ _id: _id }),
-        })
-            .then((response) => response.json())
-            .then((body) => {
-                setOrders(body);
-            });
+        type !== "admin"
+            ? fetch("http://localhost:3001/get-orders", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ _id: _id }),
+              })
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body);
+                  })
+            : fetch("http://localhost:3001/get-all-orders")
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body);
+                  });
     }
 
     useEffect(() => {}, [orders]);
@@ -73,7 +86,7 @@ export default function ManageOrder() {
             });
     }
 
-    return (
+    return type === "user" ? (
         <>
             <Container>
                 <Row>
@@ -89,10 +102,45 @@ export default function ManageOrder() {
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
                                     <Button
                                         variant="primary"
-                                        disabled={order.status === 2}
+                                        disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 2)}
                                     >
                                         Cancel Order
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        );
+                    })}
+                </Row>
+            </Container>
+        </>
+    ) : (
+        <>
+            <Container>
+                <Row>
+                    {orders.map((order, index) => {
+                        return (
+                            <Card key={index} style={{ width: "18rem" }}>
+                                <Card.Img variant="top" src="https://picsum.photos/20" />
+                                <Card.Body>
+                                    <Card.Title>{productNames[index]}</Card.Title>
+                                    <Card.Text>Price: {order.price}</Card.Text>
+                                    <Card.Text>Quantity: {order.quantity}</Card.Text>
+                                    <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
+                                    <Card.Text>Date: {order.dateOrdered}</Card.Text>
+                                    <Button
+                                        variant="primary"
+                                        disabled={order.status !== 0}
+                                        onClick={() => changeStatus(order._id, 1)}
+                                    >
+                                        Approve Order
+                                    </Button>
+                                    <Button
+                                        variant="danger"
+                                        disabled={order.status !== 0}
+                                        onClick={() => changeStatus(order._id, 2)}
+                                    >
+                                        Disapprove Order
                                     </Button>
                                 </Card.Body>
                             </Card>
