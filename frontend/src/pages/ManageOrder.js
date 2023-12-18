@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card, Button, Container, Row } from "react-bootstrap";
+import "../manage-order.css";
 
 export default function ManageOrder() {
     const _id = localStorage.getItem("_id");
@@ -106,8 +107,8 @@ export default function ManageOrder() {
                     {orders.map((order, index) => {
                         return (
                             <Card key={index} style={{ width: "18rem" }}>
-                                <Card.Img variant="top" src="https://picsum.photos/20" />
-                                <Card.Body>
+                                <Card.Img className="card-img" variant="top" src="https://picsum.photos/20" />
+                                <Card.Body className="card-body">
                                     <Card.Title>{productNames[index]}</Card.Title>
                                     <Card.Text>Price: {order.price}</Card.Text>
                                     <Card.Text>Quantity: {order.quantity}</Card.Text>
@@ -115,6 +116,7 @@ export default function ManageOrder() {
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
                                     <Button
                                         variant="primary"
+                                        className="cancel-button"
                                         disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 2)}
                                     >
@@ -134,8 +136,8 @@ export default function ManageOrder() {
                     {orders.map((order, index) => {
                         return (
                             <Card key={index} style={{ width: "18rem" }}>
-                                <Card.Img variant="top" src="https://picsum.photos/20" />
-                                <Card.Body>
+                                <Card.Img className="card-img" variant="top" src="https://picsum.photos/20" />
+                                <Card.Body className="card-body">
                                     <Card.Title>{productNames[index]}</Card.Title>
                                     <Card.Text>Price: {order.price}</Card.Text>
                                     <Card.Text>Quantity: {order.quantity}</Card.Text>
@@ -144,6 +146,7 @@ export default function ManageOrder() {
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
                                     <Button
                                         variant="primary"
+                                        className="approve-button"
                                         disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 1)}
                                     >
@@ -151,6 +154,7 @@ export default function ManageOrder() {
                                     </Button>
                                     <Button
                                         variant="danger"
+                                        className="disapprove-button"
                                         disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 2)}
                                     >
