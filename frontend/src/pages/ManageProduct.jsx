@@ -323,21 +323,26 @@ export default function ManageProduct() {
                             )}
                             </td>
                             <td>
-                            {editingRow === index ? (
-                                <button className="action-button" onClick={() => handleSaveClick(product)}>
-                                Save
-                                </button>
-                            ) : (
-                                <button className="action-button" onClick={() => handleEditClick(index)}>
-                                Edit
-                                </button>
-                            )}
-                            </td>
-                            <td>
-                                <button className="action-button" onClick={() => handleDeleteClick(product._id)}>
-                                    Delete
-                                </button>
-                            </td>
+                                    {editingRow === index ? (
+                                        <>
+                                            <button className="action-button edit-button" onClick={() => handleSaveClick(product)}>
+                                                Save
+                                            </button>
+                                            <button className="action-button delete-button" onClick={() => handleDeleteClick(product._id)}>
+                                                Delete
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button className="action-button" onClick={() => handleEditClick(index)}>
+                                                Edit
+                                            </button>
+                                            <button className="action-button" onClick={() => handleDeleteClick(product._id)}>
+                                                Delete
+                                            </button>
+                                        </>
+                                    )}
+                                </td>
                         </tr>
                         ))}
 
