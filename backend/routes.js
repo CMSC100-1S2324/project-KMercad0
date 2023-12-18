@@ -31,7 +31,7 @@ export default function router(app) {
     app.post("/checkifloggedin", checkIfLoggedIn);
     app.get("/get-users", getUsers);
     app.get("/get-products", getProducts);
-    app.get("/get-orders", getOrders);
+    app.post("/get-orders", getOrders);
     app.post("/add-product", addProduct);
     app.post("/add-order", addOrder);
     app.post("/add-to-cart", addToCart);
