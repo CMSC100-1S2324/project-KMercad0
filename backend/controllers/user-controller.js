@@ -22,24 +22,43 @@ const removeFromCart = async (req, res) => {
 };
 
 const retrieveItemsFromCart = async (req, res) => {
-    const cart = await User.findOne({ _id: req.body._id }, "cart")
-        .populate("cart")
-        .then((docs) => docs.cart);
+    try {
+        const user = await User.findOne({ _id: req.body._id }).populate("cart");
+        
+        if (!user) {
+            return res.status(404).send({ error: "User not found" });
+        }
 
-    res.send(cart);
+        const cart = user.cart || []; // Ensure cart is an array
+
+        res.send(cart);
+    } catch (error) {
+        console.error("Error retrieving items from cart:", error);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
 };
 
+
 const getCartTotalPrice = async (req, res) => {
-    const cart = await User.findOne({ _id: req.body._id }, "cart")
-        .populate("cart")
-        .then((docs) => docs.cart);
+    try {
+        const user = await User.findOne({ _id: req.body._id }).populate("cart");
 
-    let total = 0;
-    cart.forEach((item) => {
-        total += item.price;
-    });
+        if (!user) {
+            return res.status(404).send({ error: "User not found" });
+        }
 
-    res.send({ total: total });
+        const cart = user.cart || []; // Ensure cart is an array
+
+        let total = 0;
+        cart.forEach((item) => {
+            total += item.price || 0; // Ensure item.price is a number
+        });
+
+        res.send({ total: total });
+    } catch (error) {
+        console.error("Error calculating cart total price:", error);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
 };
 
 const removeAllFromCart = async (req, res) => {
