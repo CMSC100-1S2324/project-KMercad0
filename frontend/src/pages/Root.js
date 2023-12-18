@@ -36,11 +36,11 @@ export default function Root() {
                         <Nav.Link as={Link} to="/view-account">
                             View Accounts
                         </Nav.Link>
-                        <Nav.Link as={Link} to="">
-                            Manage Products
+                        <Nav.Link as={Link} to="/manage-order">
+                            Manage Orders
                         </Nav.Link>
                         <Nav.Link as={Link} to="">
-                            Manage Orders
+                            Manage Products
                         </Nav.Link>
                         {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
                     </Nav>
