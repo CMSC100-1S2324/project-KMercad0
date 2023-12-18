@@ -70,8 +70,9 @@ export default function Login(props) {  //component for login page
 
     return ( //return login page
         <div>
-            Header
-        <div style={backgroundImageStyle}>
+            Header Placement
+            {/* This part creates the entire page view */}
+        <div style={backgroundImageStyle}> 
             <Container style={outerContainerStyle}>
                 <Row>
                     <Col xs={12} className="mb-3" style={text}>
@@ -79,6 +80,7 @@ export default function Login(props) {  //component for login page
                     </Col>
                 </Row>
                 <Row>
+                    {/* This part holds the solid white part of the page */}
                     <Col xs={12} style={whiteBoxStyle}>
                         <Form>
                             <Form.Group controlId="formUsername">
