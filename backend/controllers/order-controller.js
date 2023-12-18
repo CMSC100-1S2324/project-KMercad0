@@ -41,4 +41,13 @@ const getAllOrders = async (req, res) => {
     const orders = await Order.find();
     res.send(orders);
 };
-export { getOrders, addOrder, getOrderProduct, changeOrderStatus, getAllOrders };
+
+const getOrderUser = async (req, res) => {
+    const user = await Order.findOne({ _id: req.body._id }, "userID")
+        .populate("userID")
+        .then((docs) => docs.userID);
+
+    res.send(user);
+};
+
+export { getOrders, addOrder, getOrderProduct, changeOrderStatus, getAllOrders, getOrderUser };

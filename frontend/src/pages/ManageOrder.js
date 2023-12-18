@@ -50,6 +50,7 @@ export default function ManageOrder() {
     useEffect(() => {}, [orders]);
 
     const [productNames, setProductNames] = useState([]);
+    const [userNames, setUserNames] = useState([]);
 
     useEffect(() => {
         orders.forEach((order) => {
@@ -63,6 +64,18 @@ export default function ManageOrder() {
                 .then((response) => response.json())
                 .then((body) => {
                     setProductNames((prevProductNames) => [...prevProductNames, body.title]);
+                });
+
+            fetch("http://localhost:3001/get-order-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ _id: order._id }),
+            })
+                .then((response) => response.json())
+                .then((body) => {
+                    setUserNames((userNames) => [...userNames, `${body.fname} ${body.lname}`]);
                 });
         });
     }, [orders]);
@@ -127,6 +140,7 @@ export default function ManageOrder() {
                                     <Card.Text>Price: {order.price}</Card.Text>
                                     <Card.Text>Quantity: {order.quantity}</Card.Text>
                                     <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
+                                    <Card.Text>Order by: {userNames[index]}</Card.Text>
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
                                     <Button
                                         variant="primary"

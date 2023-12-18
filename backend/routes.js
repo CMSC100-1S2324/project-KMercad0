@@ -14,6 +14,7 @@ import {
     getOrderProduct,
     changeOrderStatus,
     getAllOrders,
+    getOrderUser,
 } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
@@ -51,4 +52,5 @@ export default function router(app) {
     app.post("/remove-all-from-cart", removeAllFromCart);
     app.get("/view-all-account", viewAllAccount);
     app.get("/get-all-orders", getAllOrders);
+    app.post("/get-order-user", getOrderUser);
 }
