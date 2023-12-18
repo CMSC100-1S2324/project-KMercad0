@@ -1,0 +1,26 @@
+.card {
+    line-height: 1.2;
+    padding: 20px;
+    margin: 10px;
+    border: 0 solid;
+    border-radius: 10px;
+    background-color: #d9d9d9;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column; 
+}
+
+.card-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.cancel-button, .approve-button, .disapprove-button {
+    width: fit-content;
+    margin-top: auto;
+    height: auto;
+}
