@@ -21,13 +21,18 @@ export default function Root() {
     ) : (
         // admin
         <>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to={`/dashboard`}>Dashboard</Link>
-                    </li>
-                </ul>
-            </nav>
+            <Navbar bg="light" expand="lg">
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                        <Nav.Link as={Link} to="">View Accounts</Nav.Link>
+                        <Nav.Link as={Link} to="">Manage Products</Nav.Link>
+                        <Nav.Link as={Link} to="">Manage Orders</Nav.Link>
+                        {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
             <Outlet />
         </>
     );
