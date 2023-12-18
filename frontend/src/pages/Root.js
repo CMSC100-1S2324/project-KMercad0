@@ -39,7 +39,7 @@ export default function Root() {
                         <Nav.Link as={Link} to="/manage-order">
                             Manage Orders
                         </Nav.Link>
-                        <Nav.Link as={Link} to="">
+                        <Nav.Link as={Link} to="/manage-product">
                             Manage Products
                         </Nav.Link>
                         {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
