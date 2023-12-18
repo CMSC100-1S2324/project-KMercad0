@@ -22,4 +22,5 @@
 .cancel-button, .approve-button, .disapprove-button {
     width: fit-content;
     margin-top: auto;
+    height: auto;
 }

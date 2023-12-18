@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Container, Row } from "react-bootstrap";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import "../manage-order.css";
 
 export default function ManageOrder() {
@@ -144,13 +144,14 @@ export default function ManageOrder() {
                                     <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
                                     <Card.Text>Order by: {userNames[index]}</Card.Text>
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
-                                    <Button
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <Button
                                         variant="primary"
                                         className="approve-button"
                                         disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 1)}
                                     >
-                                        Approve Order
+                                        Approve
                                     </Button>
                                     <Button
                                         variant="danger"
@@ -158,8 +159,9 @@ export default function ManageOrder() {
                                         disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 2)}
                                     >
-                                        Disapprove Order
+                                        Disapprove
                                     </Button>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         );
