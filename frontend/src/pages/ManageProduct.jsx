@@ -142,22 +142,50 @@ export default function ManageProduct() {
                 quantity: editedValues.quantity,
             }),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to update product: ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then((data) => {
                 console.log("Product updated:", data);
-    
-                // If successful, no need to do anything as the state is already updated optimistically
                 // Reset the editing state
                 setEditingRow(null);
             })
             .catch((error) => {
                 console.error("Error updating product:", error);
-                
                 // If there's an error, revert the state to its original values
                 setTableRows(tableRows);
             });
     };
     
+    
+    const handleDeleteClick = (productId) => {
+        // Make a DELETE request to remove the product
+        fetch(`http://localhost:3001/delete-product/${productId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete product: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Product deleted:", data);
+                // Update the state by removing the deleted product
+                const updatedRows = [...tableRows];
+                updatedRows.splice(editingRow, 1);
+                setTableRows(updatedRows);
+                // Reset the editing state
+                setEditingRow(null);
+            })
+            .catch((error) => console.error("Error deleting product:", error));
+    };
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
@@ -304,6 +332,11 @@ export default function ManageProduct() {
                                 Edit
                                 </button>
                             )}
+                            </td>
+                            <td>
+                                <button className="action-button" onClick={() => handleDeleteClick(product._id)}>
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                         ))}

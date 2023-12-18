@@ -47,4 +47,28 @@ const updateProduct = async (req, res) => {
     }
 };
 
-export { getProducts, addProduct, updateQuantity, updateProduct};
+const deleteProduct = async (req, res) => {
+    const productId = req.params.productId;
+    console.log("Deleting product with ID:", productId);
+
+    try {
+        // Use your mongoose model to find and remove the product
+        const product = await Product.findOneAndDelete({ _id: productId });
+
+        if (!product) {
+            console.log("Product not found");
+            res.status(404).json({ error: "Product not found" });
+            return;
+        }
+
+        console.log("Product deleted successfully");
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+
+
+export { getProducts, addProduct, updateQuantity, updateProduct, deleteProduct};
