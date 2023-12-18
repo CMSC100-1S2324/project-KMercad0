@@ -1,4 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
+import { Navbar, Nav } from 'react-bootstrap';
 
 export default function Root() {
     const type = localStorage.getItem("type");
@@ -6,16 +7,16 @@ export default function Root() {
     return type === "user" ? (
         // user
         <>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to={`/dashboard`}>Dashboard</Link>
-                    </li>
-                    <li>
-                        <Link to={`/manage-order`}>Manage Order</Link>
-                    </li>
-                </ul>
-            </nav>
+             <Navbar bg="light" expand="lg">
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                        <Nav.Link as={Link} to="/manage-order">Manage Orders</Nav.Link>
+                        {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
             <Outlet />
         </>
     ) : (
