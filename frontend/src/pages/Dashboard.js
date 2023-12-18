@@ -180,7 +180,7 @@ export default function Dashboard() {
     }
 
     function checkoutAll() {
-        products.map((product) => {
+        products.forEach((product) => {
             let quantity = 0;
             let price = 0;
             const status = 0;

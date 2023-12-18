@@ -4,7 +4,7 @@ import OrderModel from "../models/order.js";
 const Order = OrderModel;
 
 const getOrders = async (req, res) => {
-    const orders = await Order.find({});
+    const orders = await Order.find({ userID: req.body._id });
     res.send(orders);
 };
 

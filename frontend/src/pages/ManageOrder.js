@@ -2,19 +2,32 @@ import { useState, useEffect } from "react";
 import { Card, Button, Container, Row } from "react-bootstrap";
 
 export default function ManageOrder() {
+    const _id = localStorage.getItem("_id");
     const orderStatus = ["Pending", "Completed", "Cancelled"];
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3001/get-orders")
+        fetch("http://localhost:3001/get-orders", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
             .then((response) => response.json())
             .then((body) => {
                 setOrders(body);
             });
-    }, []);
+    }, [_id]);
 
     function updateOrders() {
-        fetch("http://localhost:3001/get-orders")
+        fetch("http://localhost:3001/get-orders", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
             .then((response) => response.json())
             .then((body) => {
                 setOrders(body);
