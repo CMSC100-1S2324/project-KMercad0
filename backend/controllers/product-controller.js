@@ -31,4 +31,44 @@ const updateQuantity = async (req, res) => {
     res.send({ success: true });
 };
 
-export { getProducts, addProduct, updateQuantity };
+const updateProduct = async (req, res) => {
+    try {
+        const productId = req.params.productId;
+        const updatedProductData = req.body;
+
+        // Implement logic to find the product by ID and update its properties
+        // Example using Mongoose:
+        const product = await Product.findOneAndUpdate({ _id: productId }, updatedProductData, { new: true });
+
+        res.json({ success: true, updatedProduct: product });
+    } catch (error) {
+        console.error("Error updating product:", error);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    const productId = req.params.productId;
+    console.log("Deleting product with ID:", productId);
+
+    try {
+        // Use your mongoose model to find and remove the product
+        const product = await Product.findOneAndDelete({ _id: productId });
+
+        if (!product) {
+            console.log("Product not found");
+            res.status(404).json({ error: "Product not found" });
+            return;
+        }
+
+        console.log("Product deleted successfully");
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+
+
+export { getProducts, addProduct, updateQuantity, updateProduct, deleteProduct};
