@@ -27,7 +27,7 @@ const checkIfLoggedInOnHome = async () => {
 };
 
 // Send a POST request to API to check if the user is logged in. Redirect the user back to / if not logged in.
-const checkIfLoggedInOnDash = async () => {
+const checkIfLoggedInOnAccount = async () => {
     const res = await fetch("http://localhost:3001/checkifloggedin", {
         method: "POST",
         credentials: "include",
@@ -47,10 +47,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Root />,
         children: [
-            { path: "/dashboard", element: <Dashboard />, loader: checkIfLoggedInOnDash },
-            { path: "/manage-order", element: <ManageOrder /> },
-            { path: "/manage-product", element: <ManageProduct /> },
-            { path: "/view-account", element: <ViewAccount /> },
+            { path: "/dashboard", element: <Dashboard />, loader: checkIfLoggedInOnAccount },
+            { path: "/manage-order", element: <ManageOrder />, loader: checkIfLoggedInOnAccount },
+            { path: "/manage-product", element: <ManageProduct />, loader: checkIfLoggedInOnAccount },
+            { path: "/view-account", element: <ViewAccount />, loader: checkIfLoggedInOnAccount },
         ],
     },
 ]);
