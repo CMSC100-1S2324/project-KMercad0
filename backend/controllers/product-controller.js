@@ -69,4 +69,11 @@ const deleteProduct = async (req, res) => {
     }
 };
 
-export { getProducts, addProduct, changeQuantity, updateProduct, deleteProduct };
+const getQuantity = async (req, res) => {
+    const productId = req.params.productID;
+    const product = await Product.findOne({ _id: productId });
+
+    res.send({ quantity: product.quantity });
+};
+
+export { getProducts, addProduct, changeQuantity, updateProduct, deleteProduct, getQuantity };

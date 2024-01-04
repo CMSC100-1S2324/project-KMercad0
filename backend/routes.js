@@ -14,6 +14,7 @@ import {
     changeQuantity,
     updateProduct,
     deleteProduct,
+    getQuantity,
 } from "./controllers/product-controller.js";
 import {
     getUserOrders,
@@ -49,6 +50,7 @@ export default function router(app) {
     app.get("/get-users", getUsers);
     app.get("/get-products", getProducts);
     app.get("/get-orders", getOrders);
+    app.get("/get-quantity/:productID", getQuantity);
     app.get("/get-all-user-accounts", getAllUserAccounts);
     app.get("/get-total-user-accounts", getTotalUserAccounts);
     app.get("/get-user-orders/:userID", getUserOrders);

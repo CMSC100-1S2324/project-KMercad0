@@ -76,21 +76,36 @@ export default function Dashboard() {
     }
 
     function addToCart(productID) {
-        fetch(`http://localhost:3001/add-to-cart/${_id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ productID: productID }),
-        })
+        fetch(`http://localhost:3001/get-quantity/${productID}`)
             .then((response) => response.json())
             .then((body) => {
-                if (body.success) {
-                    updateCart();
-                    updateTotal();
-                    console.log("Successfully added to cart!");
+                let productQuantityFromCart = 0;
+                cart.forEach((item) => {
+                    if (item._id === productID) {
+                        productQuantityFromCart++;
+                    }
+                });
+
+                if (body.quantity >= productQuantityFromCart + 1) {
+                    fetch(`http://localhost:3001/add-to-cart/${_id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ productID: productID }),
+                    })
+                        .then((response) => response.json())
+                        .then((body) => {
+                            if (body.success) {
+                                updateCart();
+                                updateTotal();
+                                console.log("Successfully added to cart!");
+                            } else {
+                                console.log("Add to cart failed");
+                            }
+                        });
                 } else {
-                    console.log("Add to cart failed");
+                    console.log("FULL");
                 }
             });
     }
