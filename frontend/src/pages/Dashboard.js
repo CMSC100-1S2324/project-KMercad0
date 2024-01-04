@@ -29,7 +29,7 @@ export default function Dashboard() {
 
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
         fetch("http://localhost:3001/get-products")
@@ -37,19 +37,43 @@ export default function Dashboard() {
             .then((body) => {
                 setProducts(body);
             });
-        fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
+        fetch("http://localhost:3001/retrieve-items-from-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
             .then((response) => response.json())
             .then((body) => {
-                setCart(body.cart);
+                setCart(body);
             });
-        fetch(`http://localhost:3001/get-cart-total-price/${_id}`)
+        fetch("http://localhost:3001/get-cart-total-price", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
             .then((response) => response.json())
             .then((body) => {
-                setTotal(body.total);
+                setTotalPrice(body.totalPrice);
             });
     }, [_id]);
 
-    useEffect(() => {}, [products, cart]);
+    function retrieveItemsFromCart() {
+        fetch("http://localhost:3001/retrieve-items-from-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                setCart(body);
+            });
+    }
 
     function updateProducts() {
         fetch("http://localhost:3001/get-products")
@@ -59,35 +83,22 @@ export default function Dashboard() {
             });
     }
 
-    function updateCart() {
-        fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
-            .then((response) => response.json())
-            .then((body) => {
-                setCart(body.cart);
-            });
-    }
-
-    function updateTotal() {
-        fetch(`http://localhost:3001/get-cart-total-price/${_id}`)
-            .then((response) => response.json())
-            .then((body) => {
-                setTotal(body.total);
-            });
-    }
+    useEffect(() => {}, [products, cart]);
 
     function addToCart(productID) {
-        fetch(`http://localhost:3001/add-to-cart/${_id}`, {
-            method: "PUT",
+        fetch("http://localhost:3001/add-to-cart", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ productID: productID }),
+            body: JSON.stringify({ _id: _id, productID: productID }),
         })
             .then((response) => response.json())
             .then((body) => {
                 if (body.success) {
-                    updateCart();
-                    updateTotal();
+                    retrieveItemsFromCart();
+                    updateTotalPrice();
+                    updateQuantity(productID, -1);
                     console.log("Successfully added to cart!");
                 } else {
                     console.log("Add to cart failed");
@@ -96,18 +107,19 @@ export default function Dashboard() {
     }
 
     function removeFromCart(productID) {
-        fetch(`http://localhost:3001/remove-from-cart/${_id}`, {
-            method: "DELETE",
+        fetch("http://localhost:3001/remove-from-cart", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ productID: productID }),
+            body: JSON.stringify({ _id: _id, productID: productID }),
         })
             .then((response) => response.json())
             .then((body) => {
                 if (body.success) {
-                    updateCart();
-                    updateTotal();
+                    retrieveItemsFromCart();
+                    updateTotalPrice();
+                    updateQuantity(productID, +1);
                     console.log("Successfully remove from cart!");
                 } else {
                     console.log("Remove from cart failed");
@@ -115,13 +127,13 @@ export default function Dashboard() {
             });
     }
 
-    function changeQuantity(productID, quantity) {
-        fetch(`http://localhost:3001/change-quantity/${productID}`, {
-            method: "PUT",
+    function updateQuantity(productID, update) {
+        fetch("http://localhost:3001/update-quantity", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ quantity: quantity }),
+            body: JSON.stringify({ _id: productID, number: update }),
         })
             .then((response) => response.json())
             .then((body) => {
@@ -134,18 +146,33 @@ export default function Dashboard() {
             });
     }
 
-    function removeAllFromCart() {
-        fetch(`http://localhost:3001/remove-all-from-cart/${_id}`, {
-            method: "DELETE",
+    function updateTotalPrice() {
+        fetch("http://localhost:3001/get-cart-total-price", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify({ _id: _id }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                setTotalPrice(body.totalPrice);
+            });
+    }
+
+    function removeAllFromCart() {
+        fetch("http://localhost:3001/remove-all-from-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ _id: _id }),
         })
             .then((response) => response.json())
             .then((body) => {
                 if (body.success) {
-                    updateCart();
-                    updateTotal();
+                    retrieveItemsFromCart();
+                    updateTotalPrice();
                     console.log("Successfully updated quantity!");
                 } else {
                     console.log("Update quantity failed");
@@ -183,7 +210,6 @@ export default function Dashboard() {
                     .then((body) => {
                         if (body.success) {
                             removeAllFromCart();
-                            changeQuantity(product._id, quantity);
                             console.log("Successfully added order!");
                         } else {
                             console.log("Checkout failed");
@@ -202,41 +228,43 @@ export default function Dashboard() {
         // user
         <>
             <Container className="welcome-container">
-                <div>
-                    Welcome to the dashboard, <strong>{username}</strong>!
-                </div>
-                <Button className="logout-button" onClick={logout}>
-                    Log Out
-                </Button>
+                <div>Welcome to the dashboard, <strong>{username}</strong>!</div>
+                <Button  className="logout-button" onClick={logout}>Log Out</Button>
             </Container>
             <Container>
                 <Row>
                     {products.map((product, index) => (
                         <Card key={index} style={{ width: "18rem", display: "flex", flexDirection: "column" }}>
-                            <Card.Img className="card-img" variant="top" src="https://picsum.photos/100" />
-                            <Card.Body className="card-body">
-                                <Card.Title>{product.title}</Card.Title>
-                                <Card.Text>Description: {product.name}</Card.Text>
-                                <Card.Text>Price: {product.price}</Card.Text>
-                                <Card.Text>Quantity: {product.quantity}</Card.Text>
-                                <Button variant="primary" className="add-button" onClick={() => addToCart(product._id)}>
-                                    Add to Cart
-                                </Button>
-                            </Card.Body>
-                        </Card>
+                        <Card.Img className="card-img" variant="top" src="https://picsum.photos/100" />
+                        <Card.Body className="card-body">
+                            <Card.Title>{product.title}</Card.Title>
+                            <Card.Text>Description: {product.name}</Card.Text>
+                            <Card.Text>Price: {product.price}</Card.Text>
+                            <Card.Text>Quantity: {product.quantity}</Card.Text>
+                            <Button variant="primary" className="add-button" onClick={() => addToCart(product._id)}>
+                                Add to Cart
+                            </Button>
+                        </Card.Body>
+                    </Card>
                     ))}
                 </Row>
             </Container>
-            <br />
-            <br />
-            <br />
+            <br/>
+            <br/>
+            <br/>
             <Container className="checkout-container">
-                <div>
-                    Cart Item: <strong>{total.toFixed(2)}</strong>
-                </div>
-                <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
-                    Checkout All
-                </Button>
+                <Col>
+                    <div>Total Price: <strong>{totalPrice.toFixed(2)}</strong></div>
+                    <div>Total Quantity: <strong>{cart.length.toFixed(0)}</strong></div>
+                </Col>
+                <Col>
+                    <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
+                        Checkout All
+                    </Button>
+                </Col>
+                <Col></Col>
+                <Col></Col>
+                <Col></Col>
             </Container>
             <Container>
                 <Row>
@@ -257,11 +285,7 @@ export default function Dashboard() {
                                     <Card.Title>{product.title}</Card.Title>
                                     <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                     <Card.Text>Quantity: {quantity}</Card.Text>
-                                    <Button
-                                        variant="primary"
-                                        className="remove-button"
-                                        onClick={() => removeFromCart(product._id)}
-                                    >
+                                    <Button variant="primary" className="remove-button" onClick={() => removeFromCart(product._id)}>
                                         Remove from Cart
                                     </Button>
                                 </Card.Body>
@@ -275,12 +299,8 @@ export default function Dashboard() {
         // admin
         <>
             <Container className="welcome-container">
-                <div>
-                    Welcome to the dashboard, <strong>{username}</strong>!
-                </div>
-                <Button className="logout-button" onClick={logout}>
-                    Log Out
-                </Button>
+                <div>Welcome to the dashboard, <strong>{username}</strong>!</div>
+                <Button  className="logout-button" onClick={logout}>Log Out</Button>
             </Container>
         </>
     );

@@ -2,26 +2,19 @@ import {
     getUsers,
     addToCart,
     removeFromCart,
-    getItemsFromCart,
+    retrieveItemsFromCart,
     getCartTotalPrice,
     removeAllFromCart,
-    getAllUserAccounts,
-    getTotalUserAccounts,
+    viewAllAccount,
 } from "./controllers/user-controller.js";
+import { getProducts, addProduct, updateQuantity, updateProduct, deleteProduct } from "./controllers/product-controller.js";
 import {
-    getProducts,
-    addProduct,
-    changeQuantity,
-    updateProduct,
-    deleteProduct,
-} from "./controllers/product-controller.js";
-import {
-    getUserOrders,
-    addOrder,
-    getProductOfOrder,
-    changeOrderStatus,
     getOrders,
-    getUserOfOrder,
+    addOrder,
+    getOrderProduct,
+    changeOrderStatus,
+    getAllOrders,
+    getOrderUser,
 } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
@@ -44,23 +37,23 @@ export default function router(app) {
     app.post("/signup", signUp);
     app.post("/login", login);
     app.post("/checkifloggedin", checkIfLoggedIn);
-    app.post("/add-product", addProduct);
-    app.post("/add-order", addOrder);
     app.get("/get-users", getUsers);
     app.get("/get-products", getProducts);
-    app.get("/get-orders", getOrders);
-    app.get("/get-all-user-accounts", getAllUserAccounts);
-    app.get("/get-total-user-accounts", getTotalUserAccounts);
-    app.get("/get-user-orders/:userID", getUserOrders);
-    app.get("/get-items-from-cart/:userID", getItemsFromCart);
-    app.get("/get-cart-total-price/:userID", getCartTotalPrice);
-    app.get("/get-user-of-order/:orderID", getUserOfOrder);
-    app.get("/get-product-of-order/:orderID", getProductOfOrder);
-    app.put("/add-to-cart/:userID", addToCart);
-    app.put("/change-quantity/:productID", changeQuantity);
-    app.put("/change-order-status/:orderID", changeOrderStatus);
+    app.post("/get-orders", getOrders);
+    app.post("/add-product", addProduct);
+    app.post("/add-order", addOrder);
+    app.post("/add-to-cart", addToCart);
+    app.post("/remove-from-cart", removeFromCart);
+    app.post("/retrieve-items-from-cart", retrieveItemsFromCart);
+    app.post("/update-quantity", updateQuantity);
+    app.post("/get-cart-total-price", getCartTotalPrice);
+    app.post("/get-order-product", getOrderProduct);
+    app.post("/change-order-status", changeOrderStatus);
+    app.post("/remove-all-from-cart", removeAllFromCart);
+    app.get("/view-all-account", viewAllAccount);
+    app.get("/get-all-orders", getAllOrders);
+    app.post("/get-order-user", getOrderUser);
     app.put("/update-product/:productId", updateProduct);
-    app.delete("/remove-from-cart/:userID", removeFromCart);
-    app.delete("/remove-all-from-cart/:userID", removeAllFromCart);
     app.delete("/delete-product/:productId", deleteProduct);
 }
+

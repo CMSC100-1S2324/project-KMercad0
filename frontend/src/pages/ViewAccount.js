@@ -3,27 +3,19 @@ import { Card, Container, Row } from "react-bootstrap";
 
 export default function ViewAccount() {
     const [users, setUsers] = useState([]);
-    const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        fetch("http://localhost:3001/get-all-user-accounts")
+        fetch("http://localhost:3001/view-all-account")
             .then((response) => response.json())
             .then((body) => {
-                setUsers(body.users);
-            });
-        fetch("http://localhost:3001/get-total-user-accounts")
-            .then((response) => response.json())
-            .then((body) => {
-                setTotal(body.total);
+                setUsers(body);
             });
     });
 
     return (
         <>
             <Container>
-                <div>
-                    Total: <strong>{total.toFixed(0)}</strong>
-                </div>
+                <div>Total: <strong>{users.length.toFixed(0)}</strong></div>
                 <Row>
                     {users.map((user, index) => {
                         return (

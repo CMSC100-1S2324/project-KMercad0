@@ -9,66 +9,55 @@ const getUsers = async (req, res) => {
 };
 
 const addToCart = async (req, res) => {
-    const userID = req.params.userID;
-    await User.updateOne({ _id: userID }, { $push: { cart: req.body.productID } });
+    await User.updateOne({ _id: req.body._id }, { $push: { cart: req.body.productID } });
     res.send({ success: true });
 };
 
 const removeFromCart = async (req, res) => {
-    const userID = req.params.userID;
-    const user = await User.findOne({ _id: userID });
+    const user = await User.findOne({ _id: req.body._id });
     user.cart.splice(user.cart.indexOf(req.body.productID), 1);
 
-    await User.findOneAndUpdate({ _id: userID }, { cart: user.cart });
+    await User.findOneAndUpdate({ _id: req.body._id }, { cart: user.cart });
     res.send({ success: true });
 };
 
-const getItemsFromCart = async (req, res) => {
-    const userID = req.params.userID;
-    const cart = await User.findOne({ _id: userID }, "cart")
+const retrieveItemsFromCart = async (req, res) => {
+    const cart = await User.findOne({ _id: req.body._id }, "cart")
         .populate("cart")
         .then((docs) => docs.cart);
 
-    res.send({ cart: cart });
+    res.send(cart);
 };
 
 const getCartTotalPrice = async (req, res) => {
-    const userID = req.params.userID;
-    const cart = await User.findOne({ _id: userID }, "cart")
+    const cart = await User.findOne({ _id: req.body._id }, "cart")
         .populate("cart")
         .then((docs) => docs.cart);
 
-    let total = 0;
+    let totalPrice = 0;
     cart.forEach((item) => {
-        total += item.price;
+        totalPrice += item.price;
     });
 
-    res.send({ total: total });
+    res.send({ totalPrice: totalPrice });
 };
 
 const removeAllFromCart = async (req, res) => {
-    const userID = req.params.userID;
-    await User.updateOne({ _id: userID }, { $set: { cart: [] } });
+    await User.updateOne({ _id: req.body._id }, { $set: { cart: [] } });
     res.send({ success: true });
 };
 
-const getAllUserAccounts = async (req, res) => {
+const viewAllAccount = async (req, res) => {
     const users = await User.find({ type: "user" });
-    res.send({ users: users });
-};
-
-const getTotalUserAccounts = async (req, res) => {
-    const users = await User.find({ type: "user" });
-    res.send({ total: users.length });
+    res.send(users);
 };
 
 export {
     getUsers,
     addToCart,
     removeFromCart,
-    getItemsFromCart,
+    retrieveItemsFromCart,
     getCartTotalPrice,
     removeAllFromCart,
-    getAllUserAccounts,
-    getTotalUserAccounts,
+    viewAllAccount,
 };
