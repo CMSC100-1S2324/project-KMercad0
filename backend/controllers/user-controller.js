@@ -9,28 +9,32 @@ const getUsers = async (req, res) => {
 };
 
 const addToCart = async (req, res) => {
-    await User.updateOne({ _id: req.body._id }, { $push: { cart: req.body.productID } });
+    const userID = req.params.userID;
+    await User.updateOne({ _id: userID }, { $push: { cart: req.body.productID } });
     res.send({ success: true });
 };
 
 const removeFromCart = async (req, res) => {
-    const user = await User.findOne({ _id: req.body._id });
+    const userID = req.params.userID;
+    const user = await User.findOne({ _id: userID });
     user.cart.splice(user.cart.indexOf(req.body.productID), 1);
 
-    await User.findOneAndUpdate({ _id: req.body._id }, { cart: user.cart });
+    await User.findOneAndUpdate({ _id: userID }, { cart: user.cart });
     res.send({ success: true });
 };
 
-const retrieveItemsFromCart = async (req, res) => {
-    const cart = await User.findOne({ _id: req.body._id }, "cart")
+const getItemsFromCart = async (req, res) => {
+    const userID = req.params.userID;
+    const cart = await User.findOne({ _id: userID }, "cart")
         .populate("cart")
         .then((docs) => docs.cart);
 
-    res.send(cart);
+    res.send({ cart: cart });
 };
 
 const getCartTotalPrice = async (req, res) => {
-    const cart = await User.findOne({ _id: req.body._id }, "cart")
+    const userID = req.params.userID;
+    const cart = await User.findOne({ _id: userID }, "cart")
         .populate("cart")
         .then((docs) => docs.cart);
 
@@ -43,7 +47,8 @@ const getCartTotalPrice = async (req, res) => {
 };
 
 const removeAllFromCart = async (req, res) => {
-    await User.updateOne({ _id: req.body._id }, { $set: { cart: [] } });
+    const userID = req.params.userID;
+    await User.updateOne({ _id: userID }, { $set: { cart: [] } });
     res.send({ success: true });
 };
 
@@ -52,12 +57,4 @@ const viewAllAccount = async (req, res) => {
     res.send(users);
 };
 
-export {
-    getUsers,
-    addToCart,
-    removeFromCart,
-    retrieveItemsFromCart,
-    getCartTotalPrice,
-    removeAllFromCart,
-    viewAllAccount,
-};
+export { getUsers, addToCart, removeFromCart, getItemsFromCart, getCartTotalPrice, removeAllFromCart, viewAllAccount };

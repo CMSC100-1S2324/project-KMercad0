@@ -2,12 +2,18 @@ import {
     getUsers,
     addToCart,
     removeFromCart,
-    retrieveItemsFromCart,
+    getItemsFromCart,
     getCartTotalPrice,
     removeAllFromCart,
     viewAllAccount,
 } from "./controllers/user-controller.js";
-import { getProducts, addProduct, updateQuantity, updateProduct, deleteProduct } from "./controllers/product-controller.js";
+import {
+    getProducts,
+    addProduct,
+    changeQuantity,
+    updateProduct,
+    deleteProduct,
+} from "./controllers/product-controller.js";
 import {
     getOrders,
     addOrder,
@@ -42,18 +48,17 @@ export default function router(app) {
     app.post("/get-orders", getOrders);
     app.post("/add-product", addProduct);
     app.post("/add-order", addOrder);
-    app.post("/add-to-cart", addToCart);
-    app.post("/remove-from-cart", removeFromCart);
-    app.post("/retrieve-items-from-cart", retrieveItemsFromCart);
-    app.post("/update-quantity", updateQuantity);
-    app.post("/get-cart-total-price", getCartTotalPrice);
+    app.put("/add-to-cart/:userID", addToCart);
+    app.delete("/remove-from-cart/:userID", removeFromCart);
+    app.get("/get-items-from-cart/:userID", getItemsFromCart);
+    app.put("/change-quantity/:productID", changeQuantity);
+    app.get("/get-cart-total-price/:userID", getCartTotalPrice);
     app.post("/get-order-product", getOrderProduct);
     app.post("/change-order-status", changeOrderStatus);
-    app.post("/remove-all-from-cart", removeAllFromCart);
+    app.delete("/remove-all-from-cart/:userID", removeAllFromCart);
     app.get("/view-all-account", viewAllAccount);
     app.get("/get-all-orders", getAllOrders);
     app.post("/get-order-user", getOrderUser);
     app.put("/update-product/:productId", updateProduct);
     app.delete("/delete-product/:productId", deleteProduct);
 }
-
