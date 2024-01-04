@@ -34,12 +34,12 @@ const getCartTotalPrice = async (req, res) => {
         .populate("cart")
         .then((docs) => docs.cart);
 
-    let total = 0;
+    let totalPrice = 0;
     cart.forEach((item) => {
-        total += item.price;
+        totalPrice += item.price;
     });
 
-    res.send({ total: total });
+    res.send({ totalPrice: totalPrice });
 };
 
 const removeAllFromCart = async (req, res) => {
@@ -52,6 +52,11 @@ const viewAllAccount = async (req, res) => {
     res.send(users);
 };
 
+const getTotalAccounts = async (req, res) => {
+    const users = await User.find({ type: "user" });
+    res.send({ total: users.length });
+};
+
 export {
     getUsers,
     addToCart,
@@ -60,4 +65,5 @@ export {
     getCartTotalPrice,
     removeAllFromCart,
     viewAllAccount,
+    getTotalAccounts
 };

@@ -29,7 +29,7 @@ export default function Dashboard() {
 
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
         fetch("http://localhost:3001/get-products")
@@ -57,7 +57,7 @@ export default function Dashboard() {
         })
             .then((response) => response.json())
             .then((body) => {
-                setTotal(body.total);
+                setTotalPrice(body.totalPrice);
             });
     }, [_id]);
 
@@ -97,7 +97,7 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
-                    updateTotal();
+                    updateTotalPrice();
                     updateQuantity(productID, -1);
                     console.log("Successfully added to cart!");
                 } else {
@@ -118,7 +118,7 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
-                    updateTotal();
+                    updateTotalPrice();
                     updateQuantity(productID, +1);
                     console.log("Successfully remove from cart!");
                 } else {
@@ -146,7 +146,7 @@ export default function Dashboard() {
             });
     }
 
-    function updateTotal() {
+    function updateTotalPrice() {
         fetch("http://localhost:3001/get-cart-total-price", {
             method: "POST",
             headers: {
@@ -156,7 +156,7 @@ export default function Dashboard() {
         })
             .then((response) => response.json())
             .then((body) => {
-                setTotal(body.total);
+                setTotalPrice(body.totalPrice);
             });
     }
 
@@ -172,7 +172,7 @@ export default function Dashboard() {
             .then((body) => {
                 if (body.success) {
                     retrieveItemsFromCart();
-                    updateTotal();
+                    updateTotalPrice();
                     console.log("Successfully updated quantity!");
                 } else {
                     console.log("Update quantity failed");
@@ -253,10 +253,18 @@ export default function Dashboard() {
             <br/>
             <br/>
             <Container className="checkout-container">
-                <div>Cart Item: <strong>{total.toFixed(2)}</strong></div>
-                <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
-                    Checkout All
-                </Button>
+                <Col>
+                    <div>Total Price: <strong>{totalPrice.toFixed(2)}</strong></div>
+                    <div>Total Quantity: <strong>{cart.length.toFixed(0)}</strong></div>
+                </Col>
+                <Col>
+                    <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
+                        Checkout All
+                    </Button>
+                </Col>
+                <Col></Col>
+                <Col></Col>
+                <Col></Col>
             </Container>
             <Container>
                 <Row>
