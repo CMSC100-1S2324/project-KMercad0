@@ -47,9 +47,9 @@ export default function Dashboard() {
             .then((body) => {
                 setTotal(body.total);
             });
-    }, []);
+    }, [_id]);
 
-    useEffect(() => {}, [products, cart, total]);
+    useEffect(() => {}, [products, cart]);
 
     function updateProducts() {
         fetch("http://localhost:3001/get-products")
