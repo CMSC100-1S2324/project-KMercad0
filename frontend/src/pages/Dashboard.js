@@ -3,6 +3,7 @@ import { useNavigate, useLoaderData } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import "../dashboard.css";
+import "./Products.css"
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 
 export default function Dashboard() {
@@ -11,6 +12,71 @@ export default function Dashboard() {
     const type = localStorage.getItem("type");
     const [isLoggedIn, setIsLoggedIn] = useState(useLoaderData());
     const navigate = useNavigate();
+    const [tableRows, setTableRows] = useState([]);
+    const [sortDirections, setSortDirections] = useState({
+        title: 1,
+        name: 1,
+        type: 1,
+        price: 1,
+        quantity: 1,
+    });
+    const [editingRow, setEditingRow] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/get-products")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setTableRows(data);
+        })
+        .catch((error) => console.error('Error fetching data:', error));
+    }, []);
+
+    const handleButtonClick = (columnName) => {
+        const updatedRows = [...tableRows];
+    
+        updatedRows.sort((a, b) => {
+          const aValue = (a[columnName] || "").toString().trim();
+          const bValue = (b[columnName] || "").toString().trim();
+    
+          if (columnName === "title" || columnName === "name") {
+            return sortDirections[columnName] * aValue.localeCompare(bValue);
+          } else {
+            const numericA = parseFloat(aValue) || 0;
+            const numericB = parseFloat(bValue) || 0;
+            return sortDirections[columnName] * (numericA - numericB);
+          }
+        });
+    
+        setSortDirections({ ...sortDirections, [columnName]: -sortDirections[columnName] });
+        setTableRows(updatedRows);
+      };
+    
+      function updateSortArrow(columnName) {
+        const arrowElement = document.getElementById(`${columnName}-arrow`);
+        if (arrowElement) {
+          arrowElement.textContent = sortDirections[columnName] === 1 ? " ▲" : " ▼";
+        }
+    
+        for (const key in sortDirections) {
+          if (key !== columnName) {
+            const otherArrowElement = document.getElementById(`${key}-arrow`);
+            if (otherArrowElement) {
+              otherArrowElement.textContent = "";
+            }
+          }
+        }
+      }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        handleButtonClick("title");
+    }, []);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        updateSortArrow("title");
+    }, []);
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -227,9 +293,7 @@ export default function Dashboard() {
                     ))}
                 </Row>
             </Container>
-            <br />
-            <br />
-            <br />
+
             <Container className="checkout-container">
                 <Col>
                     <div>Total Price: <strong>{total.toFixed(2)}</strong></div>
@@ -276,6 +340,103 @@ export default function Dashboard() {
                     })}
                 </Row>
             </Container>
+            
+            <br></br>
+            <br></br>
+
+            <div className="product-container">
+                <h2 className="product-list">Product List</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <button className="action-button" onClick={() => handleButtonClick("title")}>
+                                    Title &#8645;
+                                </button>
+                                <div className="sort-arrow" id="title-arrow"></div>
+                            </th>
+                            <th>
+                                <button className="action-button" onClick={() => handleButtonClick("name")}>
+                                    Name &#8645;
+                                </button>
+                                <div className="sort-arrow" id="name-arrow"></div>
+                            </th>
+                            <th>
+                                <button className="action-button" onClick={() => handleButtonClick("type")}>
+                                    Type &#8645;
+                                </button>
+                                <div className="sort-arrow" id="type-arrow"></div>
+                            </th>
+                            <th>
+                                <button className="action-button" onClick={() => handleButtonClick("price")}>
+                                    Price &#8645;
+                                </button>
+                                <div className="sort-arrow" id="price-arrow"></div>
+                            </th>
+                            <th>
+                                <button className="action-button" onClick={() => handleButtonClick("quantity")}>
+                                    Quantity &#8645;
+                                </button>
+                                <div className="sort-arrow" id="quantity-arrow"></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {tableRows.map((product, index) => (
+                        <tr key={index}>
+                            <td>
+                            {editingRow === index ? (
+                                <input
+                                type="text"
+                                />
+                            ) : (
+                                product.title || "N/A"
+                            )}
+                            </td>
+                            <td>
+                            {editingRow === index ? (
+                                <input
+                                type="text"
+                                />
+                            ) : (
+                                product.name || "N/A"
+                            )}
+                            </td>
+                            <td>
+                            {editingRow === index ? (
+                                <input
+                                type="text"
+                                />
+                            ) : (
+                                product.type || "N/A"
+                            )}
+                            </td>
+                            <td>
+                            {editingRow === index ? (
+                                <input
+                                type="text"
+                                />
+                            ) : (
+                                product.price || "N/A"
+                            )}
+                            </td>
+                            <td>
+                            {editingRow === index ? (
+                                <input
+                                type="text"
+                                />
+                            ) : (
+                                product.quantity || "N/A"
+                            )}
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            <br></br>
+            <br></br>
         </>
     ) : (
         // admin
