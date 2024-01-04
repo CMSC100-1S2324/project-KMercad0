@@ -1,93 +1,70 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Button, Container, Row } from "react-bootstrap";
 import "../manage-order.css";
 
 export default function ManageOrder() {
     const _id = localStorage.getItem("_id");
     const type = localStorage.getItem("type");
     const orderStatus = ["Pending", "Completed", "Cancelled"];
+
     const [orders, setOrders] = useState([]);
-
-    useEffect(() => {
-        type !== "admin"
-            ? fetch("http://localhost:3001/get-orders", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ _id: _id }),
-              })
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body);
-                  })
-            : fetch("http://localhost:3001/get-all-orders")
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body);
-                  });
-    }, [_id, type]);
-
-    function updateOrders() {
-        type !== "admin"
-            ? fetch("http://localhost:3001/get-orders", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ _id: _id }),
-              })
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body);
-                  })
-            : fetch("http://localhost:3001/get-all-orders")
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body);
-                  });
-    }
-
-    useEffect(() => {}, [orders]);
-
     const [productNames, setProductNames] = useState([]);
     const [userNames, setUserNames] = useState([]);
 
     useEffect(() => {
+        type !== "admin"
+            ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body.orders);
+                  })
+            : fetch("http://localhost:3001/get-orders")
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body.orders);
+                  });
+    }, [_id, type]);
+
+    useEffect(() => {
         orders.forEach((order) => {
-            fetch("http://localhost:3001/get-order-product", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ _id: order._id }),
-            })
+            fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
                 .then((response) => response.json())
                 .then((body) => {
-                    setProductNames((prevProductNames) => [...prevProductNames, body.title]);
+                    setProductNames((prevProductNames) => [...prevProductNames, body.product.title]);
                 });
 
-            fetch("http://localhost:3001/get-order-user", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ _id: order._id }),
-            })
+            fetch(`http://localhost:3001/get-user-of-order/${order._id}`)
                 .then((response) => response.json())
                 .then((body) => {
-                    setUserNames((prevUserNames) => [...prevUserNames, `${body.fname} ${body.lname}`]);
+                    console.log(body.user.fname);
+                    setUserNames((prevUserNames) => [...prevUserNames, `${body.user.fname} ${body.user.lname}`]);
                 });
         });
     }, [orders]);
 
+    useEffect(() => {}, [orders]);
+
+    function updateOrders() {
+        type !== "admin"
+            ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body.orders);
+                  })
+            : fetch("http://localhost:3001/get-orders")
+                  .then((response) => response.json())
+                  .then((body) => {
+                      setOrders(body.orders);
+                  });
+    }
+
     function changeStatus(orderID, status) {
-        fetch("http://localhost:3001/change-order-status", {
-            method: "POST",
+        fetch(`http://localhost:3001/change-order-status/${orderID}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ _id: orderID, status: status }),
+            body: JSON.stringify({ status: status }),
         })
             .then((response) => response.json())
             .then((body) => {
@@ -146,21 +123,21 @@ export default function ManageOrder() {
                                     <Card.Text>Date: {order.dateOrdered}</Card.Text>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Button
-                                        variant="primary"
-                                        className="approve-button"
-                                        disabled={order.status !== 0}
-                                        onClick={() => changeStatus(order._id, 1)}
-                                    >
-                                        Approve
-                                    </Button>
-                                    <Button
-                                        variant="danger"
-                                        className="disapprove-button"
-                                        disabled={order.status !== 0}
-                                        onClick={() => changeStatus(order._id, 2)}
-                                    >
-                                        Disapprove
-                                    </Button>
+                                            variant="primary"
+                                            className="approve-button"
+                                            disabled={order.status !== 0}
+                                            onClick={() => changeStatus(order._id, 1)}
+                                        >
+                                            Approve
+                                        </Button>
+                                        <Button
+                                            variant="danger"
+                                            className="disapprove-button"
+                                            disabled={order.status !== 0}
+                                            onClick={() => changeStatus(order._id, 2)}
+                                        >
+                                            Disapprove
+                                        </Button>
                                     </div>
                                 </Card.Body>
                             </Card>
