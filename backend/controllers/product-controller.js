@@ -23,11 +23,11 @@ const addProduct = async (req, res) => {
     res.send({ success: true });
 };
 
-const updateQuantity = async (req, res) => {
-    const product = await Product.findOne({ _id: req.body._id });
-    let quantity = product.quantity + req.body.number;
+const changeQuantity = async (req, res) => {
+    const productId = req.params.productID;
+    const product = await Product.findOne({ _id: productId });
 
-    await Product.findOneAndUpdate({ _id: req.body._id }, { quantity: quantity });
+    await Product.findOneAndUpdate({ _id: productId }, { quantity: product.quantity - req.body.quantity });
     res.send({ success: true });
 };
 
@@ -69,6 +69,4 @@ const deleteProduct = async (req, res) => {
     }
 };
 
-
-
-export { getProducts, addProduct, updateQuantity, updateProduct, deleteProduct};
+export { getProducts, addProduct, changeQuantity, updateProduct, deleteProduct };

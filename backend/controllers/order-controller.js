@@ -4,8 +4,14 @@ import OrderModel from "../models/order.js";
 const Order = OrderModel;
 
 const getOrders = async (req, res) => {
-    const orders = await Order.find({ userID: req.body._id });
-    res.send(orders);
+    const orders = await Order.find({});
+    res.send({ orders: orders });
+};
+
+const getUserOrders = async (req, res) => {
+    const userID = req.params.userID;
+    const orders = await Order.find({ userID: userID });
+    res.send({ orders: orders });
 };
 
 const addOrder = async (req, res) => {
@@ -23,31 +29,29 @@ const addOrder = async (req, res) => {
     res.send({ success: true });
 };
 
-const getOrderProduct = async (req, res) => {
-    const product = await Order.findOne({ _id: req.body._id }, "productID")
-        .populate("productID")
-        .then((docs) => docs.productID);
-
-    res.send(product);
-};
-
 const changeOrderStatus = async (req, res) => {
-    await Order.findOneAndUpdate({ _id: req.body._id }, { status: req.body.status });
+    const orderID = req.params.orderID;
+    await Order.findOneAndUpdate({ _id: orderID }, { status: req.body.status });
 
     res.send({ success: true });
 };
 
-const getAllOrders = async (req, res) => {
-    const orders = await Order.find();
-    res.send(orders);
+const getProductOfOrder = async (req, res) => {
+    const orderID = req.params.orderID;
+    const product = await Order.findOne({ _id: orderID }, "productID")
+        .populate("productID")
+        .then((docs) => docs.productID);
+
+    res.send({ product: product });
 };
 
-const getOrderUser = async (req, res) => {
-    const user = await Order.findOne({ _id: req.body._id }, "userID")
+const getUserOfOrder = async (req, res) => {
+    const orderID = req.params.orderID;
+    const user = await Order.findOne({ _id: orderID }, "userID")
         .populate("userID")
         .then((docs) => docs.userID);
 
-    res.send(user);
+    res.send({ user: user });
 };
 
-export { getOrders, addOrder, getOrderProduct, changeOrderStatus, getAllOrders, getOrderUser };
+export { getUserOrders, addOrder, getProductOfOrder, changeOrderStatus, getOrders, getUserOfOrder };
