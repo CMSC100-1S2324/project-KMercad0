@@ -63,9 +63,6 @@ export default function ManageProduct() {
   
     function updateSortArrow(columnName) {
       const arrowElement = document.getElementById(`${columnName}-arrow`);
-      if (arrowElement) {
-        arrowElement.textContent = sortDirections[columnName] === 1 ? " ▲" : " ▼";
-      }
   
       for (const key in sortDirections) {
         if (key !== columnName) {
@@ -199,6 +196,9 @@ export default function ManageProduct() {
 
     return (
         <>
+            <br></br>
+            <br></br>
+
             <div className="product-container">
                 <h2 className="product-list">Product List</h2>
 
@@ -345,11 +345,12 @@ export default function ManageProduct() {
                                 </td>
                         </tr>
                         ))}
-
-
                     </tbody>
                 </table>
             </div>
+
+            <br></br>
+            <br></br>
         </>
     );
 }

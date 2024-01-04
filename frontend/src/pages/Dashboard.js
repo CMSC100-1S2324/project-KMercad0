@@ -54,9 +54,6 @@ export default function Dashboard() {
     
       function updateSortArrow(columnName) {
         const arrowElement = document.getElementById(`${columnName}-arrow`);
-        if (arrowElement) {
-          arrowElement.textContent = sortDirections[columnName] === 1 ? " ▲" : " ▼";
-        }
     
         for (const key in sortDirections) {
           if (key !== columnName) {
