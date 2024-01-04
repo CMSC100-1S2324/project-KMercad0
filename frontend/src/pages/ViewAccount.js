@@ -5,10 +5,10 @@ export default function ViewAccount() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3001/view-all-account")
+        fetch("http://localhost:3001/get-all-user-accounts")
             .then((response) => response.json())
             .then((body) => {
-                setUsers(body);
+                setUsers(body.users);
             });
     });
 

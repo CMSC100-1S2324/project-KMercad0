@@ -52,9 +52,17 @@ const removeAllFromCart = async (req, res) => {
     res.send({ success: true });
 };
 
-const viewAllAccount = async (req, res) => {
+const getAllUserAccounts = async (req, res) => {
     const users = await User.find({ type: "user" });
-    res.send(users);
+    res.send({ users: users });
 };
 
-export { getUsers, addToCart, removeFromCart, getItemsFromCart, getCartTotalPrice, removeAllFromCart, viewAllAccount };
+export {
+    getUsers,
+    addToCart,
+    removeFromCart,
+    getItemsFromCart,
+    getCartTotalPrice,
+    removeAllFromCart,
+    getAllUserAccounts,
+};

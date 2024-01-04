@@ -5,7 +5,7 @@ import {
     getItemsFromCart,
     getCartTotalPrice,
     removeAllFromCart,
-    viewAllAccount,
+    getAllUserAccounts,
 } from "./controllers/user-controller.js";
 import {
     getProducts,
@@ -48,11 +48,11 @@ export default function router(app) {
     app.get("/get-users", getUsers);
     app.get("/get-products", getProducts);
     app.get("/get-orders", getOrders);
+    app.get("/get-all-user-accounts", getAllUserAccounts);
     app.get("/get-user-orders/:userID", getUserOrders);
-    app.get("/get-user-of-order/:orderID", getUserOfOrder);
-    app.get("/view-all-account", viewAllAccount);
     app.get("/get-items-from-cart/:userID", getItemsFromCart);
     app.get("/get-cart-total-price/:userID", getCartTotalPrice);
+    app.get("/get-user-of-order/:orderID", getUserOfOrder);
     app.get("/get-product-of-order/:orderID", getProductOfOrder);
     app.put("/add-to-cart/:userID", addToCart);
     app.put("/change-quantity/:productID", changeQuantity);
