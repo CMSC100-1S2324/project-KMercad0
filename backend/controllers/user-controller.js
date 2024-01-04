@@ -57,11 +57,6 @@ const getAllUserAccounts = async (req, res) => {
     res.send({ users: users });
 };
 
-const getTotalUserAccounts = async (req, res) => {
-    const users = await User.find({ type: "user" });
-    res.send({ total: users.length });
-};
-
 export {
     getUsers,
     addToCart,
@@ -70,5 +65,4 @@ export {
     getCartTotalPrice,
     removeAllFromCart,
     getAllUserAccounts,
-    getTotalUserAccounts,
 };

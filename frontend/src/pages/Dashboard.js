@@ -231,12 +231,18 @@ export default function Dashboard() {
             <br />
             <br />
             <Container className="checkout-container">
-                <div>
-                    Cart Item: <strong>{total.toFixed(2)}</strong>
-                </div>
-                <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
-                    Checkout All
-                </Button>
+                <Col>
+                    <div>Total Price: <strong>{total.toFixed(2)}</strong></div>
+                    <div>Total Quantity: <strong>{cart.length.toFixed(0)}</strong></div>
+                </Col>
+                <Col>
+                    <Button variant="primary" className="checkout-button" onClick={() => checkoutAll()}>
+                        Checkout All
+                    </Button>
+                </Col>
+                <Col></Col>
+                <Col></Col>
+                <Col></Col>
             </Container>
             <Container>
                 <Row>
