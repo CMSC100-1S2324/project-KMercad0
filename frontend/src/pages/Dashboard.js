@@ -363,11 +363,33 @@ export default function Dashboard() {
         </Container>
     ) : (
         // admin
-        <Container>
-            <Container>
+        <Container fluid>
+            <Container fluid className="d-flex align-items-center" style={containerStyle}>
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
                 </div>
+            </Container>
+            <Container fluid>
+                <Row>
+                <Col md="auto">
+                        <h1>
+                            <b>Sales Report</b>
+                        </h1>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid>
+                <Row>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Products Sold</th>
+                                <th>Total Quantity of Sales</th>
+                                <th>Total Sales Income</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </Row>
             </Container>
         </Container>
     );
