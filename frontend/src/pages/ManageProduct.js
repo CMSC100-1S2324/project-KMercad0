@@ -287,7 +287,7 @@ export default function ManageProduct() {
                                             onChange={(e) => handleEditChange(e, "type")}
                                         />
                                     ) : (
-                                        product.type || "N/A"
+                                        product.type === 1 ? "Crop" : "Poultry" || "N/A"
                                     )}
                                 </td>
                                 <td>
