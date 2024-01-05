@@ -169,6 +169,7 @@ export default function ManageOrder() {
                             </Button>
                             <Button
                                 variant="danger"
+                                className="delete-button"
                                 disabled={order.status === 0}
                                 style={{ marginTop: "10px" }}
                                 onClick={() => deleteOrder(order._id)}
