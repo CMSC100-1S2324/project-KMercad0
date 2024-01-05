@@ -169,38 +169,40 @@ export default function ManageOrder() {
                     </Col>
                 </Row>
             </Container>
-            <Row>
-                {orders.map((order, index) => (
-                    <Card key={index} className="d-flex" style={productCardStyle}>
-                        <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
-                        <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
-                            <Card.Title>{productNames[index]}</Card.Title>
-                            <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
-                            <Card.Text>Quantity: {order.quantity}</Card.Text>
-                            <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
-                            <Card.Text>Date: {getDateTime(order.dateOrdered)}</Card.Text>
-                            <Button
-                                variant="primary"
-                                className="cancel-button"
-                                disabled={order.status !== 0}
-                                style={{ marginBottom: "10px" }}
-                                onClick={() => changeStatus(order._id, order.productID, order.quantity, 2)}
-                            >
-                                Cancel Order
-                            </Button>
-                            <Button
-                                variant="danger"
-                                className="delete-button"
-                                disabled={order.status === 0}
-                                style={{ marginTop: "10px" }}
-                                onClick={() => deleteOrder(order._id)}
-                            >
-                                Delete Order
-                            </Button>
-                        </Card.Body>
-                    </Card>
-                ))}
-            </Row>
+            <Container>
+                <Row>
+                    {orders.map((order, index) => (
+                        <Card key={index} className="d-flex" style={productCardStyle}>
+                            <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
+                            <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
+                                <Card.Title>{productNames[index]}</Card.Title>
+                                <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
+                                <Card.Text>Quantity: {order.quantity}</Card.Text>
+                                <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
+                                <Card.Text>Date: {getDateTime(order.dateOrdered)}</Card.Text>
+                                <Button
+                                    variant="primary"
+                                    className="cancel-button"
+                                    disabled={order.status !== 0}
+                                    style={{ marginBottom: "10px" }}
+                                    onClick={() => changeStatus(order._id, order.productID, order.quantity, 2)}
+                                >
+                                    Cancel Order
+                                </Button>
+                                <Button
+                                    variant="danger"
+                                    className="delete-button"
+                                    disabled={order.status === 0}
+                                    style={{ marginTop: "10px" }}
+                                    onClick={() => deleteOrder(order._id)}
+                                >
+                                    Delete Order
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    ))}
+                </Row>
+            </Container>
         </Container>
     ) : (
         <Container>
