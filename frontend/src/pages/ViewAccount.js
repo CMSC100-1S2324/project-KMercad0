@@ -31,7 +31,7 @@ export default function ViewAccount() {
                 <Row>
                     <Col>
                         <h1>
-                            <b>Users</b>
+                            <b>Registered Accounts</b>
                         </h1>
                     </Col>
                 </Row>
