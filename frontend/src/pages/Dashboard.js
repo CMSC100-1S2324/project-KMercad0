@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Container, Row, Col, Dropdown, DropdownButton } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Dropdown, DropdownButton, Table } from "react-bootstrap";
 
 export default function Dashboard() {
     const _id = localStorage.getItem("_id");
@@ -8,29 +8,55 @@ export default function Dashboard() {
 
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [soldOrders, setSoldOrders] = useState([]);
     const [total, setTotal] = useState(0);
     const [direction, setDirection] = useState(1);
     const [sorterName, setSorterName] = useState(null);
+    const [productNames, setProductNames] = useState([]);
     const [productsCopy, setProductsCopy] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3001/get-products")
-            .then((response) => response.json())
-            .then((body) => {
-                setProducts(body.products);
-                setProductsCopy(body.products);
-            });
-        fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
-            .then((response) => response.json())
-            .then((body) => {
-                setCart(body.cart);
-            });
-        fetch(`http://localhost:3001/get-cart-total-price/${_id}`)
-            .then((response) => response.json())
-            .then((body) => {
-                setTotal(body.total);
-            });
-    }, [_id]);
+        if (type !== "admin") {
+            fetch("http://localhost:3001/get-products")
+                .then((response) => response.json())
+                .then((body) => {
+                    setProducts(body.products);
+                    setProductsCopy(body.products);
+                });
+            fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
+                .then((response) => response.json())
+                .then((body) => {
+                    setCart(body.cart);
+                });
+            fetch(`http://localhost:3001/get-cart-total-price/${_id}`)
+                .then((response) => response.json())
+                .then((body) => {
+                    setTotal(body.total);
+                });
+        } else {
+            fetch("http://localhost:3001/get-sold-orders")
+                .then((response) => response.json())
+                .then((body) => {
+                    setSoldOrders(body.orders);
+                });
+            fetch("http://localhost:3001/get-orders")
+                .then((response) => response.json())
+                .then((body) => {
+                    setOrders(body.orders);
+                });
+        }
+    }, [_id, type]);
+
+    useEffect(() => {
+        soldOrders.forEach((order) => {
+            fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
+                .then((response) => response.json())
+                .then((body) => {
+                    setProductNames((prevProductNames) => [...prevProductNames, body.product.title]);
+                });
+        });
+    }, [soldOrders]);
 
     useEffect(() => {}, [products, cart]);
 
@@ -241,7 +267,11 @@ export default function Dashboard() {
     return type === "user" ? (
         // user
         <Container fluid style={{ paddingBottom: "2em" }}>
-            <Container fluid className="d-flex align-items-center" style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}>
+            <Container
+                fluid
+                className="d-flex align-items-center"
+                style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}
+            >
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
                 </div>
@@ -284,7 +314,11 @@ export default function Dashboard() {
                                 <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
                                 <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Stock: {product.quantity}</Card.Text>
-                                <Button variant="primary" onClick={() => addToCart(product._id)} style={{ width: "fit-content" }}>
+                                <Button
+                                    variant="primary"
+                                    onClick={() => addToCart(product._id)}
+                                    style={{ width: "fit-content" }}
+                                >
                                     Add to Cart
                                 </Button>
                             </Card.Body>
@@ -351,7 +385,11 @@ export default function Dashboard() {
                                     <Card.Title>{product.title}</Card.Title>
                                     <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                     <Card.Text>Quantity: {quantity}</Card.Text>
-                                    <Button variant="primary" onClick={() => removeFromCart(product._id)} style={{ width: "fit-content" }}>
+                                    <Button
+                                        variant="primary"
+                                        onClick={() => removeFromCart(product._id)}
+                                        style={{ width: "fit-content" }}
+                                    >
                                         Remove from Cart
                                     </Button>
                                 </Card.Body>
@@ -363,32 +401,86 @@ export default function Dashboard() {
         </Container>
     ) : (
         // admin
-        <Container fluid>
-            <Container fluid className="d-flex align-items-center" fontSize="24px" paddingTop="40px" paddingBottom="40px">
+        <Container fluid style={{ paddingBottom: "2em" }}>
+            <Container
+                fluid
+                className="d-flex align-items-center"
+                style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}
+            >
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
                 </div>
             </Container>
-            <Container fluid>
+            <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
                     <Col md="auto">
-                        <h1>
+                        <h3>
                             <b>Sales Report</b>
-                        </h1>
+                        </h3>
                     </Col>
                 </Row>
             </Container>
-            <Container fluid>
+            <Container>
                 <Row>
-                    <table>
-                        <tbody>
-                            <tr>
+                    <Table bordered hover>
+                        <thead>
+                            <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Products Sold</th>
                                 <th>Total Quantity of Sales</th>
                                 <th>Total Sales Income</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            {soldOrders.map((order, index) => (
+                                <tr key={index}>
+                                    <th>{productNames[index]}</th>
+                                    <th>{order.quantity}</th>
+                                    <th>{order.price}</th>
+                                </tr>
+                            ))}
                         </tbody>
-                    </table>
+                    </Table>
+                </Row>
+            </Container>
+            <hr></hr>
+            <Container fluid style={{ paddingBottom: "1em" }}>
+                <Row>
+                    <Col md="auto">
+                        <h3>
+                            <b>Transaction Summary</b>
+                        </h3>
+                    </Col>
+                    <Col>
+                        <DropdownButton variant="primary" title="Group By" size="24px">
+                            <Dropdown.Item onClick={() => filterSummary(null)}>None</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterSummary("annual")}>Annual</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterSummary("month")}>Month</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterSummary("week")}>Week</Dropdown.Item>
+                        </DropdownButton>
+                    </Col>
+                </Row>
+                <Row>
+                    <Table bordered hover>
+                        <thead>
+                            <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
+                                <th>Transaction ID</th>
+                                <th>Product Name</th>
+                                <th>Order Quantity</th>
+                                <th>Order Status</th>
+                                <th>Order By</th>
+                                <th>Date Ordered</th>
+                            </tr>
+                        </thead>
+                        {/* <tbody>
+                            {soldOrders.map((order, index) => (
+                                <tr key={index}>
+                                    <th>{productNames[index]}</th>
+                                    <th>{order.quantity}</th>
+                                    <th>{order.price}</th>
+                                </tr>
+                            ))}
+                        </tbody> */}
+                    </Table>
                 </Row>
             </Container>
         </Container>

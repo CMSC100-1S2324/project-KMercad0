@@ -24,6 +24,7 @@ import {
     getOrders,
     getUserOfOrder,
     deleteOrder,
+    getSoldOrders,
 } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
@@ -51,6 +52,7 @@ export default function router(app) {
     app.get("/get-users", getUsers);
     app.get("/get-products", getProducts);
     app.get("/get-orders", getOrders);
+    app.get("/get-sold-orders", getSoldOrders);
     app.get("/get-quantity/:productID", getQuantity);
     app.get("/get-all-user-accounts", getAllUserAccounts);
     app.get("/get-user-orders/:userID", getUserOrders);
