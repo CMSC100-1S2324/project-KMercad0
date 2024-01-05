@@ -1,13 +1,34 @@
-import { Outlet, Link } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useNavigate, useLoaderData, Outlet, Link } from "react-router-dom";
+import { Button, Navbar, Nav, Container } from "react-bootstrap";
+import Cookies from "universal-cookie";
 
 export default function Root() {
     const type = localStorage.getItem("type");
+    const [isLoggedIn, setIsLoggedIn] = useState(useLoaderData());
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate("/");
+        }
+    }, [isLoggedIn, navigate]);
+
+    function logout() {
+        const cookies = new Cookies();
+        cookies.remove("authToken");
+
+        localStorage.removeItem("_id");
+        localStorage.removeItem("username");
+        localStorage.removeItem("type");
+
+        setIsLoggedIn(false);
+    }
 
     return type === "user" ? (
         // user
-        <>
-            <Navbar bg="light" expand="lg">
+        <Container fluid>
+            <Navbar bg="light" expand="lg" style={{ fontSize: "20px" }}>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
@@ -20,13 +41,16 @@ export default function Root() {
                         {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
+                <Button onClick={logout} size="lg" style={{ marginLeft: "auto", marginRight: "2rem" }}>
+                    Log Out
+                </Button>
             </Navbar>
             <Outlet />
-        </>
+        </Container>
     ) : (
         // admin
-        <>
-            <Navbar bg="light" expand="lg">
+        <Container fluid>
+            <Navbar bg="light" expand="lg" style={{ fontSize: "20px" }}>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
@@ -45,8 +69,11 @@ export default function Root() {
                         {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
+                <Button onClick={logout} size="lg" style={{ marginLeft: "auto", marginRight: "2rem" }}>
+                    Log Out
+                </Button>
             </Navbar>
             <Outlet />
-        </>
+        </Container>
     );
 }
