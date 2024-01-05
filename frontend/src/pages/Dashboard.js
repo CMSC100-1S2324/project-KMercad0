@@ -251,7 +251,7 @@ export default function Dashboard() {
                 <Row>
                     <Col md="auto">
                         <h1>
-                            <b>Products</b>
+                            <b>Product Listing</b>
                         </h1>
                     </Col>
                     <Col md="auto">

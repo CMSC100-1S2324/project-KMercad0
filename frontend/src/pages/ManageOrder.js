@@ -156,7 +156,7 @@ export default function ManageOrder() {
                 <Row>
                     <Col md="auto">
                         <h1>
-                            <b>Orders</b>
+                            <b>Order Fulfillment</b>
                         </h1>
                     </Col>
                     <Col md="auto">
@@ -210,7 +210,7 @@ export default function ManageOrder() {
                 <Row>
                     <Col md="auto">
                         <h1>
-                            <b>Orders</b>
+                            <b>Order Fulfillment</b>
                         </h1>
                     </Col>
                     <Col md="auto">
