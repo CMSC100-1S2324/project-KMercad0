@@ -28,7 +28,7 @@ export default function Root() {
     return type === "user" ? (
         // user
         <Container fluid>
-            <Navbar bg="light" expand="lg" style={{ fontSize: "20px" }}>
+            <Navbar bg="light" expand="lg" style={{ fontSize: "18px" }}>
                 <Navbar.Brand style={{ marginLeft: "2em" }}>
                     <img
                         src="/bukidmart-logo.png"
@@ -59,7 +59,7 @@ export default function Root() {
     ) : (
         // admin
         <Container fluid>
-            <Navbar bg="light" expand="lg" style={{ fontSize: "20px", marginLeft: "1em" }}>
+            <Navbar bg="light" expand="lg" style={{ fontSize: "18px", marginLeft: "1em" }}>
                 <Navbar.Brand style={{ marginLeft: "2em" }}>
                     <img
                         src="/bukidmart-logo.png"

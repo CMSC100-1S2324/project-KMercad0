@@ -457,10 +457,10 @@ export default function Dashboard() {
                     </Col>
                     <Col>
                         <DropdownButton variant="primary" title="Group By" size="24px">
-                            <Dropdown.Item onClick={() => filterSummary(null)}>None</Dropdown.Item>
+                            {/* <Dropdown.Item onClick={() => filterSummary(null)}>None</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterSummary("annual")}>Annual</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterSummary("month")}>Month</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("week")}>Week</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterSummary("week")}>Week</Dropdown.Item> */}
                         </DropdownButton>
                     </Col>
                 </Row>
