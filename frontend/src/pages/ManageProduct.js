@@ -9,6 +9,7 @@ export default function ManageProduct() {
         type: 1,
         price: 1,
         quantity: 1,
+        imageurl: 1,
     });
     const [editingRow, setEditingRow] = useState(null);
     const [editedValues, setEditedValues] = useState({
@@ -17,6 +18,7 @@ export default function ManageProduct() {
         type: "",
         price: "",
         quantity: "",
+        imageurl: "",
     });
 
     useEffect(() => {
@@ -75,8 +77,9 @@ export default function ManageProduct() {
         const newType = document.getElementById("newType")?.value || "Type";
         const newPrice = document.getElementById("newPrice")?.value || "Price";
         const newQuantity = document.getElementById("newQuantity")?.value || "Quantity";
+        const newImageurl = document.getElementById("newImageUrl")?.value || "imageUrl";
 
-        console.log("New Product Values:", newTitle, newName, newType, newPrice, newQuantity);
+        console.log("New Product Values:", newTitle, newName, newType, newPrice, newQuantity, newImageurl);
 
         // Make a POST request to add the new product
         fetch("http://localhost:3001/add-product", {
@@ -90,6 +93,7 @@ export default function ManageProduct() {
                 type: newType,
                 price: newPrice,
                 quantity: newQuantity,
+                imageurl: newImageurl,
             }),
         })
             .then((response) => response.json())
@@ -110,6 +114,7 @@ export default function ManageProduct() {
             type: product.type || "",
             price: product.price || "",
             quantity: product.quantity || "",
+            imageurl: product.imageurl || "",
         });
     };
 
@@ -131,6 +136,7 @@ export default function ManageProduct() {
                 type: editedValues.type,
                 price: editedValues.price,
                 quantity: editedValues.quantity,
+                imageurl: editedValues.imageurl,
             }),
         })
             .then((response) => {
@@ -205,6 +211,9 @@ export default function ManageProduct() {
                                 <input type="text" id="newType" placeholder="Type" />
                             </td>
                             <td>
+                                <input type="text" id="newImageUrl" placeholder="Image URL" /> 
+                            </td>
+                            <td>
                                 <input type="text" id="newPrice" placeholder="Price" />
                             </td>
                             <td>
@@ -237,6 +246,12 @@ export default function ManageProduct() {
                             <th>
                                 <button className="action-button" onClick={() => handleButtonClick("type")}>
                                     Type &#8645;
+                                </button>
+                                <div className="sort-arrow" id="type-arrow"></div>
+                            </th>
+                            <th>
+                                <button className="action-button" onClick={() => handleButtonClick("price")}>
+                                    Image
                                 </button>
                                 <div className="sort-arrow" id="type-arrow"></div>
                             </th>
@@ -287,7 +302,24 @@ export default function ManageProduct() {
                                             onChange={(e) => handleEditChange(e, "type")}
                                         />
                                     ) : (
-                                        product.type === 1 ? "Crop" : "Poultry" || "N/A"
+                                        product.type || "N/A"
+                                    )}
+                                </td>
+                                <td>
+                                    {editingRow === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedValues.imageurl}
+                                            onChange={(e) => handleEditChange(e, "imageurl")}
+                                        />
+                                    ) : (
+                                        product.imageurl ? (
+                                            <a href={product.imageurl} target="_blank" rel="noopener noreferrer">
+                                                Image
+                                            </a>
+                                        ) : (
+                                            "N/A"
+                                        )
                                     )}
                                 </td>
                                 <td>
