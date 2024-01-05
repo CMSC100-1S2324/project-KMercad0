@@ -10,7 +10,7 @@ export default function Dashboard() {
     const [cart, setCart] = useState([]);
     const [total, setTotal] = useState(0);
     const [direction, setDirection] = useState(1);
-    const [sorterName, setSorterName] = useState("");
+    const [sorterName, setSorterName] = useState(null);
     const [productsCopy, setProductsCopy] = useState([]);
 
     useEffect(() => {
