@@ -14,6 +14,7 @@ import {
     updateProduct,
     deleteProduct,
     getQuantity,
+    restockQuantity,
 } from "./controllers/product-controller.js";
 import {
     getUserOrders,
@@ -59,6 +60,7 @@ export default function router(app) {
     app.get("/get-product-of-order/:orderID", getProductOfOrder);
     app.put("/add-to-cart/:userID", addToCart);
     app.put("/change-quantity/:productID", changeQuantity);
+    app.put("/restock-quantity/:productID", restockQuantity);
     app.put("/change-order-status/:orderID", changeOrderStatus);
     app.put("/update-product/:productId", updateProduct);
     app.delete("/remove-from-cart/:userID", removeFromCart);

@@ -76,4 +76,12 @@ const getQuantity = async (req, res) => {
     res.send({ quantity: product.quantity });
 };
 
-export { getProducts, addProduct, changeQuantity, updateProduct, deleteProduct, getQuantity };
+const restockQuantity = async (req, res) => {
+    const productId = req.params.productID;
+    const product = await Product.findOne({ _id: productId });
+
+    await Product.findOneAndUpdate({ _id: productId }, { quantity: product.quantity + req.body.quantity });
+    res.send({ success: true });
+};
+
+export { getProducts, addProduct, changeQuantity, updateProduct, deleteProduct, getQuantity, restockQuantity };

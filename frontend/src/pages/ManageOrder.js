@@ -61,7 +61,7 @@ export default function ManageOrder() {
                   });
     }
 
-    function changeStatus(orderID, status) {
+    function changeStatus(orderID, productID, quantity, status) {
         fetch(`http://localhost:3001/change-order-status/${orderID}`, {
             method: "PUT",
             headers: {
@@ -72,10 +72,31 @@ export default function ManageOrder() {
             .then((response) => response.json())
             .then((body) => {
                 if (body.success) {
+                    if (status === 2) {
+                        restockQuantity(productID, quantity);
+                    }
                     updateOrders();
                     console.log("Successfully changed status!");
                 } else {
                     console.log("Change status failed");
+                }
+            });
+    }
+
+    function restockQuantity(productID, quantity) {
+        fetch(`http://localhost:3001/restock-quantity/${productID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ quantity: quantity }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                if (body.success) {
+                    console.log("Successfully restock quantity!");
+                } else {
+                    console.log("Restock failed");
                 }
             });
     }
@@ -163,7 +184,7 @@ export default function ManageOrder() {
                                 className="cancel-button"
                                 disabled={order.status !== 0}
                                 style={{ marginBottom: "10px" }}
-                                onClick={() => changeStatus(order._id, 2)}
+                                onClick={() => changeStatus(order._id, order.productID, order.quantity, 2)}
                             >
                                 Cancel Order
                             </Button>
