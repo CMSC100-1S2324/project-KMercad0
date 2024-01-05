@@ -220,7 +220,17 @@ export default function Dashboard() {
     }
 
     const containerStyle = { fontSize: "24px", paddingTop: "40px", paddingBottom: "40px" };
-    const productCardStyle = { width: "15rem", height: "auto", flexDirection: "column" };
+    const productCardStyle = {
+        width: "15rem",
+        height: "auto",
+        flexDirection: "column",
+        lineHeight: "1.2",
+        padding: "20px",
+        margin: "10px",
+        border: "0",
+        borderRadius: "10px",
+        backgroundColor: "#d9d9d9",
+    };
 
     return type === "user" ? (
         // user
@@ -259,8 +269,8 @@ export default function Dashboard() {
                 <Row>
                     {products.map((product, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img variant="top" src="https://picsum.photos/50" />
-                            <Card.Body>
+                            <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/50" />
+                            <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
                                 <Card.Title>{product.title}</Card.Title>
                                 <Card.Text>Description: {product.name}</Card.Text>
                                 <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
@@ -324,8 +334,12 @@ export default function Dashboard() {
 
                         return quantity !== 0 ? (
                             <Card key={index} className="d-flex" style={productCardStyle}>
-                                <Card.Img variant="top" src="https://picsum.photos/30" />
-                                <Card.Body>
+                                <Card.Img
+                                    style={{ borderRadius: "10px" }}
+                                    variant="top"
+                                    src="https://picsum.photos/30"
+                                />
+                                <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
                                     <Card.Title>{product.title}</Card.Title>
                                     <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                     <Card.Text>Quantity: {quantity}</Card.Text>

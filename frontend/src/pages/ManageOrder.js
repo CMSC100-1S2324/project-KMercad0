@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Card, Button, Container, Row } from "react-bootstrap";
-import "../manage-order.css";
 
 export default function ManageOrder() {
     const _id = localStorage.getItem("_id");
@@ -77,74 +76,80 @@ export default function ManageOrder() {
             });
     }
 
+    const productCardStyle = {
+        width: "15rem",
+        height: "auto",
+        flexDirection: "column",
+        lineHeight: "1.2",
+        padding: "20px",
+        margin: "10px",
+        border: "0",
+        borderRadius: "10px",
+        backgroundColor: "#d9d9d9",
+    };
+
     return type === "user" ? (
-        <>
-            <Container>
-                <Row>
-                    {orders.map((order, index) => {
-                        return (
-                            <Card key={index} style={{ width: "18rem" }}>
-                                <Card.Img className="card-img" variant="top" src="https://picsum.photos/20" />
-                                <Card.Body className="card-body">
-                                    <Card.Title>{productNames[index]}</Card.Title>
-                                    <Card.Text>Price: {order.price}</Card.Text>
-                                    <Card.Text>Quantity: {order.quantity}</Card.Text>
-                                    <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
-                                    <Card.Text>Date: {order.dateOrdered}</Card.Text>
+        <Container fluid>
+            <Row>
+                {orders.map((order, index) => (
+                    <Card key={index} className="d-flex" style={productCardStyle}>
+                        <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
+                        <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
+                            <Card.Title>{productNames[index]}</Card.Title>
+                            <Card.Text>Price: {order.price}</Card.Text>
+                            <Card.Text>Quantity: {order.quantity}</Card.Text>
+                            <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
+                            <Card.Text>Date: {order.dateOrdered}</Card.Text>
+                            <Button
+                                variant="primary"
+                                className="cancel-button"
+                                disabled={order.status !== 0}
+                                onClick={() => changeStatus(order._id, 2)}
+                            >
+                                Cancel Order
+                            </Button>
+                        </Card.Body>
+                    </Card>
+                ))}
+            </Row>
+        </Container>
+    ) : (
+        <Container>
+            <Row>
+                {orders.map((order, index) => {
+                    return (
+                        <Card key={index} className="d-flex" style={productCardStyle}>
+                            <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
+                            <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
+                                <Card.Title>{productNames[index]}</Card.Title>
+                                <Card.Text>Price: {order.price}</Card.Text>
+                                <Card.Text>Quantity: {order.quantity}</Card.Text>
+                                <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
+                                <Card.Text>Order by: {userNames[index]}</Card.Text>
+                                <Card.Text>Date: {order.dateOrdered}</Card.Text>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
                                     <Button
                                         variant="primary"
-                                        className="cancel-button"
+                                        className="approve-button"
+                                        disabled={order.status !== 0}
+                                        onClick={() => changeStatus(order._id, 1)}
+                                    >
+                                        Approve
+                                    </Button>
+                                    <Button
+                                        variant="danger"
+                                        className="disapprove-button"
                                         disabled={order.status !== 0}
                                         onClick={() => changeStatus(order._id, 2)}
                                     >
-                                        Cancel Order
+                                        Disapprove
                                     </Button>
-                                </Card.Body>
-                            </Card>
-                        );
-                    })}
-                </Row>
-            </Container>
-        </>
-    ) : (
-        <>
-            <Container>
-                <Row>
-                    {orders.map((order, index) => {
-                        return (
-                            <Card key={index} style={{ width: "18rem" }}>
-                                <Card.Img className="card-img" variant="top" src="https://picsum.photos/20" />
-                                <Card.Body className="card-body">
-                                    <Card.Title>{productNames[index]}</Card.Title>
-                                    <Card.Text>Price: {order.price}</Card.Text>
-                                    <Card.Text>Quantity: {order.quantity}</Card.Text>
-                                    <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
-                                    <Card.Text>Order by: {userNames[index]}</Card.Text>
-                                    <Card.Text>Date: {order.dateOrdered}</Card.Text>
-                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                        <Button
-                                            variant="primary"
-                                            className="approve-button"
-                                            disabled={order.status !== 0}
-                                            onClick={() => changeStatus(order._id, 1)}
-                                        >
-                                            Approve
-                                        </Button>
-                                        <Button
-                                            variant="danger"
-                                            className="disapprove-button"
-                                            disabled={order.status !== 0}
-                                            onClick={() => changeStatus(order._id, 2)}
-                                        >
-                                            Disapprove
-                                        </Button>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        );
-                    })}
-                </Row>
-            </Container>
-        </>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    );
+                })}
+            </Row>
+        </Container>
     );
 }
