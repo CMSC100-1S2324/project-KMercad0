@@ -28,17 +28,13 @@ export default function Root() {
     return type === "user" ? (
         // user
         <Container fluid>
-            <Navbar bg="light" expand="lg" style={{ fontSize: "20px", marginLeft: "1em" }}>
-                <Navbar.Brand>
-                    <img
-                        src="/bukidmart-logo.png"
-                        width="40"
-                        height="40"
-                        className="d-inline-block align-top"
-                    />
+            <Navbar bg="light" expand="lg" style={{ fontSize: "20px" }}>
+                <Navbar.Brand style={{ marginLeft: "2em" }}>
+                    <img src="/bukidmart-logo.png" width="60" height="60" className="d-inline-block align-top" />
                 </Navbar.Brand>
+                <Navbar.Text style={{ fontWeight: "bold", fontSize: "20px" }}>BUKID MART</Navbar.Text>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav" style={{ marginLeft: "3em" }}>
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/dashboard">
                             Dashboard
@@ -49,7 +45,7 @@ export default function Root() {
                         {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
-                <Button onClick={logout} size="lg" style={{ marginRight: "3rem" }}>
+                <Button onClick={logout} size="lg" style={{ marginLeft: "auto", marginRight: "2rem" }}>
                     Log Out
                 </Button>
             </Navbar>
@@ -59,16 +55,12 @@ export default function Root() {
         // admin
         <Container fluid>
             <Navbar bg="light" expand="lg" style={{ fontSize: "20px", marginLeft: "1em" }}>
-                <Navbar.Brand>
-                    <img
-                        src="/bukidmart-logo.png"
-                        width="40"
-                        height="40"
-                        className="d-inline-block align-top"
-                    />
+                <Navbar.Brand style={{ marginLeft: "2em" }}>
+                    <img src="/bukidmart-logo.png" width="60" height="60" className="d-inline-block align-top" />
                 </Navbar.Brand>
+                <Navbar.Text style={{ fontWeight: "bold", fontSize: "20px" }}>BUKID MART</Navbar.Text>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav" style={{ marginLeft: "3em" }}>
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/dashboard">
                             Dashboard
