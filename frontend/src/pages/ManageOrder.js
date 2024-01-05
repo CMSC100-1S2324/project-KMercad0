@@ -10,7 +10,10 @@ export default function ManageOrder() {
     const [productNames, setProductNames] = useState([]);
     const [userNames, setUserNames] = useState([]);
     const [ordersCopy, setOrdersCopy] = useState([]);
-
+    const [productDetails, setProductDetails] = useState([]);
+    console.log(productDetails)
+    const imageUrls = productDetails.map(product => product.imageurl);
+    
     useEffect(() => {
         type !== "admin"
             ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
@@ -43,6 +46,22 @@ export default function ManageOrder() {
         });
     }, [orders]);
 
+    useEffect(() => {
+        const fetchProductDetails = async () => {
+            const productDetailsArray = [];
+    
+            for (const order of orders) {
+                const productResponse = await fetch(`http://localhost:3001/get-product-of-order/${order._id}`);
+                const productBody = await productResponse.json();
+                productDetailsArray.push(productBody.product);
+            }
+    
+            setProductDetails(productDetailsArray);
+        };
+    
+        fetchProductDetails();
+    }, [orders]);
+    
     useEffect(() => {}, [orders]);
 
     function updateOrders() {
@@ -127,7 +146,7 @@ export default function ManageOrder() {
 
     function getDateTime(dateTime) {
         const date = new Date(dateTime);
-        console.log(dateTime);
+        //console.log(dateTime);
 
         const month = date.getMonth() + 1;
         const day = date.getDay();
@@ -172,7 +191,11 @@ export default function ManageOrder() {
                 <Row>
                     {orders.map((order, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
+                            <Card.Img style={{  
+                                width: "100%",       
+                                height: "150px",      
+                                objectFit: "cover", 
+                                borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
                                 <Card.Title>{productNames[index]}</Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
@@ -226,7 +249,11 @@ export default function ManageOrder() {
                 <Row>
                     {orders.map((order, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
+                            <Card.Img style={{  
+                                width: "100%",       
+                                height: "150px",      
+                                objectFit: "cover", 
+                                borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
                                 <Card.Title>{productNames[index]}</Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
