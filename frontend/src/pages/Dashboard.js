@@ -266,6 +266,7 @@ export default function Dashboard() {
                     <Col>
                         <Button
                             variant="primary"
+                            disabled={sorterName === null}
                             onClick={() => changeDirection()}
                             dangerouslySetInnerHTML={{ __html: "&#8645" }}
                             size="lg"
@@ -371,7 +372,7 @@ export default function Dashboard() {
             </Container>
             <Container fluid>
                 <Row>
-                <Col md="auto">
+                    <Col md="auto">
                         <h1>
                             <b>Sales Report</b>
                         </h1>
