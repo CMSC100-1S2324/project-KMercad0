@@ -3,7 +3,6 @@ import { Outlet, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
 
-//comments
 export default function Login(props) {
     //component for login page
     const login = props.login;
@@ -42,7 +41,7 @@ export default function Login(props) {
         padding: "20px",
         margin: "auto",
         width: "50%",
-        height: "60vh",
+        height: "auto",
         color: "green",
         alignItems: "center",
     };
@@ -80,28 +79,27 @@ export default function Login(props) {
     return (
         //return login page
         <div>
-            Header Placement
-            {/* This part creates the entire page view */}
             <div style={backgroundImageStyle}>
                 <Container style={outerContainerStyle}>
                     <Row>
                         <Col xs={12} className="mb-3" style={text}>
-                            <h4>Login to your account</h4>
+                            <h4>Login to your Account</h4>
                         </Col>
                     </Row>
                     <Row>
                         {/* This part holds the solid white part of the page */}
                         <Col xs={12} style={whiteBoxStyle}>
                             <Form>
-                                <Form.Group controlId="l-email">
+                                <Form.Group controlId="l-email" style={{paddingBottom: "10px"}}>
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter your username" />
+                                    <Form.Control type="text" placeholder="Enter your username"/>
                                 </Form.Group>
 
                                 <Form.Group controlId="l-password">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter your password" />
+                                    <Form.Control type="password" placeholder="Enter your password" style={{paddingBottom: "10px"}}/>
                                 </Form.Group>
+
                                 <Button variant="primary" type="submit" style={buttonStyle} onClick={login}>
                                     Sign In
                                 </Button>
@@ -110,8 +108,7 @@ export default function Login(props) {
                     </Row>
                     <Row>
                         <Col xs={12} className="mb-3" style={text}>
-                            <h6>Don't have an account? <Link to={`/sign-up`}>Sign up.</Link></h6>
-                            
+                            <h6>Don't have an account? <Link to={`/sign-up`}>Sign up here!</Link></h6>
                         </Col>
                     </Row>
                 </Container>

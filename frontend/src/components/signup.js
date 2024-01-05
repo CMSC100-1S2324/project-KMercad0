@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Button, Form, Modal} from 'react-bootstrap';
+import { Container, Button, Form, Row, Col, Modal} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {  //component for signup page
-  
   const navigate = useNavigate()
   const [isValidPassword, setValidPassword] = useState(false);
   const [isValidEmail, setValidEmail] = useState(false);
@@ -104,66 +102,81 @@ export default function SignUp() {  //component for signup page
     }
   }
 
-    const imageFolder = '../backgrounds/'; //folder where background images are stored
-    const backgroundImages = ['bg1.png', 'bg2.png', 'bg3.png']; //array of background images
+  const imageFolder = '../backgrounds/'; //folder where background images are stored
+  const backgroundImages = ['bg1.png', 'bg2.png', 'bg3.png']; //array of background images
 
-    const [currentBackground, setCurrentBackground] = useState(0); //state variable to keep track of current background image
+  const [currentBackground, setCurrentBackground] = useState(0); //state variable to keep track of current background image
 
-    useEffect(() => { //useEffect hook to change background image every 5 seconds
-        const intervalId = setInterval(() => { //setInterval function to change background image every 5 seconds
-            setCurrentBackground((prevBackground) => (prevBackground + 1) % backgroundImages.length); //change background image
-        }, 5000);
+  useEffect(() => { //useEffect hook to change background image every 5 seconds
+      const intervalId = setInterval(() => { //setInterval function to change background image every 5 seconds
+          setCurrentBackground((prevBackground) => (prevBackground + 1) % backgroundImages.length); //change background image
+      }, 5000);
 
-        return () => clearInterval(intervalId); //clear interval when component unmounts
-    }, []);
+      return () => clearInterval(intervalId); //clear interval when component unmounts
+  }, []);
 
-    const backgroundImageStyle = { //style for background image
-        background: `url(${imageFolder}${backgroundImages[currentBackground]}) no-repeat center center fixed`,
-        backgroundSize: 'cover',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    };
-
+  const backgroundImageStyle = { //style for background image
+      background: `url(${imageFolder}${backgroundImages[currentBackground]}) no-repeat center center fixed`,
+      backgroundSize: 'cover',
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+  };
     
-    const informationContainerStyle = { //style for outer container
-        borderRadius: '15px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        background: 'rgba(255, 255, 255, 0.9)',
-        padding: '20px',
-        margin: 'auto',
-        width: '50%',
-        height: '80vh',
-        color: 'green',
-        alignItems: 'center',
-    };
+  const outerContainerStyle = { //style for outer container
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      background: 'rgba(255, 255, 255, 0.8)',
+      padding: '20px 0 50px 0',
+      margin: 'auto',
+      width: '50%',
+      height: 'auto',
+      color: 'green',
+      alignItems: 'center',
+  };
 
+  const whiteBoxStyle = { //style for white box
+    background: "white",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    width: "80%",
+    height: "auto",
+    margin: "auto",
+    paddingBottom: "8px"
+  };
     
-    const text = { //style for text
-        textAlign: 'center', 
-        marginTop: '5px',
-        color: '085025',
-    };
+  const text = { //style for text
+      textAlign: 'center', 
+      marginTop: '5px',
+      color: '085025',
+  };
 
-    const buttonStyle = { //style for button
-        backgroundColor: 'green',
-        borderColor: 'green',
-        color: 'white',
-        position: 'relative',
-        marginTop: '3%',
-        marginBottom: '3%' ,
-        left: '50%',
-        transform: 'translateX(-60%)',
-    };
+  const buttonStyle = { //style for button
+      backgroundColor: 'green',
+      borderColor: 'green',
+      color: 'white',
+      position: 'relative',
+      marginTop: '3%',
+      marginBottom: '3%' ,
+      left: '45%',
+      transform: 'translateX(-60%)',
+  };
 
-
-    return ( //return signup page
-        <div style={backgroundImageStyle}> {/* background image */}
-        <Container style={informationContainerStyle}>
-          <h4 className="mt-5 mb-4" style ={text}>Create an Account</h4>
-          <Form>
-            <Form.Group controlId="firstName">
+  return ( //return signup page
+    <div style={backgroundImageStyle}> {/* background image */}
+      <Container style={outerContainerStyle}>
+        <Row>
+          <Col xs={12}>
+            <h4 className="mt-3 mb-4" style ={text}>Create an Account</h4>
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col xs={12} style={whiteBoxStyle}>
+            <Form>
+            <Form.Group controlId="firstName" style={{paddingBottom: "10px"}}>
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
@@ -175,7 +188,7 @@ export default function SignUp() {  //component for signup page
               />
             </Form.Group>
     
-            <Form.Group controlId="middleName">
+            <Form.Group controlId="middleName" style={{paddingBottom: "10px"}}>
               <Form.Label>Middle Name</Form.Label>
               <Form.Control
                   type="text"
@@ -187,7 +200,7 @@ export default function SignUp() {  //component for signup page
               />
             </Form.Group>
     
-            <Form.Group controlId="lastName">
+            <Form.Group controlId="lastName" style={{paddingBottom: "10px"}}>
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                   type="text"
@@ -199,7 +212,7 @@ export default function SignUp() {  //component for signup page
               />
             </Form.Group>
     
-            <Form.Group controlId="email">
+            <Form.Group controlId="email" style={{paddingBottom: "10px"}}>
               <Form.Label>Email</Form.Label>
               <Form.Control
                   type="text"
@@ -211,7 +224,7 @@ export default function SignUp() {  //component for signup page
               />
             </Form.Group>
     
-            <Form.Group controlId="password">
+            <Form.Group controlId="password" style={{paddingBottom: "10px"}}>
               <Form.Label>Password</Form.Label>
               <Form.Control
                   type="password"
@@ -223,8 +236,6 @@ export default function SignUp() {  //component for signup page
               />
             </Form.Group>
 
-          
-
             <Button variant="primary" type="button" onClick={signUp} style={buttonStyle}>
               Sign Up
             </Button>
@@ -233,44 +244,41 @@ export default function SignUp() {  //component for signup page
               Back
             </Button>
           </Form>
-        </Container>
+          </Col>
+        </Row>
+      </Container>
 
+        {isValidPassword && (
+        <Modal show={isValidPassword} onHide={togglePassword}>
+          <Modal.Header closeButton>
+            <Modal.Title>Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Password must have at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handlePassword} className="w-100 mb-4">
+              Try Again
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
 
-          {isValidPassword && (
-          <Modal show={isValidPassword} onHide={togglePassword}>
-            <Modal.Header closeButton>
-              <Modal.Title>Warning</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Password must have at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" onClick={handlePassword} className="w-100 mb-4">
-                Try Again
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-
-        {isValidEmail && (
-          <Modal show={isValidEmail} onHide={toggleEmail}>
-            <Modal.Header closeButton>
-              <Modal.Title>Warning</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Please enter a valid email address
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" onClick={handleEmail} className="w-100 mb-4">
-                Try Again
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-        </div>
-
-
-        
-
-      );
-    }
+      {isValidEmail && (
+        <Modal show={isValidEmail} onHide={toggleEmail}>
+          <Modal.Header closeButton>
+            <Modal.Title>Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Please enter a valid email address
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handleEmail} className="w-100 mb-4">
+              Try Again
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+    </div>
+  );
+}

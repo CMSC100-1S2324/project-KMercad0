@@ -59,7 +59,7 @@ export default function Root() {
     ) : (
         // admin
         <Container fluid>
-            <Navbar bg="light" expand="lg" style={{ fontSize: "18px", marginLeft: "1em" }}>
+            <Navbar bg="light" expand="lg" style={{ fontSize: "17px", marginLeft: "1em" }}>
                 <Navbar.Brand style={{ marginLeft: "2em" }}>
                     <img
                         src="/bukidmart-logo.png"
@@ -87,7 +87,7 @@ export default function Root() {
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <Button onClick={logout} size="24px" style={{ marginLeft: "auto", marginRight: "2rem" }}>
+                <Button onClick={logout} size="24px" style={{ marginRight: "2rem" }}>
                     Log Out
                 </Button>
             </Navbar>

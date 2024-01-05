@@ -313,7 +313,7 @@ export default function Dashboard() {
                                 objectFit: "cover", 
                                 borderRadius: "10px" }} variant="top" src={product.imageurl} />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
-                                <Card.Title>{product.title}</Card.Title>
+                                <Card.Title><strong>{product.title}</strong></Card.Title>
                                 <Card.Text>Description: {product.name}</Card.Text>
                                 <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
                                 <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
@@ -386,7 +386,7 @@ export default function Dashboard() {
                                 objectFit: "cover", 
                                 borderRadius: "10px" }} variant="top" src={product.imageurl} />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
-                                <Card.Title>{product.title}</Card.Title>
+                                <Card.Title><strong>{product.title}</strong></Card.Title>
                                 <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                 <Card.Text>Quantity: {quantity}</Card.Text>
                                 <Button
