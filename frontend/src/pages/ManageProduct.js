@@ -59,11 +59,6 @@ export default function ManageProduct() {
     };
 
     function updateSortArrow(columnName) {
-        const arrowElement = document.getElementById(`${columnName}-arrow`);
-        if (arrowElement) {
-            arrowElement.textContent = sortDirections[columnName] === 1 ? " ▲" : " ▼";
-        }
-
         for (const key in sortDirections) {
             if (key !== columnName) {
                 const otherArrowElement = document.getElementById(`${key}-arrow`);
