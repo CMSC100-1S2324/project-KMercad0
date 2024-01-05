@@ -51,11 +51,13 @@ export default function ManageOrder() {
                   .then((response) => response.json())
                   .then((body) => {
                       setOrders(body.orders);
+                      setOrdersCopy(body.orders);
                   })
             : fetch("http://localhost:3001/get-orders")
                   .then((response) => response.json())
                   .then((body) => {
                       setOrders(body.orders);
+                      setOrdersCopy(body.orders);
                   });
     }
 
@@ -91,15 +93,27 @@ export default function ManageOrder() {
             });
     }
 
-    function filterOrders(status) {
+    function filterOrders(filterName) {
         const unfilteredOrders = [...ordersCopy];
 
-        if (status !== null) {
-            let filteredOrders = unfilteredOrders.filter((item) => item.status === status);
+        if (filterName !== null) {
+            let filteredOrders = unfilteredOrders.filter((item) => item.status === filterName);
             setOrders(filteredOrders);
             return;
         }
         setOrders(unfilteredOrders);
+    }
+
+    function getDateTime(dateTime) {
+        const date = new Date(dateTime);
+        console.log(dateTime);
+
+        const month = date.getMonth() + 1;
+        const day = date.getDay();
+        const year = date.getFullYear();
+        const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+        return `${month}/${day}/${year} ${time}`;
     }
 
     const containerStyle = { fontSize: "24px", paddingTop: "40px", paddingBottom: "40px" };
@@ -143,7 +157,7 @@ export default function ManageOrder() {
                             <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
                             <Card.Text>Quantity: {order.quantity}</Card.Text>
                             <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
-                            <Card.Text>Date: {order.dateOrdered}</Card.Text>
+                            <Card.Text>Date: {getDateTime(order.dateOrdered)}</Card.Text>
                             <Button
                                 variant="primary"
                                 className="cancel-button"
@@ -155,6 +169,7 @@ export default function ManageOrder() {
                             </Button>
                             <Button
                                 variant="danger"
+                                className="delete-button"
                                 disabled={order.status === 0}
                                 style={{ marginTop: "10px" }}
                                 onClick={() => deleteOrder(order._id)}

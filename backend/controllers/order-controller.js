@@ -57,7 +57,7 @@ const getUserOfOrder = async (req, res) => {
 const deleteOrder = async (req, res) => {
     const orderID = req.params.orderID;
 
-    const product = await Order.findOneAndDelete({ _id: orderID });
+    await Order.findOneAndDelete({ _id: orderID });
     res.send({ success: true });
 };
 
