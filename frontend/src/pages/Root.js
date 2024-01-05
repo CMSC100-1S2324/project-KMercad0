@@ -30,7 +30,13 @@ export default function Root() {
         <Container fluid>
             <Navbar bg="light" expand="lg" style={{ fontSize: "20px" }}>
                 <Navbar.Brand style={{ marginLeft: "2em" }}>
-                    <img src="/bukidmart-logo.png" width="60" height="60" className="d-inline-block align-top" />
+                    <img
+                        src="/bukidmart-logo.png"
+                        alt="logo"
+                        width="60"
+                        height="60"
+                        className="d-inline-block align-top"
+                    />
                 </Navbar.Brand>
                 <Navbar.Text style={{ fontWeight: "bold", fontSize: "20px" }}>BUKID MART</Navbar.Text>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -56,7 +62,13 @@ export default function Root() {
         <Container fluid>
             <Navbar bg="light" expand="lg" style={{ fontSize: "20px", marginLeft: "1em" }}>
                 <Navbar.Brand style={{ marginLeft: "2em" }}>
-                    <img src="/bukidmart-logo.png" width="60" height="60" className="d-inline-block align-top" />
+                    <img
+                        src="/bukidmart-logo.png"
+                        alt="logo"
+                        width="60"
+                        height="60"
+                        className="d-inline-block align-top"
+                    />
                 </Navbar.Brand>
                 <Navbar.Text style={{ fontWeight: "bold", fontSize: "20px" }}>BUKID MART</Navbar.Text>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
