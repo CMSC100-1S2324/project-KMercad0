@@ -21,62 +21,58 @@ export default function ManageProduct() {
 
     useEffect(() => {
         fetch("http://localhost:3001/get-products")
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            setTableRows(data);
-        })
-        .catch((error) => console.error('Error fetching data:', error));
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.products);
+                setTableRows(data.products);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
     }, []);
-    
+
     function handleEditChange(e, columnName) {
         const value = e.target.value;
-    
+
         setEditedValues((prevValues) => ({
             ...prevValues,
             [columnName]: value,
         }));
     }
-    
-      
-      
-    
+
     const handleButtonClick = (columnName) => {
-      const updatedRows = [...tableRows];
-  
-      updatedRows.sort((a, b) => {
-        const aValue = (a[columnName] || "").toString().trim();
-        const bValue = (b[columnName] || "").toString().trim();
-  
-        if (columnName === "title" || columnName === "name") {
-          return sortDirections[columnName] * aValue.localeCompare(bValue);
-        } else {
-          const numericA = parseFloat(aValue) || 0;
-          const numericB = parseFloat(bValue) || 0;
-          return sortDirections[columnName] * (numericA - numericB);
-        }
-      });
-  
-      setSortDirections({ ...sortDirections, [columnName]: -sortDirections[columnName] });
-      setTableRows(updatedRows);
+        const updatedRows = [...tableRows];
+
+        updatedRows.sort((a, b) => {
+            const aValue = (a[columnName] || "").toString().trim();
+            const bValue = (b[columnName] || "").toString().trim();
+
+            if (columnName === "title" || columnName === "name") {
+                return sortDirections[columnName] * aValue.localeCompare(bValue);
+            } else {
+                const numericA = parseFloat(aValue) || 0;
+                const numericB = parseFloat(bValue) || 0;
+                return sortDirections[columnName] * (numericA - numericB);
+            }
+        });
+
+        setSortDirections({ ...sortDirections, [columnName]: -sortDirections[columnName] });
+        setTableRows(updatedRows);
     };
-  
+
     function updateSortArrow(columnName) {
-      const arrowElement = document.getElementById(`${columnName}-arrow`);
-      if (arrowElement) {
-        arrowElement.textContent = sortDirections[columnName] === 1 ? " ▲" : " ▼";
-      }
-  
-      for (const key in sortDirections) {
-        if (key !== columnName) {
-          const otherArrowElement = document.getElementById(`${key}-arrow`);
-          if (otherArrowElement) {
-            otherArrowElement.textContent = "";
-          }
+        const arrowElement = document.getElementById(`${columnName}-arrow`);
+        if (arrowElement) {
+            arrowElement.textContent = sortDirections[columnName] === 1 ? " ▲" : " ▼";
         }
-      }
+
+        for (const key in sortDirections) {
+            if (key !== columnName) {
+                const otherArrowElement = document.getElementById(`${key}-arrow`);
+                if (otherArrowElement) {
+                    otherArrowElement.textContent = "";
+                }
+            }
+        }
     }
-  
 
     function addNewProduct() {
         const newTitle = document.getElementById("newTitle")?.value || "Title";
@@ -91,25 +87,25 @@ export default function ManageProduct() {
         fetch("http://localhost:3001/add-product", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              title: newTitle,
-              name: newName,
-              type: newType,
-              price: newPrice,
-              quantity: newQuantity,
+                title: newTitle,
+                name: newName,
+                type: newType,
+                price: newPrice,
+                quantity: newQuantity,
             }),
-          })
+        })
             .then((response) => response.json())
             .then((data) => {
-              console.log("New product added:", data);
-      
-              window.location.reload();
+                console.log("New product added:", data);
+
+                window.location.reload();
             })
             .catch((error) => console.error("Error adding new product:", error));
-        }
-    
+    }
+
     const handleEditClick = (index) => {
         setEditingRow(index);
         const product = tableRows[index];
@@ -127,7 +123,7 @@ export default function ManageProduct() {
         const updatedRows = [...tableRows];
         updatedRows[editingRow] = { ...editedProduct, ...editedValues };
         setTableRows(updatedRows);
-    
+
         // Make a PUT request to update the product
         fetch(`http://localhost:3001/update-product/${editedProduct._id}`, {
             method: "PUT",
@@ -159,8 +155,7 @@ export default function ManageProduct() {
                 setTableRows(tableRows);
             });
     };
-    
-    
+
     const handleDeleteClick = (productId) => {
         // Make a DELETE request to remove the product
         fetch(`http://localhost:3001/delete-product/${productId}`, {
@@ -186,7 +181,7 @@ export default function ManageProduct() {
             })
             .catch((error) => console.error("Error deleting product:", error));
     };
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         handleButtonClick("title");
@@ -265,70 +260,76 @@ export default function ManageProduct() {
                         </tr>
                     </thead>
                     <tbody>
-                    {tableRows.map((product, index) => (
-                        <tr key={index}>
-                            <td>
-                            {editingRow === index ? (
-                                <input
-                                type="text"
-                                value={editedValues.title}
-                                onChange={(e) => handleEditChange(e, "title")}
-                                />
-                            ) : (
-                                product.title || "N/A"
-                            )}
-                            </td>
-                            <td>
-                            {editingRow === index ? (
-                                <input
-                                type="text"
-                                value={editedValues.name}
-                                onChange={(e) => handleEditChange(e, "name")}
-                                />
-                            ) : (
-                                product.name || "N/A"
-                            )}
-                            </td>
-                            <td>
-                            {editingRow === index ? (
-                                <input
-                                type="text"
-                                value={editedValues.type}
-                                onChange={(e) => handleEditChange(e, "type")}
-                                />
-                            ) : (
-                                product.type || "N/A"
-                            )}
-                            </td>
-                            <td>
-                            {editingRow === index ? (
-                                <input
-                                type="text"
-                                value={editedValues.price}
-                                onChange={(e) => handleEditChange(e, "price")}
-                                />
-                            ) : (
-                                product.price || "N/A"
-                            )}
-                            </td>
-                            <td>
-                            {editingRow === index ? (
-                                <input
-                                type="text"
-                                value={editedValues.quantity}
-                                onChange={(e) => handleEditChange(e, "quantity")}
-                                />
-                            ) : (
-                                product.quantity || "N/A"
-                            )}
-                            </td>
-                            <td>
+                        {tableRows.map((product, index) => (
+                            <tr key={index}>
+                                <td>
+                                    {editingRow === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedValues.title}
+                                            onChange={(e) => handleEditChange(e, "title")}
+                                        />
+                                    ) : (
+                                        product.title || "N/A"
+                                    )}
+                                </td>
+                                <td>
+                                    {editingRow === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedValues.name}
+                                            onChange={(e) => handleEditChange(e, "name")}
+                                        />
+                                    ) : (
+                                        product.name || "N/A"
+                                    )}
+                                </td>
+                                <td>
+                                    {editingRow === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedValues.type}
+                                            onChange={(e) => handleEditChange(e, "type")}
+                                        />
+                                    ) : (
+                                        product.type || "N/A"
+                                    )}
+                                </td>
+                                <td>
+                                    {editingRow === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedValues.price}
+                                            onChange={(e) => handleEditChange(e, "price")}
+                                        />
+                                    ) : (
+                                        product.price || "N/A"
+                                    )}
+                                </td>
+                                <td>
+                                    {editingRow === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedValues.quantity}
+                                            onChange={(e) => handleEditChange(e, "quantity")}
+                                        />
+                                    ) : (
+                                        product.quantity || "N/A"
+                                    )}
+                                </td>
+                                <td>
                                     {editingRow === index ? (
                                         <>
-                                            <button className="action-button edit-button" onClick={() => handleSaveClick(product)}>
+                                            <button
+                                                className="action-button edit-button"
+                                                onClick={() => handleSaveClick(product)}
+                                            >
                                                 Save
                                             </button>
-                                            <button className="action-button delete-button" onClick={() => handleDeleteClick(product._id)}>
+                                            <button
+                                                className="action-button delete-button"
+                                                onClick={() => handleDeleteClick(product._id)}
+                                            >
                                                 Delete
                                             </button>
                                         </>
@@ -337,16 +338,17 @@ export default function ManageProduct() {
                                             <button className="action-button" onClick={() => handleEditClick(index)}>
                                                 Edit
                                             </button>
-                                            <button className="action-button" onClick={() => handleDeleteClick(product._id)}>
+                                            <button
+                                                className="action-button"
+                                                onClick={() => handleDeleteClick(product._id)}
+                                            >
                                                 Delete
                                             </button>
                                         </>
                                     )}
                                 </td>
-                        </tr>
+                            </tr>
                         ))}
-
-
                     </tbody>
                 </table>
             </div>

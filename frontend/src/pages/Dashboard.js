@@ -16,7 +16,7 @@ export default function Dashboard() {
         fetch("http://localhost:3001/get-products")
             .then((response) => response.json())
             .then((body) => {
-                setProducts(body);
+                setProducts(body.products);
             });
         fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
             .then((response) => response.json())
@@ -36,7 +36,7 @@ export default function Dashboard() {
         fetch("http://localhost:3001/get-products")
             .then((response) => response.json())
             .then((body) => {
-                setProducts(body);
+                setProducts(body.products);
             });
     }
 
