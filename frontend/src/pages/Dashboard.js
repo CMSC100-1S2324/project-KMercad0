@@ -11,12 +11,14 @@ export default function Dashboard() {
     const [total, setTotal] = useState(0);
     const [direction, setDirection] = useState(1);
     const [sorterName, setSorterName] = useState("");
+    const [productsCopy, setProductsCopy] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:3001/get-products")
             .then((response) => response.json())
             .then((body) => {
                 setProducts(body.products);
+                setProductsCopy(body.products);
             });
         fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
             .then((response) => response.json())
@@ -190,23 +192,28 @@ export default function Dashboard() {
     }
 
     function sortProducts(sorterName, direction) {
-        const sortedProducts = [...products];
+        const unsortedProducts = [...productsCopy];
 
-        sortedProducts.sort((a, b) => {
-            const aValue = a[sorterName].toString().trim();
-            const bValue = b[sorterName].toString().trim();
+        if (sorterName !== null) {
+            let sortedProducts = unsortedProducts.sort((a, b) => {
+                const aValue = a[sorterName].toString().trim();
+                const bValue = b[sorterName].toString().trim();
 
-            if (sorterName === "title" || sorterName === "name") {
-                return direction * aValue.localeCompare(bValue);
-            } else {
-                const numericA = parseFloat(aValue);
-                const numericB = parseFloat(bValue);
-                return direction * (numericA - numericB);
-            }
-        });
+                if (sorterName === "title" || sorterName === "name") {
+                    return direction * aValue.localeCompare(bValue);
+                } else {
+                    const numericA = parseFloat(aValue);
+                    const numericB = parseFloat(bValue);
+                    return direction * (numericA - numericB);
+                }
+            });
 
+            setSorterName(sorterName);
+            setProducts(sortedProducts);
+            return;
+        }
         setSorterName(sorterName);
-        setProducts(sortedProducts);
+        setProducts(unsortedProducts);
     }
 
     function changeDirection() {
@@ -225,7 +232,7 @@ export default function Dashboard() {
         height: "auto",
         flexDirection: "column",
         lineHeight: "1.2",
-        padding: "20px",
+        padding: "15px",
         margin: "10px",
         border: "0",
         borderRadius: "10px",
@@ -249,6 +256,7 @@ export default function Dashboard() {
                     </Col>
                     <Col md="auto">
                         <DropdownButton variant="primary" title="Sort By" size="lg">
+                            <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("title", direction)}>Title</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("type", direction)}>Type</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("price", direction)}>Price</Dropdown.Item>
@@ -274,7 +282,7 @@ export default function Dashboard() {
                                 <Card.Title>{product.title}</Card.Title>
                                 <Card.Text>Description: {product.name}</Card.Text>
                                 <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
-                                <Card.Text>Price: {product.price}</Card.Text>
+                                <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Stock: {product.quantity}</Card.Text>
                                 <Button variant="primary" onClick={() => addToCart(product._id)}>
                                     Add to Cart
