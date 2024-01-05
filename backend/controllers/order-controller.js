@@ -54,4 +54,11 @@ const getUserOfOrder = async (req, res) => {
     res.send({ user: user });
 };
 
-export { getUserOrders, addOrder, getProductOfOrder, changeOrderStatus, getOrders, getUserOfOrder };
+const deleteOrder = async (req, res) => {
+    const orderID = req.params.orderID;
+
+    const product = await Order.findOneAndDelete({ _id: orderID });
+    res.send({ success: true });
+};
+
+export { getUserOrders, addOrder, getProductOfOrder, changeOrderStatus, getOrders, getUserOfOrder, deleteOrder };

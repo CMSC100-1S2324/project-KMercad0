@@ -5,7 +5,7 @@ import {
     getItemsFromCart,
     getCartTotalPrice,
     removeAllFromCart,
-    getAllUserAccounts
+    getAllUserAccounts,
 } from "./controllers/user-controller.js";
 import {
     getProducts,
@@ -22,6 +22,7 @@ import {
     changeOrderStatus,
     getOrders,
     getUserOfOrder,
+    deleteOrder,
 } from "./controllers/order-controller.js";
 import { signUp, login, checkIfLoggedIn } from "./controllers/auth-controller.js";
 
@@ -63,4 +64,5 @@ export default function router(app) {
     app.delete("/remove-from-cart/:userID", removeFromCart);
     app.delete("/remove-all-from-cart/:userID", removeAllFromCart);
     app.delete("/delete-product/:productId", deleteProduct);
+    app.delete("/delete-order/:orderID", deleteOrder);
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Container, Row } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Dropdown, DropdownButton } from "react-bootstrap";
 
 export default function ManageOrder() {
     const _id = localStorage.getItem("_id");
@@ -9,6 +9,7 @@ export default function ManageOrder() {
     const [orders, setOrders] = useState([]);
     const [productNames, setProductNames] = useState([]);
     const [userNames, setUserNames] = useState([]);
+    const [ordersCopy, setOrdersCopy] = useState([]);
 
     useEffect(() => {
         type !== "admin"
@@ -16,11 +17,13 @@ export default function ManageOrder() {
                   .then((response) => response.json())
                   .then((body) => {
                       setOrders(body.orders);
+                      setOrdersCopy(body.orders);
                   })
             : fetch("http://localhost:3001/get-orders")
                   .then((response) => response.json())
                   .then((body) => {
                       setOrders(body.orders);
+                      setOrdersCopy(body.orders);
                   });
     }, [_id, type]);
 
@@ -88,6 +91,18 @@ export default function ManageOrder() {
             });
     }
 
+    function filterOrders(status) {
+        const unfilteredOrders = [...ordersCopy];
+
+        if (status !== null) {
+            let filteredOrders = unfilteredOrders.filter((item) => item.status === status);
+            setOrders(filteredOrders);
+            return;
+        }
+        setOrders(unfilteredOrders);
+    }
+
+    const containerStyle = { fontSize: "24px", paddingTop: "40px", paddingBottom: "40px" };
     const productCardStyle = {
         width: "15rem",
         height: "auto",
@@ -102,13 +117,30 @@ export default function ManageOrder() {
 
     return type === "user" ? (
         <Container fluid>
+            <Container fluid style={containerStyle}>
+                <Row>
+                    <Col md="auto">
+                        <h1>
+                            <b>Orders</b>
+                        </h1>
+                    </Col>
+                    <Col md="auto">
+                        <DropdownButton variant="primary" title="Filter By" size="lg">
+                            <Dropdown.Item onClick={() => filterOrders(null)}>All</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterOrders(0)}>Pending</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterOrders(1)}>Completed</Dropdown.Item>
+                            <Dropdown.Item onClick={() => filterOrders(2)}>Cancelled</Dropdown.Item>
+                        </DropdownButton>
+                    </Col>
+                </Row>
+            </Container>
             <Row>
                 {orders.map((order, index) => (
                     <Card key={index} className="d-flex" style={productCardStyle}>
                         <Card.Img style={{ borderRadius: "10px" }} variant="top" src="https://picsum.photos/20" />
                         <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
                             <Card.Title>{productNames[index]}</Card.Title>
-                            <Card.Text>Price: {order.price}</Card.Text>
+                            <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
                             <Card.Text>Quantity: {order.quantity}</Card.Text>
                             <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
                             <Card.Text>Date: {order.dateOrdered}</Card.Text>
@@ -116,6 +148,7 @@ export default function ManageOrder() {
                                 variant="primary"
                                 className="cancel-button"
                                 disabled={order.status !== 0}
+                                style={{ marginBottom: "10px" }}
                                 onClick={() => changeStatus(order._id, 2)}
                             >
                                 Cancel Order
