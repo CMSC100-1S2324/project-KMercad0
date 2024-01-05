@@ -35,7 +35,6 @@ export default function ManageOrder() {
             fetch(`http://localhost:3001/get-user-of-order/${order._id}`)
                 .then((response) => response.json())
                 .then((body) => {
-                    console.log(body.user.fname);
                     setUserNames((prevUserNames) => [...prevUserNames, `${body.user.fname} ${body.user.lname}`]);
                 });
         });
@@ -76,12 +75,25 @@ export default function ManageOrder() {
             });
     }
 
+    function deleteOrder(orderID) {
+        fetch(`http://localhost:3001/delete-order/${orderID}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                updateOrders();
+            });
+    }
+
     const productCardStyle = {
         width: "15rem",
         height: "auto",
         flexDirection: "column",
         lineHeight: "1.2",
-        padding: "20px",
+        padding: "15px",
         margin: "10px",
         border: "0",
         borderRadius: "10px",
@@ -107,6 +119,14 @@ export default function ManageOrder() {
                                 onClick={() => changeStatus(order._id, 2)}
                             >
                                 Cancel Order
+                            </Button>
+                            <Button
+                                variant="danger"
+                                disabled={order.status === 0}
+                                style={{ marginTop: "10px" }}
+                                onClick={() => deleteOrder(order._id)}
+                            >
+                                Delete Order
                             </Button>
                         </Card.Body>
                     </Card>
