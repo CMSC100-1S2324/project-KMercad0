@@ -48,10 +48,9 @@ export default function Root() {
                         <Nav.Link as={Link} to="/manage-order">
                             Manage Orders
                         </Nav.Link>
-                        {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
-                <Button onClick={logout} size="lg" style={{ marginLeft: "auto", marginRight: "2rem" }}>
+                <Button onClick={logout} size="24px" style={{ marginLeft: "auto", marginRight: "2rem" }}>
                     Log Out
                 </Button>
             </Navbar>
@@ -86,10 +85,9 @@ export default function Root() {
                         <Nav.Link as={Link} to="/manage-product">
                             Manage Products
                         </Nav.Link>
-                        {/* <Nav.Link as={Link} to="">Edit Profile</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
-                <Button onClick={logout} size="lg" style={{ marginLeft: "auto", marginRight: "2rem" }}>
+                <Button onClick={logout} size="24px" style={{ marginLeft: "auto", marginRight: "2rem" }}>
                     Log Out
                 </Button>
             </Navbar>

@@ -137,7 +137,6 @@ export default function ManageOrder() {
         return `${month}/${day}/${year} ${time}`;
     }
 
-    const containerStyle = { fontSize: "24px", paddingTop: "40px", paddingBottom: "40px" };
     const productCardStyle = {
         width: "15rem",
         height: "auto",
@@ -151,16 +150,16 @@ export default function ManageOrder() {
     };
 
     return type === "user" ? (
-        <Container fluid>
-            <Container fluid style={containerStyle}>
+        <Container fluid style={{ paddingBottom: "2em" }}>
+            <Container fluid style={{ paddingTop: "3em", paddingBottom: "1em" }}>
                 <Row>
                     <Col md="auto">
-                        <h1>
+                        <h3>
                             <b>Order Fulfillment</b>
-                        </h1>
+                        </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="primary" title="Filter By" size="lg">
+                        <DropdownButton variant="primary" title="Filter By" size="24px">
                             <Dropdown.Item onClick={() => filterOrders(null)}>All</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(0)}>Pending</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(1)}>Completed</Dropdown.Item>
@@ -184,7 +183,7 @@ export default function ManageOrder() {
                                     variant="primary"
                                     className="cancel-button"
                                     disabled={order.status !== 0}
-                                    style={{ marginBottom: "10px" }}
+                                    style={{ marginBottom: "10px", width: "fit-content" }}
                                     onClick={() => changeStatus(order._id, order.productID, order.quantity, 2)}
                                 >
                                     Cancel Order
@@ -193,7 +192,7 @@ export default function ManageOrder() {
                                     variant="danger"
                                     className="delete-button"
                                     disabled={order.status === 0}
-                                    style={{ marginTop: "10px" }}
+                                    style={{ marginTop: "10px", width: "fit-content" }}
                                     onClick={() => deleteOrder(order._id)}
                                 >
                                     Delete Order
@@ -206,7 +205,7 @@ export default function ManageOrder() {
         </Container>
     ) : (
         <Container fluid>
-            <Container fluid style={containerStyle}>
+            <Container fluid style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}>
                 <Row>
                     <Col md="auto">
                         <h1>

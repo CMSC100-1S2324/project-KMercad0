@@ -226,7 +226,6 @@ export default function Dashboard() {
         }
     }
 
-    const containerStyle = { fontSize: "24px", paddingTop: "40px", paddingBottom: "40px" };
     const productCardStyle = {
         width: "15rem",
         height: "auto",
@@ -241,21 +240,21 @@ export default function Dashboard() {
 
     return type === "user" ? (
         // user
-        <Container fluid>
-            <Container fluid className="d-flex align-items-center" style={containerStyle}>
+        <Container fluid style={{ paddingBottom: "2em" }}>
+            <Container fluid className="d-flex align-items-center" style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}>
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
                 </div>
             </Container>
-            <Container fluid>
+            <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
                     <Col md="auto">
-                        <h1>
+                        <h3>
                             <b>Product Listing</b>
-                        </h1>
+                        </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="primary" title="Sort By" size="lg">
+                        <DropdownButton variant="primary" title="Sort By" size="24px">
                             <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("title", direction)}>Title</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("type", direction)}>Type</Dropdown.Item>
@@ -263,18 +262,18 @@ export default function Dashboard() {
                             <Dropdown.Item onClick={() => sortProducts("quantity", direction)}>Stock</Dropdown.Item>
                         </DropdownButton>
                     </Col>
-                    <Col>
+                    <Col md="auto">
                         <Button
                             variant="primary"
                             disabled={sorterName === null}
                             onClick={() => changeDirection()}
                             dangerouslySetInnerHTML={{ __html: "&#8645" }}
-                            size="lg"
+                            size="24px"
                         ></Button>
                     </Col>
                 </Row>
             </Container>
-            <Container fluid>
+            <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
                     {products.map((product, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
@@ -285,7 +284,7 @@ export default function Dashboard() {
                                 <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
                                 <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Stock: {product.quantity}</Card.Text>
-                                <Button variant="primary" onClick={() => addToCart(product._id)}>
+                                <Button variant="primary" onClick={() => addToCart(product._id)} style={{ width: "fit-content" }}>
                                     Add to Cart
                                 </Button>
                             </Card.Body>
@@ -294,12 +293,12 @@ export default function Dashboard() {
                 </Row>
             </Container>
             <hr></hr>
-            <Container fluid>
-                <h1>
+            <Container fluid style={{ paddingTop: "1em" }}>
+                <h3>
                     <b>Cart</b>
-                </h1>
+                </h3>
             </Container>
-            <Container fluid className="d-flex align-items-center" style={containerStyle}>
+            <Container fluid className="d-flex align-items-center" style={{ fontSize: "24px", paddingBottom: "1em" }}>
                 <Col md="auto">
                     <div>
                         Total Price: <strong>{total.toFixed(2)}</strong>
@@ -311,17 +310,17 @@ export default function Dashboard() {
                 <Col md="auto">
                     <Button
                         variant="primary"
-                        size="lg"
+                        size="24px"
                         onClick={() => checkoutAllFromCart()}
                         style={{ marginLeft: "2rem" }}
                     >
                         Checkout All
                     </Button>
                 </Col>
-                <Col>
+                <Col md="auto">
                     <Button
                         variant="primary"
-                        size="lg"
+                        size="24px"
                         onClick={() => removeAllFromCart()}
                         style={{ marginLeft: "2rem" }}
                     >
@@ -352,7 +351,7 @@ export default function Dashboard() {
                                     <Card.Title>{product.title}</Card.Title>
                                     <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                     <Card.Text>Quantity: {quantity}</Card.Text>
-                                    <Button variant="primary" onClick={() => removeFromCart(product._id)}>
+                                    <Button variant="primary" onClick={() => removeFromCart(product._id)} style={{ width: "fit-content" }}>
                                         Remove from Cart
                                     </Button>
                                 </Card.Body>
@@ -365,7 +364,7 @@ export default function Dashboard() {
     ) : (
         // admin
         <Container fluid>
-            <Container fluid className="d-flex align-items-center" style={containerStyle}>
+            <Container fluid className="d-flex align-items-center" fontSize="24px" paddingTop="40px" paddingBottom="40px">
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
                 </div>
