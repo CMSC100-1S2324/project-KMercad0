@@ -108,7 +108,7 @@ export default function Login(props) {
                     </Row>
                     <Row>
                         <Col xs={12} className="mb-3" style={text}>
-                            <h6>Don't have an account? <Link to={`/sign-up`}>Sign up here!</Link></h6>
+                            <h6 style={{ color: 'green' }}>Don't have an account? <Link to={`/sign-up`} style={{ color: 'green' }}>Sign up here!</Link></h6>
                         </Col>
                     </Row>
                 </Container>
