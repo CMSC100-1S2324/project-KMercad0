@@ -717,9 +717,9 @@ export default function Dashboard() {
                         console.log(value);
                         return (
                             <Row>
-                                <h1 style={{ color: "white" }}>
+                                <h3 style={{ color: "lightgray", paddingBottom: "0.5em" }}>
                                     <strong>{title}</strong>
-                                </h1>
+                                </h3>
                                 <Table bordered hover variant="dark">
                                     <thead>
                                         <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
