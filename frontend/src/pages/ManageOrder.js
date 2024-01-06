@@ -10,6 +10,7 @@ export default function ManageOrder() {
     const [ordersCopy, setOrdersCopy] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
     const [userDetails, setUserDetails] = useState([]);
+    const [filterName, setFilterName] = useState(null);
 
     const imageUrls = productDetails.map((product) => product.imageurl);
     const productNames = productDetails.map((product) => product.title);
@@ -57,20 +58,18 @@ export default function ManageOrder() {
         fetchProductAndUserDetails();
     }, [orders]);
 
-    function updateOrders() {
-        type !== "admin"
-            ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body.orders);
-                      setOrdersCopy(body.orders);
-                  })
-            : fetch("http://localhost:3001/get-orders")
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body.orders);
-                      setOrdersCopy(body.orders);
-                  });
+    async function updateOrders() {
+        const orderPromises =
+            type !== "admin"
+                ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
+                      .then((response) => response.json())
+                      .then((body) => body.orders)
+                : fetch("http://localhost:3001/get-orders")
+                      .then((response) => response.json())
+                      .then((body) => body.orders);
+
+        const orderResults = await orderPromises;
+        return orderResults;
     }
 
     function changeStatus(orderID, productID, quantity, status) {
@@ -87,7 +86,7 @@ export default function ManageOrder() {
                     if (status === 2) {
                         restockQuantity(productID, quantity);
                     }
-                    updateOrders();
+                    updateOrders().then((orderResults) => reapplyFiltering(orderResults));
                     console.log("Successfully changed status!");
                 } else {
                     console.log("Change status failed");
@@ -122,8 +121,21 @@ export default function ManageOrder() {
         })
             .then((response) => response.json())
             .then((body) => {
-                updateOrders();
+                updateOrders().then((orderResults) => reapplyFiltering(orderResults));
             });
+    }
+
+    function reapplyFiltering(orderResults) {
+        const unfilteredOrders = [...orderResults];
+
+        if (filterName !== null) {
+            let filteredOrders = unfilteredOrders.filter((item) => item.status === filterName);
+            setOrders(filteredOrders);
+            setOrdersCopy(orderResults);
+            return;
+        }
+        setOrders(unfilteredOrders);
+        setOrdersCopy(orderResults);
     }
 
     function filterOrders(filterName) {
@@ -131,9 +143,11 @@ export default function ManageOrder() {
 
         if (filterName !== null) {
             let filteredOrders = unfilteredOrders.filter((item) => item.status === filterName);
+            setFilterName(filterName);
             setOrders(filteredOrders);
             return;
         }
+        setFilterName(filterName);
         setOrders(unfilteredOrders);
     }
 
