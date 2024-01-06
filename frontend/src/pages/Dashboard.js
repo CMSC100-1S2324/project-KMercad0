@@ -480,7 +480,7 @@ export default function Dashboard() {
             <Container
                 fluid
                 className="d-flex align-items-center"
-                style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}
+                style={{ fontSize: "24px", color: "lightgray", paddingTop: "2em", paddingBottom: "2em" }}
             >
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
@@ -488,7 +488,7 @@ export default function Dashboard() {
             </Container>
             <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
-                    <Col md="auto">
+                    <Col md="auto" style={{ color: "lightgrey" }}>
                         <h3>
                             <b>Sales Report</b>
                         </h3>
@@ -497,7 +497,7 @@ export default function Dashboard() {
             </Container>
             <Container>
                 <Row>
-                    <Table bordered hover>
+                    <Table bordered hover variant="dark">
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Products Sold</th>
@@ -520,7 +520,7 @@ export default function Dashboard() {
             <hr></hr>
             <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
-                    <Col md="auto">
+                    <Col md="auto" style={{ color: "lightgrey" }}>
                         <h3>
                             <b>Transaction Summary</b>
                         </h3>
@@ -535,7 +535,7 @@ export default function Dashboard() {
                     </Col>
                 </Row>
                 <Row>
-                    <Table bordered hover>
+                    <Table bordered hover variant="dark">
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Transaction ID</th>
