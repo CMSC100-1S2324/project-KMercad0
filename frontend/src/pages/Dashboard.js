@@ -316,6 +316,7 @@ export default function Dashboard() {
                     const yearB = new Date(b.dateOrdered).getFullYear();
                     return new Date(yearA, 0, 1) - new Date(yearB, 0, 1);
                 }
+                return null;
             });
 
             setSorterName(sorterName);
