@@ -59,14 +59,15 @@ export default function Login(props) {
 
     const text = {
         //style for text
+        color: "green",
         textAlign: "center",
         marginTop: "20px",
-        color: "085025",
+        // color: "085025",
     };
 
     const buttonStyle = {
         //style for button
-        backgroundColor: "#198754",
+        backgroundColor: "green",
         borderColor: "#198754",
         color: "white",
         position: "relative",
@@ -108,7 +109,7 @@ export default function Login(props) {
                     </Row>
                     <Row>
                         <Col xs={12} className="mb-3" style={text}>
-                            <h6 style={{ color: 'green' }}>Don't have an account? <Link to={`/sign-up`} style={{ color: 'green' }}>Sign up here!</Link></h6>
+                            <h6>Don't have an account? <Link to={`/sign-up`} style={{ color: 'green' }}>Sign up here!</Link></h6>
                         </Col>
                     </Row>
                 </Container>
