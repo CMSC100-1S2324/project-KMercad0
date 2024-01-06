@@ -114,8 +114,9 @@ state management
         - run command `npm i` or `npm install`,
         - then, run command `npm start`
 
-          ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/86e74b13-a218-476e-a96b-ccbf56b7649b)
           ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/2bc90e4d-9a66-4354-9970-9f99ff43c8b6)
+          ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/86e74b13-a218-476e-a96b-ccbf56b7649b)
+
 
 ## You're all set up! Just wait for the project website to appear and open. 
 
