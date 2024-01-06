@@ -109,6 +109,7 @@ export default function Dashboard() {
         };
 
         updateOrdersAndGroupings();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orders]);
 
     useEffect(() => {}, [products, cart]);
@@ -647,7 +648,7 @@ export default function Dashboard() {
                                 <tr key={index}>
                                     <th>{productNames[index]}</th>
                                     <th>{order.quantity}</th>
-                                    <th>{order.price}</th>
+                                    <th>{order.price.toFixed(2)}</th>
                                 </tr>
                             ))}
                         </tbody>

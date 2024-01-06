@@ -56,22 +56,12 @@ export default function ManageProduct() {
                 const numericB = parseFloat(bValue) || 0;
                 return sortDirections[columnName] * (numericA - numericB);
             }
+            return null;
         });
 
         setSortDirections({ ...sortDirections, [columnName]: -sortDirections[columnName] });
         setTableRows(updatedRows);
     };
-
-    function updateSortArrow(columnName) {
-        for (const key in sortDirections) {
-            if (key !== columnName) {
-                const otherArrowElement = document.getElementById(`${key}-arrow`);
-                if (otherArrowElement) {
-                    otherArrowElement.textContent = "";
-                }
-            }
-        }
-    }
 
     function addNewProduct() {
         const newTitle = document.getElementById("newTitle")?.value || "Title";
@@ -185,14 +175,9 @@ export default function ManageProduct() {
             .catch((error) => console.error("Error deleting product:", error));
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         handleButtonClick("title");
-    }, []);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => {
-        updateSortArrow("title");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
