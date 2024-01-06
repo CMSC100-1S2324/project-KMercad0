@@ -57,13 +57,7 @@ export default function SignUp() {
 
         console.log(formValue);
         // form validation goes here
-        if (
-            formValue.fname !== "" &&
-            formValue.mname !== "" &&
-            formValue.lname !== "" &&
-            formValue.email !== "" &&
-            formValue.password !== ""
-        ) {
+        if (formValue.fname !== "" && formValue.lname !== "" && formValue.email !== "" && formValue.password !== "") {
             console.log(formValue.password);
             if (validatePassword(formValue.password) === true) {
                 if (validateEmail(formValue.email) === true) {
