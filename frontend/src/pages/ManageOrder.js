@@ -165,20 +165,20 @@ export default function ManageOrder() {
         margin: "10px",
         border: "0",
         borderRadius: "10px",
-        backgroundColor: "#d9d9d9",
+        backgroundColor: "#181a1b",
     };
 
     return type === "user" ? (
         <Container fluid style={{ paddingBottom: "2em" }}>
             <Container fluid style={{ paddingTop: "3em", paddingBottom: "1em" }}>
                 <Row>
-                    <Col md="auto">
+                    <Col md="auto" style={{ color: "lightgray" }}>
                         <h3>
                             <b>Order Fulfillment</b>
                         </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="primary" title="Filter By" size="24px">
+                        <DropdownButton variant="success" title="Filter By" size="24px">
                             <Dropdown.Item onClick={() => filterOrders(null)}>All</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(0)}>Pending</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(1)}>Completed</Dropdown.Item>
@@ -196,15 +196,14 @@ export default function ManageOrder() {
                                 height: "150px",      
                                 objectFit: "cover", 
                                 borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
-                            <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
+                            <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
                                 <Card.Title>{productNames[index]}</Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Quantity: {order.quantity}</Card.Text>
                                 <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
                                 <Card.Text>Date: {getDateTime(order.dateOrdered)}</Card.Text>
                                 <Button
-                                    variant="primary"
-                                    className="cancel-button"
+                                    variant="outline-warning"
                                     disabled={order.status !== 0}
                                     style={{ marginBottom: "10px", width: "fit-content" }}
                                     onClick={() => changeStatus(order._id, order.productID, order.quantity, 2)}
@@ -212,8 +211,7 @@ export default function ManageOrder() {
                                     Cancel Order
                                 </Button>
                                 <Button
-                                    variant="danger"
-                                    className="delete-button"
+                                    variant="outline-danger"
                                     disabled={order.status === 0}
                                     style={{ marginTop: "10px", width: "fit-content" }}
                                     onClick={() => deleteOrder(order._id)}
@@ -262,7 +260,7 @@ export default function ManageOrder() {
                                 <Card.Text>Order by: {userNames[index]}</Card.Text>
                                 <Card.Text>Date: {getDateTime(order.dateOrdered)}</Card.Text>
                                 <Button
-                                    variant="primary"
+                                    variant="outline-success"
                                     className="approve-button"
                                     disabled={order.status !== 0}
                                     style={{ marginBottom: "10px" }}
@@ -271,7 +269,7 @@ export default function ManageOrder() {
                                     Approve
                                 </Button>
                                 <Button
-                                    variant="danger"
+                                    variant="outline-danger"
                                     className="disapprove-button"
                                     disabled={order.status !== 0}
                                     style={{ marginTop: "10px" }}

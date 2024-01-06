@@ -261,7 +261,7 @@ export default function Dashboard() {
         margin: "10px",
         border: "0",
         borderRadius: "10px",
-        backgroundColor: "#d9d9d9",
+        backgroundColor: "#181a1b",
     };
 
     return type === "user" ? (
@@ -270,7 +270,7 @@ export default function Dashboard() {
             <Container
                 fluid
                 className="d-flex align-items-center"
-                style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}
+                style={{ fontSize: "24px", color: "lightgray", paddingTop: "2em", paddingBottom: "2em" }}
             >
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
@@ -278,13 +278,13 @@ export default function Dashboard() {
             </Container>
             <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
-                    <Col md="auto">
+                    <Col md="auto" style={{ color: "lightgray" }}>
                         <h3>
                             <b>Product Listing</b>
                         </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="primary" title="Sort By" size="24px">
+                        <DropdownButton variant="success" title="Sort By" size="24px">
                             <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("title", direction)}>Title</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("type", direction)}>Type</Dropdown.Item>
@@ -294,7 +294,7 @@ export default function Dashboard() {
                     </Col>
                     <Col md="auto">
                         <Button
-                            variant="primary"
+                            variant="success"
                             disabled={sorterName === null}
                             onClick={() => changeDirection()}
                             dangerouslySetInnerHTML={{ __html: "&#8645" }}
@@ -312,14 +312,14 @@ export default function Dashboard() {
                                 height: "150px",      
                                 objectFit: "cover", 
                                 borderRadius: "10px" }} variant="top" src={product.imageurl} />
-                            <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
-                                <Card.Title><strong>{product.title}</strong></Card.Title>
+                            <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
+                                <Card.Title style = {{ color: "#198754" }}><strong>{product.title}</strong></Card.Title>
                                 <Card.Text>Description: {product.name}</Card.Text>
                                 <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
                                 <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Stock: {product.quantity}</Card.Text>
                                 <Button
-                                    variant="primary"
+                                    variant="outline-success"
                                     onClick={() => addToCart(product._id)}
                                     style={{ width: "fit-content" }}
                                 >
@@ -331,13 +331,13 @@ export default function Dashboard() {
                 </Row>
             </Container>
             <hr></hr>
-            <Container fluid style={{ paddingTop: "1em" }}>
+            <Container fluid style={{ paddingTop: "1em", color: "lightgray" }}>
                 <h3>
                     <b>Cart</b>
                 </h3>
             </Container>
             <Container fluid className="d-flex align-items-center" style={{ fontSize: "24px", paddingBottom: "1em" }}>
-                <Col md="auto">
+                <Col md="auto" style={{ color: "lightgray" }}>
                     <div>
                         Total Price: <strong>{total.toFixed(2)}</strong>
                     </div>
@@ -347,7 +347,7 @@ export default function Dashboard() {
                 </Col>
                 <Col md="auto">
                     <Button
-                        variant="primary"
+                        variant="success"
                         size="24px"
                         onClick={() => checkoutAllFromCart()}
                         style={{ marginLeft: "2rem" }}
@@ -357,7 +357,7 @@ export default function Dashboard() {
                 </Col>
                 <Col md="auto">
                     <Button
-                        variant="primary"
+                        variant="danger"
                         size="24px"
                         onClick={() => removeAllFromCart()}
                         style={{ marginLeft: "2rem" }}
@@ -385,12 +385,12 @@ export default function Dashboard() {
                                 height: "150px",      
                                 objectFit: "cover", 
                                 borderRadius: "10px" }} variant="top" src={product.imageurl} />
-                            <Card.Body className="d-flex flex-column" style={{ flex: 1 }}>
-                                <Card.Title><strong>{product.title}</strong></Card.Title>
+                            <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
+                                <Card.Title style={{ color: "#198754" }}><strong>{product.title}</strong></Card.Title>
                                 <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                 <Card.Text>Quantity: {quantity}</Card.Text>
                                 <Button
-                                    variant="primary"
+                                    variant="outline-danger"
                                     onClick={() => removeFromCart(product._id)}
                                     style={{ width: "fit-content" }}
                                 >

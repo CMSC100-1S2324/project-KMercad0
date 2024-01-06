@@ -132,7 +132,7 @@ export default function SignUp() {  //component for signup page
       margin: 'auto',
       width: '50%',
       height: 'auto',
-      color: 'green',
+      color: '#198754',
       alignItems: 'center',
   };
 
@@ -154,8 +154,8 @@ export default function SignUp() {  //component for signup page
   };
 
   const buttonStyle = { //style for button
-      backgroundColor: 'green',
-      borderColor: 'green',
+      backgroundColor: '#198754',
+      borderColor: '#198754',
       color: 'white',
       position: 'relative',
       marginTop: '3%',
