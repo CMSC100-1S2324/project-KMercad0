@@ -284,7 +284,7 @@ export default function Dashboard() {
                         </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="success" title="Sort By" size="24px">
+                        <DropdownButton variant="primary" title="Sort By" size="24px">
                             <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("title", direction)}>Title</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortProducts("type", direction)}>Type</Dropdown.Item>
@@ -294,7 +294,7 @@ export default function Dashboard() {
                     </Col>
                     <Col md="auto">
                         <Button
-                            variant="success"
+                            variant="primary"
                             disabled={sorterName === null}
                             onClick={() => changeDirection()}
                             dangerouslySetInnerHTML={{ __html: "&#8645" }}

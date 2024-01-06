@@ -178,7 +178,7 @@ export default function ManageOrder() {
                         </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="success" title="Filter By" size="24px">
+                        <DropdownButton variant="primary" title="Filter By" size="24px">
                             <Dropdown.Item onClick={() => filterOrders(null)}>All</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(0)}>Pending</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(1)}>Completed</Dropdown.Item>
@@ -205,7 +205,7 @@ export default function ManageOrder() {
                                 <Button
                                     variant="outline-warning"
                                     disabled={order.status !== 0}
-                                    style={{ marginBottom: "10px", width: "auto" }}
+                                    style={{ marginTop: "10px", marginBottom: "10px", width: "auto" }}
                                     onClick={() => changeStatus(order._id, order.productID, order.quantity, 2)}
                                 >
                                     Cancel Order
@@ -234,7 +234,7 @@ export default function ManageOrder() {
                         </h3>
                     </Col>
                     <Col md="auto">
-                        <DropdownButton variant="success" title="Filter By" size="24px">
+                        <DropdownButton variant="primary" title="Filter By" size="24px">
                             <Dropdown.Item onClick={() => filterOrders(null)}>All</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(0)}>Pending</Dropdown.Item>
                             <Dropdown.Item onClick={() => filterOrders(1)}>Completed</Dropdown.Item>
