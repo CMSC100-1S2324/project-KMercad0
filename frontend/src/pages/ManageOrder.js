@@ -11,9 +11,9 @@ export default function ManageOrder() {
     const [userNames, setUserNames] = useState([]);
     const [ordersCopy, setOrdersCopy] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
-    console.log(productDetails)
-    const imageUrls = productDetails.map(product => product.imageurl);
-    
+    console.log(productDetails);
+    const imageUrls = productDetails.map((product) => product.imageurl);
+
     useEffect(() => {
         type !== "admin"
             ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
@@ -49,19 +49,19 @@ export default function ManageOrder() {
     useEffect(() => {
         const fetchProductDetails = async () => {
             const productDetailsArray = [];
-    
+
             for (const order of orders) {
                 const productResponse = await fetch(`http://localhost:3001/get-product-of-order/${order._id}`);
                 const productBody = await productResponse.json();
                 productDetailsArray.push(productBody.product);
             }
-    
+
             setProductDetails(productDetailsArray);
         };
-    
+
         fetchProductDetails();
     }, [orders]);
-    
+
     useEffect(() => {}, [orders]);
 
     function updateOrders() {
@@ -191,11 +191,16 @@ export default function ManageOrder() {
                 <Row>
                     {orders.map((order, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{  
-                                width: "100%",       
-                                height: "150px",      
-                                objectFit: "cover", 
-                                borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
+                            <Card.Img
+                                style={{
+                                    width: "100%",
+                                    height: "150px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                }}
+                                variant="top"
+                                src={imageUrls[index]}
+                            />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
                                 <Card.Title style={{ color: "#198754" }}>{productNames[index]}</Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
@@ -247,13 +252,20 @@ export default function ManageOrder() {
                 <Row>
                     {orders.map((order, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{  
-                                width: "100%",       
-                                height: "150px",      
-                                objectFit: "cover", 
-                                borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
+                            <Card.Img
+                                style={{
+                                    width: "100%",
+                                    height: "150px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                }}
+                                variant="top"
+                                src={imageUrls[index]}
+                            />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
-                                <Card.Title style={{ color: "#198754" }}><strong>{productNames[index]}</strong></Card.Title>
+                                <Card.Title style={{ color: "#198754" }}>
+                                    <strong>{productNames[index]}</strong>
+                                </Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Quantity: {order.quantity}</Card.Text>
                                 <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
