@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLoaderData, Outlet, Link } from "react-router-dom";
 import { Button, Navbar, Nav, Container } from "react-bootstrap";
+import { House, Person, Receipt, Bag } from 'react-bootstrap-icons';
 import Cookies from "universal-cookie";
 
 export default function Root() {
@@ -43,10 +44,12 @@ export default function Root() {
                 <Navbar.Collapse id="basic-navbar-nav" style={{ marginLeft: "3em" }}>
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/dashboard" style={{ color: "lightgray" }}>
-                            <strong>Dashboard</strong>
+                            <House size={18} style={{ marginBottom: "5px" }}/>
+                            <strong> Dashboard</strong>
                         </Nav.Link>
                         <Nav.Link as={Link} to="/manage-order" style={{ color: "lightgray" }}>
-                            <strong>Manage Orders</strong> 
+                            <Receipt size={18} style={{ marginBottom: "5px", marginLeft: "20px"  }}/>
+                            <strong> Manage Orders</strong> 
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
@@ -74,16 +77,20 @@ export default function Root() {
                 <Navbar.Collapse id="basic-navbar-nav" style={{ marginLeft: "3em" }}>
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/dashboard" style={{ color: "lightgray" }}>
-                            <strong>Dashboard</strong>
+                            <House size={18} style={{ marginBottom: "5px" }}/>
+                            <strong> Dashboard</strong>
                         </Nav.Link>
                         <Nav.Link as={Link} to="/view-account" style={{ color: "lightgray" }}>
-                            <strong>View Accounts</strong>
+                            <Person size={18} style={{ marginBottom: "5px", marginLeft: "20px" }}/>
+                            <strong> View Accounts</strong>
                         </Nav.Link>
                         <Nav.Link as={Link} to="/manage-order" style={{ color: "lightgray" }}>
-                            <strong>Manage Orders</strong>
+                            <Receipt size={18} style={{ marginBottom: "5px", marginLeft: "20px" }}/>
+                            <strong> Manage Orders</strong>
                         </Nav.Link>
                         <Nav.Link as={Link} to="/manage-product" style={{ color: "lightgray" }}>
-                            <strong>Manage Products</strong>
+                            <Bag size={18} style={{ marginBottom: "5px", marginLeft: "20px" }}/>
+                            <strong> Manage Products</strong>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

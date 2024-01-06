@@ -577,7 +577,7 @@ export default function Dashboard() {
             </Container>
             <hr></hr>
             <Container fluid style={{ paddingBottom: "1em" }}>
-                <Row>
+                <Row style={{ paddingBottom: "1em" }}>
                     <Col md="auto" style={{ color: "lightgrey" }}>
                         <h3>
                             <b>Transaction Summary</b>
