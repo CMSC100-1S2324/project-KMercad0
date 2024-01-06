@@ -5,6 +5,20 @@ export default function Dashboard() {
     const _id = localStorage.getItem("_id");
     const username = localStorage.getItem("username");
     const type = localStorage.getItem("type");
+    const MONTHS = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
 
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
@@ -18,6 +32,7 @@ export default function Dashboard() {
     const [ordersCopy, setOrdersCopy] = useState([]);
     const [productNames, setProductNames] = useState([]);
     const [productsCopy, setProductsCopy] = useState([]);
+    const [groupings, setGroupings] = useState({});
 
     const productNamesFromOrders = productDetails.map((product) => product.title);
     const userNamesFromOrders = userDetails.map((user) => `${user.fname} ${user.lname}`);
@@ -88,7 +103,12 @@ export default function Dashboard() {
             setUserDetails(userResults);
         };
 
-        fetchProductAndUserDetails();
+        const updateOrdersAndGroupings = async () => {
+            await fetchProductAndUserDetails();
+            startGroupings(orders);
+        };
+
+        updateOrdersAndGroupings();
     }, [orders]);
 
     useEffect(() => {}, [products, cart]);
@@ -325,6 +345,35 @@ export default function Dashboard() {
         }
         setSorterName(sorterName);
         setOrders(unsortedOrders);
+    }
+
+    function startGroupings(collection) {
+        if (sorterName === "monthly") {
+            const grouped = collection.reduce((accumulator, order) => {
+                const parsed = new Date(order.dateOrdered);
+                const year = parsed.getFullYear();
+                const month = parsed.getMonth();
+                const groupKey = `${month},${year}`;
+                accumulator[groupKey] = accumulator[groupKey] || { orders: [] };
+                accumulator[groupKey].orders.push(order);
+                return accumulator;
+            }, {});
+
+            setGroupings({ ...grouped });
+        }
+
+        if (sorterName === "yearly") {
+            const grouped = collection.reduce((accumulator, order) => {
+                const parsed = new Date(order.dateOrdered);
+                const year = parsed.getFullYear();
+                const groupKey = `${year}`;
+                accumulator[groupKey] = accumulator[groupKey] || { orders: [] };
+                accumulator[groupKey].orders.push(order);
+                return accumulator;
+            }, {});
+
+            setGroupings({ ...grouped });
+        }
     }
 
     function getDateTime(dateTime) {
@@ -621,32 +670,83 @@ export default function Dashboard() {
                         </DropdownButton>
                     </Col>
                 </Row>
-                <Row>
-                    <Table bordered hover variant="dark">
-                        <thead>
-                            <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
-                                <th>Transaction ID</th>
-                                <th>Product Name</th>
-                                <th>Order Quantity</th>
-                                <th>Order Status</th>
-                                <th>Order By</th>
-                                <th>Date Ordered</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {orders.map((order, index) => (
-                                <tr key={index}>
-                                    <td>{order._id}</td>
-                                    <td>{productNamesFromOrders[index]}</td>
-                                    <td>{order.quantity}</td>
-                                    <td>{getOrderStatus(order.status)}</td>
-                                    <td>{userNamesFromOrders[index]}</td>
-                                    <td>{getDateTime(order.dateOrdered)}</td>
+                {sorterName === null ? (
+                    <Row style={{ marginBottom: "20px" }}>
+                        <Table bordered hover variant="dark">
+                            <thead>
+                                <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
+                                    <th>Transaction ID</th>
+                                    <th>Product Name</th>
+                                    <th>Order Quantity</th>
+                                    <th>Order Status</th>
+                                    <th>Order By</th>
+                                    <th>Date Ordered</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                </Row>
+                            </thead>
+                            <tbody>
+                                {orders.map((order, index) => (
+                                    <tr key={index}>
+                                        <td>{order._id}</td>
+                                        <td>{productNamesFromOrders[index]}</td>
+                                        <td>{order.quantity}</td>
+                                        <td>{getOrderStatus(order.status)}</td>
+                                        <td>{userNamesFromOrders[index]}</td>
+                                        <td>{getDateTime(order.dateOrdered)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Row>
+                ) : (
+                    Object.entries(groupings).map(([key, value]) => {
+                        let title;
+
+                        if (sorterName === "monthly") {
+                            const parsed = key.split(",");
+                            const month = parsed[0];
+                            const year = parsed[1];
+                            title = `Month of ${MONTHS[month]} ${year}`;
+                        }
+
+                        if (sorterName === "yearly") {
+                            const year = key;
+                            title = `Year of ${year}`;
+                        }
+
+                        console.log(value);
+                        return (
+                            <Row>
+                                <h1 style={{ color: "white" }}>
+                                    <strong>{title}</strong>
+                                </h1>
+                                <Table bordered hover variant="dark">
+                                    <thead>
+                                        <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
+                                            <th>Transaction ID</th>
+                                            <th>Product ID</th>
+                                            <th>Order Quantity</th>
+                                            <th>Order Status</th>
+                                            <th>Order ID</th>
+                                            <th>Date Ordered</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {value.orders.map((order, index) => (
+                                            <tr key={index}>
+                                                <td>{order._id}</td>
+                                                <td>{order.productID}</td>
+                                                <td>{order.quantity}</td>
+                                                <td>{getOrderStatus(order.status)}</td>
+                                                <td>{order.userID}</td>
+                                                <td>{getDateTime(order.dateOrdered)}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            </Row>
+                        );
+                    })
+                )}
             </Container>
         </Container>
     );
