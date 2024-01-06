@@ -1,18 +1,5 @@
 [{
   "_id": {
-    "$oid": "657b03377ebc3fdb6a14ab68"
-  },
-  "fname": "Reinne",
-  "mname": "Andrei",
-  "lname": "Secorata",
-  "type": "user",
-  "email": "rasecorata@g.c",
-  "password": "$2b$10$WQdgVteyvdDPVYFOahLvKOg6atvMdrFkj4ZqV9DjWs5vvSSrJxTUS",
-  "cart": [],
-  "__v": 0
-},
-{
-  "_id": {
     "$oid": "657b036c7ebc3fdb6a14ab6a"
   },
   "fname": "Steph",
@@ -34,19 +21,6 @@
   "type": "user",
   "email": "ecpanga@g.c",
   "password": "$2b$10$MVYCDw5IocFCL.zYM/LtheZj/nb1IU7.pcpcjIp3RZR33pzC0tb6y",
-  "cart": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "657b04647ebc3fdb6a14ab7c"
-  },
-  "fname": "Jessie",
-  "mname": "Jay",
-  "lname": "Jose",
-  "type": "admin",
-  "email": "jjjose@g.c",
-  "password": "$2b$10$DIuLUwEh3xrYWOPc/R4y4.okXbvrl2d/IOJWKjf6CtWkv/M3GsUJa",
   "cart": [],
   "__v": 0
 },
@@ -78,14 +52,14 @@
 },
 {
   "_id": {
-    "$oid": "657b055c7ebc3fdb6a14ab84"
+    "$oid": "6599641d20b704bb5efa7d16"
   },
-  "fname": "Alan",
-  "mname": "Jay",
-  "lname": "Turing",
-  "type": "user",
-  "email": "ajturing@g.c",
-  "password": "$2b$10$RaBapZCSWTVzq2nrZHjfCuW1xvEg2eqx/LBibaT82SyJdYnwHv.CC",
+  "fname": "Root",
+  "mname": "",
+  "lname": "Administrator",
+  "type": "admin",
+  "email": "administrator@da.gov.ph",
+  "password": "$2b$10$va4El363plxA8U4yqiDs1.aPA0sko.xk6Xro9DsB6OlFtW9QwLYMa",
   "cart": [],
   "__v": 0
 }]
