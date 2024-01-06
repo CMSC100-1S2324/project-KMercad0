@@ -265,12 +265,12 @@ export default function Dashboard() {
     };
 
     const cartCardStyle = {
-        width: "25rem",
+        width: "25.6rem",
         height: "auto",
         flexDirection: "row",
         backgroundColor: "#181a1b",
         padding: "10px",
-        margin: "10px",
+        margin: "0 0 20px 0",
     };
 
     return type === "user" ? (
@@ -300,7 +300,7 @@ export default function Dashboard() {
                                 </h3>
                             </Col>
                             <Col md="auto">
-                                <DropdownButton variant="success" title="Sort By" size="24px">
+                                <DropdownButton variant="primary" title="Sort By" size="24px">
                                     <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
                                     <Dropdown.Item onClick={() => sortProducts("title", direction)}>
                                         Title
@@ -316,7 +316,7 @@ export default function Dashboard() {
                             </Col>
                             <Col md="auto">
                                 <Button
-                                    variant="success"
+                                    variant="primary"
                                     disabled={sorterName === null}
                                     onClick={() => changeDirection()}
                                     dangerouslySetInnerHTML={{ __html: "&#8645" }}
@@ -335,6 +335,7 @@ export default function Dashboard() {
                                             height: "150px",
                                             objectFit: "cover",
                                             borderRadius: "10px",
+                                            marginLeft: "0"
                                         }}
                                         variant="top"
                                         src={product.imageurl}
@@ -387,7 +388,7 @@ export default function Dashboard() {
                                     variant="success"
                                     size="24px"
                                     onClick={() => checkoutAllFromCart()}
-                                    style={{ marginLeft: "2rem", marginBottom: "1px" }}
+                                    style={{ marginLeft: "6em", marginBottom: "10px", width: "7.2em" }}
                                 >
                                     Checkout All
                                 </Button>
@@ -397,7 +398,7 @@ export default function Dashboard() {
                                     variant="danger"
                                     size="24px"
                                     onClick={() => removeAllFromCart()}
-                                    style={{ marginLeft: "2rem" }}
+                                    style={{ marginLeft: "6em", width: "7.2em" }}
                                 >
                                     Remove All
                                 </Button>
@@ -416,9 +417,9 @@ export default function Dashboard() {
                                     }
                                 });
                                 return quantity !== 0 ? (
-                                    <Card key={index} className="d-flex align-items-end" style={cartCardStyle}>
+                                    <Card key={index} style={cartCardStyle}>
                                         <Row md="auto">
-                                            <Col md={4}>
+                                            <Col md={3}>
                                                 <Card.Img
                                                     style={{
                                                         width: "100%",
@@ -430,13 +431,13 @@ export default function Dashboard() {
                                                     src={product.imageurl}
                                                 />
                                             </Col>
-                                            <Col md={8}>
+                                            <Col md={9}>
                                                 <Card.Body
                                                     className="d-flex flex-row justify-content-start align-items-start"
                                                     style={{
                                                         flex: 1,
                                                         color: "lightgray",
-                                                        paddingBottom: "0px",
+                                                        paddingBottom: "0"
                                                     }}
                                                 >
                                                     <div
@@ -458,9 +459,9 @@ export default function Dashboard() {
                                                         <Button
                                                             variant="outline-danger"
                                                             onClick={() => removeFromCart(product._id)}
-                                                            style={{ width: "100%", paddingBottom: "0px" }}
+                                                            style={{ width: "auto", marginLeft: "4.4em" }}
                                                         >
-                                                            Remove Item
+                                                            Remove
                                                         </Button>
                                                     </div>
                                                 </Card.Body>
