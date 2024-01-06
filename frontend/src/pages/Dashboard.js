@@ -264,128 +264,64 @@ export default function Dashboard() {
         backgroundColor: "#181a1b",
     };
 
+    const cartCardStyle = {
+        width: "25rem",
+        height: "auto",
+        flexDirection: "row",
+        backgroundColor: "#181a1b",
+        padding: "10px",
+        margin: "10px",
+    };
+
     return type === "user" ? (
         // user
         <Container fluid style={{ paddingBottom: "2em" }}>
-            <Container
-                fluid
-                className="d-flex align-items-center"
-                style={{ fontSize: "24px", color: "lightgray", paddingTop: "2em", paddingBottom: "2em" }}
-            >
-                <div>
-                    Welcome to the dashboard, <strong>{username}</strong>!
-                </div>
-            </Container>
-            <Container fluid style={{ paddingBottom: "1em" }}>
-                <Row>
-                    <Col md="auto" style={{ color: "lightgray" }}>
-                        <h3>
-                            <b>Product Listings</b>
-                        </h3>
-                    </Col>
-                    <Col md="auto">
-                        <DropdownButton variant="success" title="Sort By" size="24px">
-                            <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
-                            <Dropdown.Item onClick={() => sortProducts("title", direction)}>Title</Dropdown.Item>
-                            <Dropdown.Item onClick={() => sortProducts("type", direction)}>Type</Dropdown.Item>
-                            <Dropdown.Item onClick={() => sortProducts("price", direction)}>Price</Dropdown.Item>
-                            <Dropdown.Item onClick={() => sortProducts("quantity", direction)}>Stock</Dropdown.Item>
-                        </DropdownButton>
-                    </Col>
-                    <Col md="auto">
-                        <Button
-                            variant="success"
-                            disabled={sorterName === null}
-                            onClick={() => changeDirection()}
-                            dangerouslySetInnerHTML={{ __html: "&#8645" }}
-                            size="24px"
-                        ></Button>
-                    </Col>
-                </Row>
-            </Container>
-            <Container fluid style={{ paddingBottom: "1em" }}>
-                <Row>
-                    {products.map((product, index) => (
-                        <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img
-                                style={{
-                                    width: "100%",
-                                    height: "150px",
-                                    objectFit: "cover",
-                                    borderRadius: "10px",
-                                }}
-                                variant="top"
-                                src={product.imageurl}
-                            />
-                            <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
-                                <Card.Title style={{ color: "#198754" }}>
-                                    <strong>{product.title}</strong>
-                                </Card.Title>
-                                <Card.Text>Description: {product.name}</Card.Text>
-                                <Card.Text>Type: {product.type}</Card.Text>
-                                <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
-                                <Card.Text>Stock: {product.quantity}</Card.Text>
-                                <Button
-                                    variant="outline-success"
-                                    onClick={() => addToCart(product._id)}
-                                    style={{ width: "auto" }}
-                                >
-                                    Add to Cart
-                                </Button>
-                            </Card.Body>
-                        </Card>
-                    ))}
-                </Row>
-            </Container>
-            <hr></hr>
-            <Container fluid style={{ paddingTop: "1em", color: "lightgray" }}>
-                <h3>
-                    <b>Cart</b>
-                </h3>
-            </Container>
-            <Container fluid className="d-flex align-items-center" style={{ fontSize: "24px", paddingBottom: "1em" }}>
-                <Col md="auto" style={{ color: "lightgray" }}>
+            {/* <Row> */}
+            <Col md={8}>
+                <Container
+                    fluid
+                    className="d-flex align-items-center"
+                    style={{
+                        fontSize: "24px",
+                        color: "lightgray",
+                        paddingTop: "2em",
+                        paddingBottom: "2em",
+                    }}
+                >
                     <div>
-                        Total Price: <strong>{total.toFixed(2)}</strong>
+                        Welcome to the dashboard, <strong>{username}</strong>!
                     </div>
-                    <div>
-                        Total Quantity: <strong>{cart.length.toFixed(0)}</strong>
-                    </div>
-                </Col>
-                <Col md="auto">
-                    <Button
-                        variant="success"
-                        size="24px"
-                        onClick={() => checkoutAllFromCart()}
-                        style={{ marginLeft: "2rem" }}
-                    >
-                        Checkout All
-                    </Button>
-                </Col>
-                <Col md="auto">
-                    <Button
-                        variant="danger"
-                        size="24px"
-                        onClick={() => removeAllFromCart()}
-                        style={{ marginLeft: "2rem" }}
-                    >
-                        Remove All
-                    </Button>
-                </Col>
-            </Container>
-            <Container fluid>
-                <Row>
-                    {products.map((product, index) => {
-                        let quantity = 0;
-                        let price = 0;
-                        cart.forEach((item) => {
-                            if (item.name === product.name) {
-                                quantity++;
-                                price += product.price;
-                            }
-                        });
-
-                        return quantity !== 0 ? (
+                </Container>
+                <Container fluid style={{ paddingBottom: "1em" }}>
+                    <Row>
+                        <Col md="auto" style={{ color: "lightgray" }}>
+                            <h3>
+                                <b>Product Listings</b>
+                            </h3>
+                        </Col>
+                        <Col md="auto">
+                            <DropdownButton variant="success" title="Sort By" size="24px">
+                                <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
+                                <Dropdown.Item onClick={() => sortProducts("title", direction)}>Title</Dropdown.Item>
+                                <Dropdown.Item onClick={() => sortProducts("type", direction)}>Type</Dropdown.Item>
+                                <Dropdown.Item onClick={() => sortProducts("price", direction)}>Price</Dropdown.Item>
+                                <Dropdown.Item onClick={() => sortProducts("quantity", direction)}>Stock</Dropdown.Item>
+                            </DropdownButton>
+                        </Col>
+                        <Col md="auto">
+                            <Button
+                                variant="success"
+                                disabled={sorterName === null}
+                                onClick={() => changeDirection()}
+                                dangerouslySetInnerHTML={{ __html: "&#8645" }}
+                                size="24px"
+                            ></Button>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container fluid style={{ paddingBottom: "1em" }}>
+                    <Row>
+                        {products.map((product, index) => (
                             <Card key={index} className="d-flex" style={productCardStyle}>
                                 <Card.Img
                                     style={{
@@ -401,22 +337,134 @@ export default function Dashboard() {
                                     <Card.Title style={{ color: "#198754" }}>
                                         <strong>{product.title}</strong>
                                     </Card.Title>
-                                    <Card.Text>Price: {price.toFixed(2)}</Card.Text>
-                                    <Card.Text>Quantity: {quantity}</Card.Text>
+                                    <Card.Text>Description: {product.name}</Card.Text>
+                                    <Card.Text>Type: {product.type}</Card.Text>
+                                    <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
+                                    <Card.Text>Stock: {product.quantity}</Card.Text>
                                     <Button
-                                        class="align-self-end"
-                                        variant="outline-danger"
-                                        onClick={() => removeFromCart(product._id)}
+                                        variant="outline-success"
+                                        onClick={() => addToCart(product._id)}
                                         style={{ width: "auto" }}
                                     >
-                                        Remove from Cart
+                                        Add to Cart
                                     </Button>
                                 </Card.Body>
                             </Card>
-                        ) : null;
-                    })}
-                </Row>
-            </Container>
+                        ))}
+                    </Row>
+                </Container>
+            </Col>
+            <Col md={1}>
+                <hr></hr>
+                <hr></hr>
+                <Container fluid style={{ paddingTop: "1em", color: "lightgray" }}>
+                    <h3>
+                        <b>Cart</b>
+                    </h3>
+                </Container>
+                <Container
+                    fluid
+                    className="d-flex align-items-center"
+                    style={{ fontSize: "24px", paddingBottom: "1em" }}
+                >
+                    <Col md="auto" style={{ color: "lightgray" }}>
+                        <div>
+                            Total Price: <strong>{total.toFixed(2)}</strong>
+                        </div>
+                        <div>
+                            Total Quantity: <strong>{cart.length.toFixed(0)}</strong>
+                        </div>
+                    </Col>
+                    <Col md="auto">
+                        <Row md="auto">
+                            <Button
+                                variant="success"
+                                size="24px"
+                                onClick={() => checkoutAllFromCart()}
+                                style={{ marginLeft: "2rem", marginBottom: "1px" }}
+                            >
+                                Checkout All
+                            </Button>
+                        </Row>
+                        <Row md="auto">
+                            <Button
+                                variant="danger"
+                                size="24px"
+                                onClick={() => removeAllFromCart()}
+                                style={{ marginLeft: "2rem" }}
+                            >
+                                Remove All
+                            </Button>
+                        </Row>
+                    </Col>
+                </Container>
+                <Container fluid>
+                    <Col md="auto">
+                        {products.map((product, index) => {
+                            let quantity = 0;
+                            let price = 0;
+                            cart.forEach((item) => {
+                                if (item.name === product.name) {
+                                    quantity++;
+                                    price += product.price;
+                                }
+                            });
+                            return quantity !== 0 ? (
+                                <Card key={index} className="d-flex align-items-end" style={cartCardStyle}>
+                                    <Row md="auto">
+                                        <Col md={4}>
+                                            <Card.Img
+                                                style={{
+                                                    width: "100%",
+                                                    height: "auto",
+                                                    objectFit: "cover",
+                                                    borderRadius: "10px",
+                                                }}
+                                                variant="left"
+                                                src={product.imageurl}
+                                            />
+                                        </Col>
+                                        <Col md={8}>
+                                            <Card.Body
+                                                className="d-flex flex-row justify-content-start align-items-start"
+                                                style={{
+                                                    flex: 1,
+                                                    color: "lightgray",
+                                                    paddingBottom: "0px",
+                                                }}
+                                            >
+                                                <div
+                                                    style={{
+                                                        marginRight: "30px",
+                                                        marginLeft: "-20px",
+                                                        marginTop: "-20px",
+                                                    }}
+                                                >
+                                                    <Card.Title className="mt-0" style={{ color: "#198754" }}>
+                                                        <strong>{product.title}</strong>
+                                                    </Card.Title>
+                                                    <Card.Text className="mb-1">Price: {price.toFixed(2)}</Card.Text>
+                                                    <Card.Text className="mb-0">Quantity: {quantity}</Card.Text>
+                                                </div>
+                                                <div className="ml-auto">
+                                                    <Button
+                                                        variant="outline-danger"
+                                                        onClick={() => removeFromCart(product._id)}
+                                                        style={{ width: "100%", paddingBottom: "0px" }}
+                                                    >
+                                                        Remove Item
+                                                    </Button>
+                                                </div>
+                                            </Card.Body>
+                                        </Col>
+                                    </Row>
+                                </Card>
+                            ) : null;
+                        })}
+                    </Col>
+                </Container>
+            </Col>
+            {/* </Row> */}
         </Container>
     ) : (
         // admin
