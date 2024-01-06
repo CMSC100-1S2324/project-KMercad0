@@ -1,12 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
 
-export default function Login(props) {
-    //component for login page
-    const login = props.login;
-    const signup = props.signup;
+export default function Login() {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // redirect when login is successful
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/dashboard");
+        }
+    }, [isLoggedIn, navigate]);
+
+    function logIn(e) {
+        e.preventDefault();
+
+        // form validation goes here
+
+        fetch("http://localhost:3001/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: document.getElementById("l-email").value,
+                password: document.getElementById("l-password").value,
+            }),
+        })
+            .then((response) => response.json())
+            .then((body) => {
+                if (body.success) {
+                    setIsLoggedIn(true);
+                    // successful log in. store the token as a cookie
+                    const cookies = new Cookies();
+                    cookies.set("authToken", body.token, {
+                        path: "localhost:3001/",
+                        age: 60 * 60,
+                        sameSite: false,
+                    });
+
+                    localStorage.setItem("_id", body._id);
+                    localStorage.setItem("username", body.username);
+                    localStorage.setItem("type", body.type);
+                } else {
+                    alert("Log in failed");
+                }
+            });
+    }
 
     const imageFolder = "../backgrounds/"; //folder where background images are stored
     const backgroundImages = ["bg1.png", "bg2.png", "bg3.png"]; //array of background images
@@ -91,17 +133,21 @@ export default function Login(props) {
                         {/* This part holds the solid white part of the page */}
                         <Col xs={12} style={whiteBoxStyle}>
                             <Form>
-                                <Form.Group controlId="l-email" style={{paddingBottom: "10px"}}>
+                                <Form.Group controlId="l-email" style={{ paddingBottom: "10px" }}>
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter your username"/>
+                                    <Form.Control type="text" placeholder="Enter your username" />
                                 </Form.Group>
 
                                 <Form.Group controlId="l-password">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter your password" style={{paddingBottom: "10px"}}/>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Enter your password"
+                                        style={{ paddingBottom: "10px" }}
+                                    />
                                 </Form.Group>
 
-                                <Button variant="primary" type="submit" style={buttonStyle} onClick={login}>
+                                <Button variant="primary" type="submit" style={buttonStyle} onClick={logIn}>
                                     Sign In
                                 </Button>
                             </Form>
@@ -109,7 +155,12 @@ export default function Login(props) {
                     </Row>
                     <Row>
                         <Col xs={12} className="mb-3" style={text}>
-                            <h6>Don't have an account? <Link to={`/sign-up`} style={{ color: 'green' }}>Sign up here!</Link></h6>
+                            <h6>
+                                Don't have an account?{" "}
+                                <Link to={`/sign-up`} style={{ color: "green" }}>
+                                    Sign up here!
+                                </Link>
+                            </h6>
                         </Col>
                     </Row>
                 </Container>
