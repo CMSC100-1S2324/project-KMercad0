@@ -173,6 +173,6 @@ state management
           ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/86e74b13-a218-476e-a96b-ccbf56b7649b)
 
 ## Runthrough
-- 
+- https://drive.google.com/file/d/1_ft-FHKfkzGuiDGrtFRLn4a8u1Mtg3I9/view?usp=sharing
 
 ## You're all set up! Just wait for the project website to appear and open.s
