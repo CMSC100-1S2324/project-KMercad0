@@ -76,6 +76,19 @@ The packages installed for this project as well as their functions are as follow
 - Note: Make sure that you have already installed MongoDB in your device. Here is a quick video tutorial on how to install MongoDB on your device. https://www.youtube.com/watch?v=gB6WLkSrtJk&authuser=0
 - Next, in your chosen work directory create a workspace folder and name it however you like. For convenience we used the Desktop.
 2. Cloning Repository
+- Open the project's github repository and copy it's link shown below.
+   ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/c2c470f2-d341-4067-813f-9ab5c546ff9b)
+- In the terminal we have set up in step 1, copy and paste the code snippet below. Make sure to edit it with the repositories link.  
+  ```bash
+  git clone https://github.com/your-username/your-repository.git
+  ```
+- Or simply copy and paste this ready to use clone code snippet for our project's repository.
+  ```bash
+  git clone https://github.com/CMSC100-1S2324/project-KMercad0.git
+  ```
+- Lastly, go to the cloned project directory using the command cd.
+    ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/c1870940-18f4-4bfb-a48f-cde86277c9e0)
+  - Note: You may need a special access key to copy the repository. Kindly message the developers if you encounter any problems.
 
 3. Setting Up the Database
 4. Running (open 2 terminal, npm install, npm start)
