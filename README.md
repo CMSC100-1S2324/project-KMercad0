@@ -72,3 +72,10 @@ The packages installed for this project as well as their functions are as follow
     state management
 
 ## 5. How to Run:
+1. Setting Up Workspace
+- Note: Make sure that you have already installed MongoDB in your device. Here is a quick video tutorial on how to install MongoDB on your device. https://www.youtube.com/watch?v=gB6WLkSrtJk&authuser=0
+- Next, in your chosen work directory create a workspace folder and name it however you like. For convenience we used the Desktop.
+2. Cloning Repository
+
+3. Setting Up the Database
+4. Running (open 2 terminal, npm install, npm start)
