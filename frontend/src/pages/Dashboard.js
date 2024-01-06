@@ -280,7 +280,7 @@ export default function Dashboard() {
                 <Row>
                     <Col md="auto" style={{ color: "lightgray" }}>
                         <h3>
-                            <b>Product Listing</b>
+                            <b>Product Listings</b>
                         </h3>
                     </Col>
                     <Col md="auto">

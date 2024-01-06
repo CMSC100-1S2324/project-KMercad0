@@ -27,7 +27,7 @@ export default function Root() {
 
     return type === "user" ? (
         // user
-        <Container fluid style={{ backgroundColor: "#2d3133" }}>
+        <Container fluid style={{ backgroundColor: "#2d3133", minHeight: "100vh"}}>
             <Navbar expand="lg" style={{ backgroundColor: "#1b1e1f", fontSize: "18px" }}>
                 <Navbar.Brand style={{ marginLeft: "2em" }}>
                     <img
