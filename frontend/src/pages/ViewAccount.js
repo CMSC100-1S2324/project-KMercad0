@@ -12,7 +12,6 @@ export default function ViewAccount() {
             });
     });
 
-    const containerStyle = { fontSize: "24px", paddingTop: "40px", paddingBottom: "40px" };
     const userCardStyle = {
         width: "15rem",
         height: "auto",
@@ -22,22 +21,22 @@ export default function ViewAccount() {
         margin: "10px",
         border: "0",
         borderRadius: "10px",
-        backgroundColor: "#d9d9d9",
+        backgroundColor: "#181a1b",
     };
 
     return (
-        <Container fluid>
-            <Container fluid style={containerStyle}>
+        <Container fluid style={{ paddingBottom: "2em" }}>
+            <Container fluid style={{ paddingTop: "3em", paddingBottom: "0.5em" }}>
                 <Row>
-                    <Col>
-                        <h1>
+                    <Col md="auto" style={{ color: "lightgray" }}>
+                        <h3>
                             <b>Registered Accounts</b>
-                        </h1>
+                        </h3>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="d-flex align-items-center" style={{ fontSize: "24px", marginBottom: "15px" }}>
-                <Col md="auto">
+                <Col md="auto" style={{ color: "lightgray" }}>
                     <div>
                         Total: <strong>{users.length.toFixed(0)}</strong>
                     </div>
@@ -49,10 +48,10 @@ export default function ViewAccount() {
                         return (
                             <Card key={index} style={userCardStyle}>
                                 <Card.Body>
-                                    <Card.Title>
-                                        User: {user.fname} {user.mname} {user.lname}{" "}
+                                    <Card.Title style={{ color: "#198754" }}>
+                                        <strong>{user.fname} {user.mname} {user.lname}{" "}</strong>
                                     </Card.Title>
-                                    <Card.Text>Email: {user.email}</Card.Text>
+                                    <Card.Text style={{ color: "lightgray" }}>Email: {user.email}</Card.Text>
                                 </Card.Body>
                             </Card>
                         );

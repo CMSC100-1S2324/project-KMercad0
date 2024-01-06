@@ -321,7 +321,7 @@ export default function Dashboard() {
                                 <Button
                                     variant="outline-success"
                                     onClick={() => addToCart(product._id)}
-                                    style={{ width: "fit-content" }}
+                                    style={{ width: "auto" }}
                                 >
                                     Add to Cart
                                 </Button>
@@ -390,9 +390,10 @@ export default function Dashboard() {
                                 <Card.Text>Price: {price.toFixed(2)}</Card.Text>
                                 <Card.Text>Quantity: {quantity}</Card.Text>
                                 <Button
+                                    class="align-self-end"
                                     variant="outline-danger"
                                     onClick={() => removeFromCart(product._id)}
-                                    style={{ width: "fit-content" }}
+                                    style={{ width: "auto" }}
                                 >
                                     Remove from Cart
                                 </Button>
