@@ -2,64 +2,79 @@ import { useState, useEffect } from "react";
 import { Card, Button, Container, Row, Col, Dropdown, DropdownButton, Table } from "react-bootstrap";
 
 export default function Dashboard() {
-    const _id = localStorage.getItem("_id");
-    const username = localStorage.getItem("username");
-    const type = localStorage.getItem("type");
+  const _id = localStorage.getItem("_id");
+  const username = localStorage.getItem("username");
+  const type = localStorage.getItem("type");
 
-    const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
-    const [orders, setOrders] = useState([]);
-    const [soldOrders, setSoldOrders] = useState([]);
-    const [total, setTotal] = useState(0);
-    const [direction, setDirection] = useState(1);
-    const [sorterName, setSorterName] = useState(null);
-    const [productNames, setProductNames] = useState([]);
-    const [productsCopy, setProductsCopy] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [productDetails, setProductDetails] = useState([]);
+  const [summarySorter, setSummarySorter] = useState(null);
+  const [soldOrders, setSoldOrders] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [sorterName, setSorterName] = useState(null);
+  const [productNames, setProductNames] = useState([]);
+  const [productsCopy, setProductsCopy] = useState([]);
 
-    useEffect(() => {
-        if (type !== "admin") {
-            fetch("http://localhost:3001/get-products")
-                .then((response) => response.json())
-                .then((body) => {
-                    setProducts(body.products);
-                    setProductsCopy(body.products);
-                });
-            fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
-                .then((response) => response.json())
-                .then((body) => {
-                    setCart(body.cart);
-                });
-            fetch(`http://localhost:3001/get-cart-total-price/${_id}`)
-                .then((response) => response.json())
-                .then((body) => {
-                    setTotal(body.total);
-                });
-        } else {
-            fetch("http://localhost:3001/get-sold-orders")
-                .then((response) => response.json())
-                .then((body) => {
-                    setSoldOrders(body.orders);
-                });
-            fetch("http://localhost:3001/get-orders")
-                .then((response) => response.json())
-                .then((body) => {
-                    setOrders(body.orders);
-                });
-        }
-    }, [_id, type]);
-
-    useEffect(() => {
-        soldOrders.forEach((order) => {
-            fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
-                .then((response) => response.json())
-                .then((body) => {
-                    setProductNames((prevProductNames) => [...prevProductNames, body.product.title]);
-                });
+  useEffect(() => {
+    if (type !== "admin") {
+      fetch("http://localhost:3001/get-products")
+        .then((response) => response.json())
+        .then((body) => {
+          setProducts(body.products);
+          setProductsCopy(body.products);
         });
-    }, [soldOrders]);
+      fetch(`http://localhost:3001/get-items-from-cart/${_id}`)
+        .then((response) => response.json())
+        .then((body) => {
+          setCart(body.cart);
+        });
+      fetch(`http://localhost:3001/get-cart-total-price/${_id}`)
+        .then((response) => response.json())
+        .then((body) => {
+          setTotal(body.total);
+        });
+    } else {
+      fetch("http://localhost:3001/get-sold-orders")
+        .then((response) => response.json())
+        .then((body) => {
+          setSoldOrders(body.orders);
+        });
+      fetch("http://localhost:3001/get-orders")
+        .then((response) => response.json())
+        .then((body) => {
+          setOrders(body.orders);
+        });
+    }
+  }, [_id, type]);
+  useEffect(() => {
+        if (type === "admin") {
+            fetch("http://localhost:3001/get-orders")
+            .then((response) => response.json())
+            .then((body) => {
+         
+                const sortedOrders = sortOrdersByCriteria(body.orders, summarySorter);
+                setOrders(sortedOrders);
+            });
+        }
+    }, [type, summarySorter]);
 
-    useEffect(() => {}, [products, cart]);
+  useEffect(() => {
+    soldOrders.forEach((order) => {
+      fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
+        .then((response) => response.json())
+        .then((body) => {
+          setProductNames((prevProductNames) => [...prevProductNames, body.product.title]);
+        });
+    });
+  }, [soldOrders, productDetails]);
 
+  useEffect(() => {}, [products, cart]);
+
+  
+  
     function updateProducts() {
         fetch("http://localhost:3001/get-products")
             .then((response) => response.json())
@@ -250,6 +265,45 @@ export default function Dashboard() {
                 return newDirection;
             });
         }
+    }
+
+    function getOrderStatus(status) {
+        //console.log(status)
+        switch (status) {
+          case 0:
+            return "Pending";
+          case 1:
+            return "Completed";
+          case 2:
+            return "Cancelled";
+          default:
+            return "Unknown";
+        }
+      }
+
+    function sortOrdersByCriteria(orders, sorter) {
+        if (sorter === "monthly") {
+  
+            return orders.sort((a, b) => {
+            const monthA = new Date(a.dateOrdered).getMonth();
+            const monthB = new Date(b.dateOrdered).getMonth();
+            return monthA - monthB;
+            });
+        }
+        else if (sorter === "yearly") {
+
+            return orders.sort((a, b) => {
+            const yearA = new Date(a.dateOrdered).getFullYear();
+            const yearB = new Date(b.dateOrdered).getFullYear();
+            return yearA - yearB;
+            });
+        }
+                
+        return orders;
+    }
+
+    function filterSummary(sorter) {
+        setSummarySorter(sorter);
     }
 
     const productCardStyle = {
@@ -526,11 +580,10 @@ export default function Dashboard() {
                         </h3>
                     </Col>
                     <Col>
-                        <DropdownButton variant="primary" title="Group By" size="24px">
-                            {/* <Dropdown.Item onClick={() => filterSummary(null)}>None</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("annual")}>Annual</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("month")}>Month</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("week")}>Week</Dropdown.Item> */}
+                        <DropdownButton variant="primary" title="Sort by" size="24px">
+                             <Dropdown.Item onClick={() => setSummarySorter(null)}>None</Dropdown.Item>
+                             <Dropdown.Item onClick={() => setSummarySorter("monthly")}>Monthly</Dropdown.Item>
+                             <Dropdown.Item onClick={() => setSummarySorter("yearly")}>Yearly</Dropdown.Item>
                         </DropdownButton>
                     </Col>
                 </Row>
@@ -539,22 +592,25 @@ export default function Dashboard() {
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Transaction ID</th>
-                                <th>Product Name</th>
+                                <th>Product ID</th>
                                 <th>Order Quantity</th>
                                 <th>Order Status</th>
-                                <th>Order By</th>
+                                <th>Order By User ID</th>
                                 <th>Date Ordered</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
-                            {soldOrders.map((order, index) => (
+                         <tbody>
+                            {orders.map((order, index) => (
                                 <tr key={index}>
-                                    <th>{productNames[index]}</th>
-                                    <th>{order.quantity}</th>
-                                    <th>{order.price}</th>
+                                    <td>{order._id}</td>
+                                    <td>{order.productID}</td>
+                                    <td>{order.quantity}</td>
+                                    <td>{getOrderStatus(order.status)}</td>
+                                    <td>{order.userID}</td>
+                                    <td>{order.dateOrdered}</td>
                                 </tr>
                             ))}
-                        </tbody> */}
+                        </tbody>
                     </Table>
                 </Row>
             </Container>
