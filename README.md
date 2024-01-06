@@ -17,18 +17,74 @@ database, Node JS based web server using Express JS for the backend, and React J
 ## 2. Project Specifications:
 
 ### a. User Types and Accounts:
+- There are two types of users / accounts: Administrators or Merchants, and Customers. 
+- Customers register using their email address and password. There is no need for verification or OTP; they can 
+simply register with a username using an email format.
 
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/398b3247-d563-4cc3-91d1-edf335b0c726)
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/743a279a-6ebe-4d3c-a1ac-bbd9529771b0)
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/a7788597-b881-49a8-81ea-b1363ce7d12c)
+
+- Upon signing up, customers are automatically assigned as customer users—individuals with the capability to make 
+purchases from the shop.
+
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/e1833202-3f70-4ec0-877a-dd6e6cede2ff)
+
+- The Department of Agriculture (DA) has only one user account that manages the entire catalog of items available 
+for distribution in the public market. They do not need to go through the registration process, as they already have 
+their assigned accounts as merchants. In our project, the credentials of the sole administrator account are as follows:
+admin@da.gov.ph (email address) and Administrator100! (password).
+- The Department of Agriculture, as a built-in administrative user, also oversees the e-commerce management, which are 
+as follows: management of accounts, order fulfillment, product listings, and sales reports.
+- The general public cannot access the website unless they register in the system.
 
 ### b. E-commerce Management (Administrator / Merchant View)
+- The Administrator view contains four pages: Dashboard, View Accounts, Manage Orders, and Manage Products. The Dashboard 
+contains the Sales Report: a list of all products sold, total quantity of sales, and total sales income generated 
+by each product. It also contains a Transaction Summary: a list of all transactions which can be sorted by weekly, monthly, 
+and annual sales.
 
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/cf8f0ab5-3fa0-4df9-88bc-2a6018941849)
 
-### c. Shop (Customer User View)
+- Next, the View Accounts page oversees the list of all registered Customer accounts and reports its total.
 
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/300a05cf-ad5a-42a3-9a14-d91d0b174c3a)
+
+- The Manage Orders page oversees the order fulfillment whereby after the Customer creates an order, the Merchant needs to 
+confirm it. Once confirmed, the order is considered final and ready for delivery to the Customer. Orders can be filtered via 
+the following statuses: All, Pending, Completed, and Cancelled.
+
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/69d57fa7-9ac3-4258-bc67-d4d1e8cce2be)
+
+- Lastly, the Manage Products page oversees the product listings. Products in the inventory can be sorted in ascending and 
+descending order by the following categories: Title, Name, Type, Price, and Quantity. Moreover, the Merchant has the option 
+to add a new product, as well as edit and delete products currently in the inventory.
+
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/01fab1f3-578f-411c-b42d-7ba3176e21bb)
+
+### c. Shop (Customer View)
+- The Customer View contains two pages: Dashboard and Manage Orders. The dashboard contains all products available in the shop. 
+Product listings can be sorted in ascending and descending order by the following categories: None, Title, Type, Price, and Stock. 
+The Customer can add items from the shop to the Cart, which reports the total quantity and total price of all items added in the 
+Cart. In the Cart, the Customer has the option to delete individual items or remove them all at once. Once satisfied, the Customer 
+has the option to checkout all items in the cart.
+
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/7e854ad5-8f57-43b6-88a8-0c8e635a1653)
+
+- Orders serve as confirmations for items purchased in the Cart. Similar to the Administrator view, the Manage Orders page also oversees 
+the order fulfillment, whereby instead Customers have the option to cancel and subsequently delete the order if it has not yet been 
+confirmed by the Merchant.  Moreover, the Customer has the option to filter orders via the following statuses: All, Pending, Completed,
+and Cancelled.
+
+![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/0e4f34ca-89ce-4cfb-840d-1da4477167a3)
+
+### d. Additional Points
+- We were able to implement data persistence for the Shopping Cart, whereby it is only rendered in the UI.
 
 ## 3. Schema:
 The database structure used for this project (which is a modified version of the initial provided schema) is as
 follows:
-1. User
+### a. User
 - User ID (String: Mongoose Object ID)
 - First Name (String)
 - Middle Name (String)
@@ -38,7 +94,7 @@ follows:
 - Password (String)
 - Cart (Array of Mongoose Object ID)
 
-2. Product
+### b. Product
 - Product ID (String: Mongoose Object ID)
 - Product Title (String)
 - Product Name (String)
@@ -47,7 +103,7 @@ follows:
 - Product Price (Number)
 - Product Quantity (Number)
 
-3. Order
+### c. Order
 - Order ID (String: Mongoose Object ID)
 - Product ID (String: Mongoose Object ID, ID Reference to Product)
 - Order Quantity (Number)
@@ -58,7 +114,7 @@ follows:
 
 ## 4. Packages:
 The packages installed for this project as well as their functions are as follows:
-1. Backend
+### a. Backend
 - Bcrypt: encrypts and hashes passwords for secure storage
 - Cookie Parser: parses HTTP request cookies for easy handling
 - Cors: enables Cross-Origin Resource Sharing for secure communication between different domains
@@ -68,7 +124,7 @@ The packages installed for this project as well as their functions are as follow
 - Needle: lightweight HTTP client for making requests to external APIs
 - Nodemon: monitors changes in the server-side code and automatically restarts the server during development
 
-2. Frontend
+### b. Frontend
 - React: JavaScript library for building interactive and dynamic user interfaces
 - Bootstrap: frontend framework for designing responsive and visually appealing web applications
 - Universal Cookie: enables cookie handling in both server-side and client-side environments for consistent 
@@ -103,7 +159,6 @@ state management
             - users
               ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/f3dd39e1-6c64-4c13-b0e5-ad1992aecb64)
 
-  
 ### 4. Running the Project
 - Open two (2) new terminals
     - Using the first terminal, go to the project's backend directory,
@@ -117,6 +172,4 @@ state management
           ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/2bc90e4d-9a66-4354-9970-9f99ff43c8b6)
           ![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/100903195/86e74b13-a218-476e-a96b-ccbf56b7649b)
 
-
-## You're all set up! Just wait for the project website to appear and open. 
-
+## You're all set up! Just wait for the project website to appear and open.
