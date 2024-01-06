@@ -63,7 +63,7 @@ export default function Login() {
         }, 5000);
 
         return () => clearInterval(intervalId); //clear interval when component unmounts
-    }, []);
+    });
 
     const backgroundImageStyle = {
         //style for background image

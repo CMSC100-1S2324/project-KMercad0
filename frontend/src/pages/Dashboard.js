@@ -10,13 +10,17 @@ export default function Dashboard() {
     const [cart, setCart] = useState([]);
     const [orders, setOrders] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
-    const [summarySorter, setSummarySorter] = useState(null);
+    const [userDetails, setUserDetails] = useState([]);
     const [soldOrders, setSoldOrders] = useState([]);
     const [total, setTotal] = useState(0);
     const [direction, setDirection] = useState(1);
     const [sorterName, setSorterName] = useState(null);
+    const [ordersCopy, setOrdersCopy] = useState([]);
     const [productNames, setProductNames] = useState([]);
     const [productsCopy, setProductsCopy] = useState([]);
+
+    const productNamesFromOrders = productDetails.map((product) => product.title);
+    const userNamesFromOrders = userDetails.map((user) => `${user.fname} ${user.lname}`);
 
     useEffect(() => {
         if (type !== "admin") {
@@ -46,20 +50,10 @@ export default function Dashboard() {
                 .then((response) => response.json())
                 .then((body) => {
                     setOrders(body.orders);
+                    setOrdersCopy(body.orders);
                 });
         }
     }, [_id, type]);
-
-    useEffect(() => {
-        if (type === "admin") {
-            fetch("http://localhost:3001/get-orders")
-                .then((response) => response.json())
-                .then((body) => {
-                    const sortedOrders = sortOrdersByCriteria(body.orders, summarySorter);
-                    setOrders(sortedOrders);
-                });
-        }
-    }, [type, summarySorter]);
 
     useEffect(() => {
         soldOrders.forEach((order) => {
@@ -70,6 +64,32 @@ export default function Dashboard() {
                 });
         });
     }, [soldOrders]);
+
+    useEffect(() => {
+        const fetchProductAndUserDetails = async () => {
+            const productPromises = orders.map((order) =>
+                fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
+                    .then((response) => response.json())
+                    .then((body) => body.product)
+            );
+
+            const userPromises = orders.map((order) =>
+                fetch(`http://localhost:3001/get-user-of-order/${order._id}`)
+                    .then((response) => response.json())
+                    .then((body) => body.user)
+            );
+
+            const [productResults, userResults] = await Promise.all([
+                Promise.all(productPromises),
+                Promise.all(userPromises),
+            ]);
+
+            setProductDetails(productResults);
+            setUserDetails(userResults);
+        };
+
+        fetchProductAndUserDetails();
+    }, [orders]);
 
     useEffect(() => {}, [products, cart]);
 
@@ -279,22 +299,32 @@ export default function Dashboard() {
         }
     }
 
-    function sortOrdersByCriteria(orders, sorter) {
-        if (sorter === "monthly") {
-            return orders.sort((a, b) => {
-                const monthA = new Date(a.dateOrdered).getMonth();
-                const monthB = new Date(b.dateOrdered).getMonth();
-                return monthA - monthB;
-            });
-        } else if (sorter === "yearly") {
-            return orders.sort((a, b) => {
-                const yearA = new Date(a.dateOrdered).getFullYear();
-                const yearB = new Date(b.dateOrdered).getFullYear();
-                return yearA - yearB;
-            });
-        }
+    function sortOrders(sorterName) {
+        const unsortedOrders = [...ordersCopy];
 
-        return orders;
+        if (sorterName !== null) {
+            let sortedOrder = unsortedOrders.sort((a, b) => {
+                if (sorterName === "monthly") {
+                    const monthA = new Date(a.dateOrdered).getMonth();
+                    const monthB = new Date(b.dateOrdered).getMonth();
+                    const yearA = new Date(a.dateOrdered).getFullYear();
+                    const yearB = new Date(b.dateOrdered).getFullYear();
+                    return new Date(yearA, monthA, 1) - new Date(yearB, monthB, 1);
+                }
+                if (sorterName === "yearly") {
+                    const yearA = new Date(a.dateOrdered).getFullYear();
+                    const yearB = new Date(b.dateOrdered).getFullYear();
+                    return new Date(yearA, 0, 1) - new Date(yearB, 0, 1);
+                }
+                return null;
+            });
+
+            setSorterName(sorterName);
+            setOrders(sortedOrder);
+            return;
+        }
+        setSorterName(sorterName);
+        setOrders(unsortedOrders);
     }
 
     function getDateTime(dateTime) {
@@ -585,9 +615,9 @@ export default function Dashboard() {
                     </Col>
                     <Col>
                         <DropdownButton variant="primary" title="Sort by" size="24px">
-                            <Dropdown.Item onClick={() => setSummarySorter(null)}>None</Dropdown.Item>
-                            <Dropdown.Item onClick={() => setSummarySorter("monthly")}>Monthly</Dropdown.Item>
-                            <Dropdown.Item onClick={() => setSummarySorter("yearly")}>Yearly</Dropdown.Item>
+                            <Dropdown.Item onClick={() => sortOrders(null)}>None</Dropdown.Item>
+                            <Dropdown.Item onClick={() => sortOrders("monthly")}>Monthly</Dropdown.Item>
+                            <Dropdown.Item onClick={() => sortOrders("yearly")}>Yearly</Dropdown.Item>
                         </DropdownButton>
                     </Col>
                 </Row>
@@ -596,10 +626,10 @@ export default function Dashboard() {
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Transaction ID</th>
-                                <th>Product ID</th>
+                                <th>Product Name</th>
                                 <th>Order Quantity</th>
                                 <th>Order Status</th>
-                                <th>Order By User ID</th>
+                                <th>Order By</th>
                                 <th>Date Ordered</th>
                             </tr>
                         </thead>
@@ -607,10 +637,10 @@ export default function Dashboard() {
                             {orders.map((order, index) => (
                                 <tr key={index}>
                                     <td>{order._id}</td>
-                                    <td>{order.productID}</td>
+                                    <td>{productNamesFromOrders[index]}</td>
                                     <td>{order.quantity}</td>
                                     <td>{getOrderStatus(order.status)}</td>
-                                    <td>{order.userID}</td>
+                                    <td>{userNamesFromOrders[index]}</td>
                                     <td>{getDateTime(order.dateOrdered)}</td>
                                 </tr>
                             ))}
