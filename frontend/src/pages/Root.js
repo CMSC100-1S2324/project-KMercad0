@@ -50,7 +50,7 @@ export default function Root() {
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <Button onClick={logout} size="24px" style={{ marginRight: "3rem", backgroundColor: "#198754", borderColor: "#198754" }}>
+                <Button variant="primary" onClick={logout} size="24px" style={{ marginRight: "3rem" }}>
                     Log Out
                 </Button>
             </Navbar>
@@ -87,7 +87,7 @@ export default function Root() {
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <Button onClick={logout} size="24px" style={{ marginRight: "3rem", backgroundColor: "#198754", borderColor: "#198754" }}>
+                <Button variant="primary" onClick={logout} size="24px" style={{ marginRight: "3rem" }}>
                     Log Out
                 </Button>
             </Navbar>

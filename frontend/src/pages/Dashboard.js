@@ -475,7 +475,7 @@ export default function Dashboard() {
                                     variant="success"
                                     size="24px"
                                     onClick={() => checkoutAllFromCart()}
-                                    style={{ marginLeft: "6em", marginBottom: "10px", width: "7.2em" }}
+                                    style={{ marginLeft: "3em", marginBottom: "10px", width: "7.2em" }}
                                 >
                                     Checkout All
                                 </Button>
@@ -485,7 +485,7 @@ export default function Dashboard() {
                                     variant="danger"
                                     size="24px"
                                     onClick={() => removeAllFromCart()}
-                                    style={{ marginLeft: "6em", width: "7.2em" }}
+                                    style={{ marginLeft: "3em", width: "7.2em" }}
                                 >
                                     Remove All
                                 </Button>
@@ -510,7 +510,7 @@ export default function Dashboard() {
                                                 <Card.Img
                                                     style={{
                                                         width: "100%",
-                                                        height: "auto",
+                                                        height: "100px",
                                                         objectFit: "cover",
                                                         borderRadius: "10px",
                                                     }}
@@ -546,7 +546,7 @@ export default function Dashboard() {
                                                         <Button
                                                             variant="outline-danger"
                                                             onClick={() => removeFromCart(product._id)}
-                                                            style={{ width: "auto", marginLeft: "4.4em" }}
+                                                            style={{ width: "auto", marginLeft: "4.5em" }}
                                                         >
                                                             Remove
                                                         </Button>
