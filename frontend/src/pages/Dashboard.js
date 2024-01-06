@@ -9,6 +9,8 @@ export default function Dashboard() {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [productDetails, setProductDetails] = useState([]);
+    const [summarySorter, setSummarySorter] = useState(null);
     const [soldOrders, setSoldOrders] = useState([]);
     const [total, setTotal] = useState(0);
     const [direction, setDirection] = useState(1);
@@ -47,6 +49,17 @@ export default function Dashboard() {
                 });
         }
     }, [_id, type]);
+
+    useEffect(() => {
+        if (type === "admin") {
+            fetch("http://localhost:3001/get-orders")
+                .then((response) => response.json())
+                .then((body) => {
+                    const sortedOrders = sortOrdersByCriteria(body.orders, summarySorter);
+                    setOrders(sortedOrders);
+                });
+        }
+    }, [type, summarySorter]);
 
     useEffect(() => {
         soldOrders.forEach((order) => {
@@ -225,7 +238,7 @@ export default function Dashboard() {
                 const aValue = a[sorterName].toString().trim();
                 const bValue = b[sorterName].toString().trim();
 
-                if (sorterName === "title" || sorterName === "name") {
+                if (sorterName === "title" || sorterName === "type") {
                     return direction * aValue.localeCompare(bValue);
                 } else {
                     const numericA = parseFloat(aValue);
@@ -252,6 +265,50 @@ export default function Dashboard() {
         }
     }
 
+    function getOrderStatus(status) {
+        //console.log(status)
+        switch (status) {
+            case 0:
+                return "Pending";
+            case 1:
+                return "Completed";
+            case 2:
+                return "Cancelled";
+            default:
+                return "Unknown";
+        }
+    }
+
+    function sortOrdersByCriteria(orders, sorter) {
+        if (sorter === "monthly") {
+            return orders.sort((a, b) => {
+                const monthA = new Date(a.dateOrdered).getMonth();
+                const monthB = new Date(b.dateOrdered).getMonth();
+                return monthA - monthB;
+            });
+        } else if (sorter === "yearly") {
+            return orders.sort((a, b) => {
+                const yearA = new Date(a.dateOrdered).getFullYear();
+                const yearB = new Date(b.dateOrdered).getFullYear();
+                return yearA - yearB;
+            });
+        }
+
+        return orders;
+    }
+
+    function getDateTime(dateTime) {
+        const date = new Date(dateTime);
+        //console.log(dateTime);
+
+        const month = date.getMonth() + 1;
+        const day = date.getDay();
+        const year = date.getFullYear();
+        const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+        return `${month}/${day}/${year} ${time}`;
+    }
+
     const productCardStyle = {
         width: "15rem",
         height: "auto",
@@ -265,12 +322,12 @@ export default function Dashboard() {
     };
 
     const cartCardStyle = {
-        width: "25rem",
+        width: "25.6rem",
         height: "auto",
         flexDirection: "row",
         backgroundColor: "#181a1b",
         padding: "10px",
-        margin: "10px",
+        margin: "0 0 20px 0",
     };
 
     return type === "user" ? (
@@ -300,7 +357,7 @@ export default function Dashboard() {
                                 </h3>
                             </Col>
                             <Col md="auto">
-                                <DropdownButton variant="success" title="Sort By" size="24px">
+                                <DropdownButton variant="primary" title="Sort By" size="24px">
                                     <Dropdown.Item onClick={() => sortProducts(null, direction)}>None</Dropdown.Item>
                                     <Dropdown.Item onClick={() => sortProducts("title", direction)}>
                                         Title
@@ -316,7 +373,7 @@ export default function Dashboard() {
                             </Col>
                             <Col md="auto">
                                 <Button
-                                    variant="success"
+                                    variant="primary"
                                     disabled={sorterName === null}
                                     onClick={() => changeDirection()}
                                     dangerouslySetInnerHTML={{ __html: "&#8645" }}
@@ -335,6 +392,7 @@ export default function Dashboard() {
                                             height: "150px",
                                             objectFit: "cover",
                                             borderRadius: "10px",
+                                            marginLeft: "0",
                                         }}
                                         variant="top"
                                         src={product.imageurl}
@@ -387,7 +445,7 @@ export default function Dashboard() {
                                     variant="success"
                                     size="24px"
                                     onClick={() => checkoutAllFromCart()}
-                                    style={{ marginLeft: "2rem", marginBottom: "1px" }}
+                                    style={{ marginLeft: "3em", marginBottom: "10px", width: "7.2em" }}
                                 >
                                     Checkout All
                                 </Button>
@@ -397,7 +455,7 @@ export default function Dashboard() {
                                     variant="danger"
                                     size="24px"
                                     onClick={() => removeAllFromCart()}
-                                    style={{ marginLeft: "2rem" }}
+                                    style={{ marginLeft: "3em", width: "7.2em" }}
                                 >
                                     Remove All
                                 </Button>
@@ -406,7 +464,7 @@ export default function Dashboard() {
                     </Container>
                     <Container fluid>
                         <Col md="auto">
-                            {products.map((product, index) => {
+                            {productsCopy.map((product, index) => {
                                 let quantity = 0;
                                 let price = 0;
                                 cart.forEach((item) => {
@@ -416,9 +474,9 @@ export default function Dashboard() {
                                     }
                                 });
                                 return quantity !== 0 ? (
-                                    <Card key={index} className="d-flex align-items-end" style={cartCardStyle}>
+                                    <Card key={index} style={cartCardStyle}>
                                         <Row md="auto">
-                                            <Col md={4}>
+                                            <Col md={3}>
                                                 <Card.Img
                                                     style={{
                                                         width: "100%",
@@ -430,13 +488,13 @@ export default function Dashboard() {
                                                     src={product.imageurl}
                                                 />
                                             </Col>
-                                            <Col md={8}>
+                                            <Col md={9}>
                                                 <Card.Body
                                                     className="d-flex flex-row justify-content-start align-items-start"
                                                     style={{
                                                         flex: 1,
                                                         color: "lightgray",
-                                                        paddingBottom: "0px",
+                                                        paddingBottom: "0",
                                                     }}
                                                 >
                                                     <div
@@ -458,9 +516,9 @@ export default function Dashboard() {
                                                         <Button
                                                             variant="outline-danger"
                                                             onClick={() => removeFromCart(product._id)}
-                                                            style={{ width: "100%", paddingBottom: "0px" }}
+                                                            style={{ width: "auto", marginLeft: "4.5em" }}
                                                         >
-                                                            Remove Item
+                                                            Remove
                                                         </Button>
                                                     </div>
                                                 </Card.Body>
@@ -480,7 +538,7 @@ export default function Dashboard() {
             <Container
                 fluid
                 className="d-flex align-items-center"
-                style={{ fontSize: "24px", paddingTop: "2em", paddingBottom: "2em" }}
+                style={{ fontSize: "24px", color: "lightgray", paddingTop: "2em", paddingBottom: "2em" }}
             >
                 <div>
                     Welcome to the dashboard, <strong>{username}</strong>!
@@ -488,7 +546,7 @@ export default function Dashboard() {
             </Container>
             <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
-                    <Col md="auto">
+                    <Col md="auto" style={{ color: "lightgrey" }}>
                         <h3>
                             <b>Sales Report</b>
                         </h3>
@@ -497,7 +555,7 @@ export default function Dashboard() {
             </Container>
             <Container>
                 <Row>
-                    <Table bordered hover>
+                    <Table bordered hover variant="dark">
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Products Sold</th>
@@ -520,41 +578,43 @@ export default function Dashboard() {
             <hr></hr>
             <Container fluid style={{ paddingBottom: "1em" }}>
                 <Row>
-                    <Col md="auto">
+                    <Col md="auto" style={{ color: "lightgrey" }}>
                         <h3>
                             <b>Transaction Summary</b>
                         </h3>
                     </Col>
                     <Col>
-                        <DropdownButton variant="primary" title="Group By" size="24px">
-                            {/* <Dropdown.Item onClick={() => filterSummary(null)}>None</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("annual")}>Annual</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("month")}>Month</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("week")}>Week</Dropdown.Item> */}
+                        <DropdownButton variant="primary" title="Sort by" size="24px">
+                            <Dropdown.Item onClick={() => setSummarySorter(null)}>None</Dropdown.Item>
+                            <Dropdown.Item onClick={() => setSummarySorter("monthly")}>Monthly</Dropdown.Item>
+                            <Dropdown.Item onClick={() => setSummarySorter("yearly")}>Yearly</Dropdown.Item>
                         </DropdownButton>
                     </Col>
                 </Row>
                 <Row>
-                    <Table bordered hover>
+                    <Table bordered hover variant="dark">
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Transaction ID</th>
-                                <th>Product Name</th>
+                                <th>Product ID</th>
                                 <th>Order Quantity</th>
                                 <th>Order Status</th>
-                                <th>Order By</th>
+                                <th>Order By User ID</th>
                                 <th>Date Ordered</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
-                            {soldOrders.map((order, index) => (
+                        <tbody>
+                            {orders.map((order, index) => (
                                 <tr key={index}>
-                                    <th>{productNames[index]}</th>
-                                    <th>{order.quantity}</th>
-                                    <th>{order.price}</th>
+                                    <td>{order._id}</td>
+                                    <td>{order.productID}</td>
+                                    <td>{order.quantity}</td>
+                                    <td>{getOrderStatus(order.status)}</td>
+                                    <td>{order.userID}</td>
+                                    <td>{getDateTime(order.dateOrdered)}</td>
                                 </tr>
                             ))}
-                        </tbody> */}
+                        </tbody>
                     </Table>
                 </Row>
             </Container>

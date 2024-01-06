@@ -4,12 +4,12 @@ import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Root from "./pages/Root";
-import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ManageOrder from "./pages/ManageOrder";
 import ManageProduct from "./pages/ManageProduct";
 import ViewAccount from "./pages/ViewAccount";
-import SignUp from "./components/signup";
+import Login from "./pages/Login";
+import SignUp from "./pages/Signup";
 
 // Send a POST request to API to check if the user is logged in. Redirect the user to /dashboard if already logged in
 const checkIfLoggedInOnHome = async () => {
@@ -42,8 +42,8 @@ const checkIfLoggedInOnAccount = async () => {
 };
 
 const router = createBrowserRouter([
-    { path: "/", element: <Auth />, loader: checkIfLoggedInOnHome },
-    { path: "/sign-up", element: <SignUp />,},
+    { path: "/", element: <Login />, loader: checkIfLoggedInOnHome },
+    { path: "/sign-up", element: <SignUp />, loader: checkIfLoggedInOnHome },
     {
         path: "/",
         element: <Root />,
@@ -52,7 +52,6 @@ const router = createBrowserRouter([
             { path: "/manage-order", element: <ManageOrder />, loader: checkIfLoggedInOnAccount },
             { path: "/manage-product", element: <ManageProduct />, loader: checkIfLoggedInOnAccount },
             { path: "/view-account", element: <ViewAccount />, loader: checkIfLoggedInOnAccount },
-           
         ],
     },
 ]);
