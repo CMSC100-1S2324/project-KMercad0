@@ -225,7 +225,7 @@ export default function Dashboard() {
                 const aValue = a[sorterName].toString().trim();
                 const bValue = b[sorterName].toString().trim();
 
-                if (sorterName === "title" || sorterName === "name") {
+                if (sorterName === "title" || sorterName === "type") {
                     return direction * aValue.localeCompare(bValue);
                 } else {
                     const numericA = parseFloat(aValue);
@@ -406,7 +406,7 @@ export default function Dashboard() {
                     </Container>
                     <Container fluid>
                         <Col md="auto">
-                            {products.map((product, index) => {
+                            {productsCopy.map((product, index) => {
                                 let quantity = 0;
                                 let price = 0;
                                 cart.forEach((item) => {
