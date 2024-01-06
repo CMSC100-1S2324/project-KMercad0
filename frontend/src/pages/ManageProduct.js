@@ -47,9 +47,11 @@ export default function ManageProduct() {
             const aValue = (a[columnName] || "").toString().trim();
             const bValue = (b[columnName] || "").toString().trim();
 
-            if (columnName === "title" || columnName === "name") {
+            if (columnName === "title" || columnName === "type" || columnName === "name") {
                 return sortDirections[columnName] * aValue.localeCompare(bValue);
-            } else {
+            }
+
+            if (columnName === "price" || columnName === "quantity") {
                 const numericA = parseFloat(aValue) || 0;
                 const numericB = parseFloat(bValue) || 0;
                 return sortDirections[columnName] * (numericA - numericB);
@@ -195,221 +197,243 @@ export default function ManageProduct() {
 
     return (
         <>
-        <Container fluid style={{ paddingBottom: "2em" }}>
-            <Container fluid style={{ paddingTop: "3em", paddingBottom: "1em" }}>
-                <Row>
-                    <Col md="auto" style={{ color: "lightgrey" }}>
-                        <h3>
-                            <b>Product Listings</b>
-                        </h3>
-                    </Col>
-                </Row>
+            <Container fluid style={{ paddingBottom: "2em" }}>
+                <Container fluid style={{ paddingTop: "3em", paddingBottom: "1em" }}>
+                    <Row>
+                        <Col md="auto" style={{ color: "lightgrey" }}>
+                            <h3>
+                                <b>Product Listings</b>
+                            </h3>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container>
+                    <Row>
+                        <Container fluid style={{ paddingLeft: "0", paddingBottom: "0.5em" }}>
+                            <Row>
+                                <Col md="auto" style={{ color: "lightgray" }}>
+                                    <h4>
+                                        <b>Add New Product</b>
+                                    </h4>
+                                </Col>
+                            </Row>
+                        </Container>
+                        <Table bordered variant="dark">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" id="newTitle" placeholder="Title" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="newName" placeholder="Name" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="newType" placeholder="Type" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="newImageUrl" placeholder="Image URL" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="newPrice" placeholder="Price" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="newQuantity" placeholder="Quantity" />
+                                    </td>
+                                    <td>
+                                        <Button
+                                            variant="success"
+                                            onClick={() => addNewProduct()}
+                                            style={{ width: "auto" }}
+                                        >
+                                            +
+                                        </Button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                        <Table bordered hover variant="dark">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleButtonClick("title")}
+                                            style={{ width: "100%" }}
+                                        >
+                                            Title &#8645;
+                                        </Button>
+                                        <div className="sort-arrow" id="title-arrow"></div>
+                                    </th>
+                                    <th>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleButtonClick("name")}
+                                            style={{ width: "100%" }}
+                                        >
+                                            Name &#8645;
+                                        </Button>
+                                        <div className="sort-arrow" id="name-arrow"></div>
+                                    </th>
+                                    <th>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleButtonClick("type")}
+                                            style={{ width: "100%" }}
+                                        >
+                                            Type &#8645;
+                                        </Button>
+                                        <div className="sort-arrow" id="type-arrow"></div>
+                                    </th>
+                                    <th>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleButtonClick(null)}
+                                            style={{ width: "100%" }}
+                                        >
+                                            Image
+                                        </Button>
+                                        <div className="sort-arrow" id="type-arrow"></div>
+                                    </th>
+                                    <th>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleButtonClick("price")}
+                                            style={{ width: "100%" }}
+                                        >
+                                            Price &#8645;
+                                        </Button>
+                                        <div className="sort-arrow" id="price-arrow"></div>
+                                    </th>
+                                    <th>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleButtonClick("quantity")}
+                                            style={{ width: "100%" }}
+                                        >
+                                            Quantity &#8645;
+                                        </Button>
+                                        <div className="sort-arrow" id="quantity-arrow"></div>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tableRows.map((product, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedValues.title}
+                                                    onChange={(e) => handleEditChange(e, "title")}
+                                                />
+                                            ) : (
+                                                product.title || "N/A"
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedValues.name}
+                                                    onChange={(e) => handleEditChange(e, "name")}
+                                                />
+                                            ) : (
+                                                product.name || "N/A"
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedValues.type}
+                                                    onChange={(e) => handleEditChange(e, "type")}
+                                                />
+                                            ) : (
+                                                product.type || "N/A"
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedValues.imageurl}
+                                                    onChange={(e) => handleEditChange(e, "imageurl")}
+                                                />
+                                            ) : product.imageurl ? (
+                                                <a href={product.imageurl} target="_blank" rel="noopener noreferrer">
+                                                    Image
+                                                </a>
+                                            ) : (
+                                                "N/A"
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedValues.price}
+                                                    onChange={(e) => handleEditChange(e, "price")}
+                                                />
+                                            ) : (
+                                                product.price || "N/A"
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedValues.quantity}
+                                                    onChange={(e) => handleEditChange(e, "quantity")}
+                                                />
+                                            ) : (
+                                                product.quantity || "N/A"
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingRow === index ? (
+                                                <>
+                                                    <Button
+                                                        variant="success"
+                                                        onClick={() => handleSaveClick(product)}
+                                                        style={{ width: "100%", marginBottom: "10px" }}
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                    <Button
+                                                        variant="danger"
+                                                        onClick={() => handleDeleteClick(product._id)}
+                                                        style={{ width: "100%" }}
+                                                    >
+                                                        Delete
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Button
+                                                        variant="warning"
+                                                        onClick={() => handleEditClick(index)}
+                                                        style={{ width: "100%", marginBottom: "10px" }}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        variant="danger"
+                                                        onClick={() => handleDeleteClick(product._id)}
+                                                        style={{ width: "100%" }}
+                                                    >
+                                                        Delete
+                                                    </Button>
+                                                </>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Row>
+                </Container>
             </Container>
-            <Container>
-                <Row>
-                    <Container fluid style={{ paddingLeft: "0", paddingBottom: "0.5em" }}>
-                        <Row>
-                            <Col md="auto" style={{ color: "lightgray" }}>
-                                <h4>
-                                    <b>Add New Product</b>
-                                </h4>
-                            </Col>
-                        </Row>
-                     </Container>
-                    <Table bordered variant="dark">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text" id="newTitle" placeholder="Title" />
-                                </td>
-                                <td>
-                                    <input type="text" id="newName" placeholder="Name" />
-                                </td>
-                                <td>
-                                    <input type="text" id="newType" placeholder="Type" />
-                                </td>
-                                <td>
-                                    <input type="text" id="newImageUrl" placeholder="Image URL" /> 
-                                </td>
-                                <td>
-                                    <input type="text" id="newPrice" placeholder="Price" />
-                                </td>
-                                <td>
-                                    <input type="text" id="newQuantity" placeholder="Quantity" />
-                                </td>
-                                <td>
-                                    <Button
-                                        variant="success"
-                                        onClick={() => addNewProduct()}
-                                        style={{ width: "auto" }}
-                                    >
-                                        +
-                                    </Button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                    <Table bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                            <th>
-                                <Button variant="primary" onClick={() => handleButtonClick("title")} style={{ width: "100%" }}>
-                                    Title &#8645;
-                                </Button>
-                                <div className="sort-arrow" id="title-arrow"></div>
-                            </th>
-                            <th>
-                                <Button variant="primary" onClick={() => handleButtonClick("name")} style={{ width: "100%" }}>
-                                    Name &#8645;
-                                </Button>
-                                <div className="sort-arrow" id="name-arrow"></div>
-                            </th>
-                            <th>
-                                <Button variant="primary" onClick={() => handleButtonClick("type")} style={{ width: "100%" }}>
-                                    Type &#8645;
-                                </Button>
-                                <div className="sort-arrow" id="type-arrow"></div>
-                            </th>
-                            <th>
-                                <Button variant="primary" onClick={() => handleButtonClick("price")} style={{ width: "100%" }}>
-                                    Image
-                                </Button>
-                                <div className="sort-arrow" id="type-arrow"></div>
-                            </th>
-                            <th>
-                                <Button variant="primary" onClick={() => handleButtonClick("price")} style={{ width: "100%" }}>
-                                    Price &#8645;
-                                </Button>
-                                <div className="sort-arrow" id="price-arrow"></div>
-                            </th>
-                            <th>
-                                <Button variant="primary" onClick={() => handleButtonClick("quantity")} style={{ width: "100%" }}>
-                                    Quantity &#8645;
-                                </Button>
-                                <div className="sort-arrow" id="quantity-arrow"></div>
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableRows.map((product, index) => (
-                            <tr key={index}>
-                                <td>
-                                    {editingRow === index ? (
-                                        <input
-                                            type="text"
-                                            value={editedValues.title}
-                                            onChange={(e) => handleEditChange(e, "title")}
-                                        />
-                                    ) : (
-                                        product.title || "N/A"
-                                    )}
-                                </td>
-                                <td>
-                                    {editingRow === index ? (
-                                        <input
-                                            type="text"
-                                            value={editedValues.name}
-                                            onChange={(e) => handleEditChange(e, "name")}
-                                        />
-                                    ) : (
-                                        product.name || "N/A"
-                                    )}
-                                </td>
-                                <td>
-                                    {editingRow === index ? (
-                                        <input
-                                            type="text"
-                                            value={editedValues.type}
-                                            onChange={(e) => handleEditChange(e, "type")}
-                                        />
-                                    ) : (
-                                        product.type || "N/A"
-                                    )}
-                                </td>
-                                <td>
-                                    {editingRow === index ? (
-                                        <input
-                                            type="text"
-                                            value={editedValues.imageurl}
-                                            onChange={(e) => handleEditChange(e, "imageurl")}
-                                        />
-                                    ) : (
-                                        product.imageurl ? (
-                                            <a href={product.imageurl} target="_blank" rel="noopener noreferrer">
-                                                Image
-                                            </a>
-                                        ) : (
-                                            "N/A"
-                                        )
-                                    )}
-                                </td>
-                                <td>
-                                    {editingRow === index ? (
-                                        <input
-                                            type="text"
-                                            value={editedValues.price}
-                                            onChange={(e) => handleEditChange(e, "price")}
-                                        />
-                                    ) : (
-                                        product.price || "N/A"
-                                    )}
-                                </td>
-                                <td>
-                                    {editingRow === index ? (
-                                        <input
-                                            type="text"
-                                            value={editedValues.quantity}
-                                            onChange={(e) => handleEditChange(e, "quantity")}
-                                        />
-                                    ) : (
-                                        product.quantity || "N/A"
-                                    )}
-                                </td>
-                                <td>
-                                    {editingRow === index ? (
-                                        <>
-                                            <Button
-                                                variant="success"
-                                                onClick={() => handleSaveClick(product)}
-                                                style={{ width: "100%", marginBottom: "10px" }}
-                                            >
-                                                Save
-                                            </Button>
-                                            <Button
-                                                variant="danger"
-                                                onClick={() => handleDeleteClick(product._id)}
-                                                style={{ width: "100%" }}
-                                            >
-                                                Delete
-                                            </Button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Button 
-                                                variant="warning"
-                                                onClick={() => handleEditClick(index)}
-                                                style={{ width: "100%", marginBottom: "10px" }}
-                                            >
-                                                Edit
-                                            </Button>
-                                            <Button
-                                                variant="danger"
-                                                onClick={() => handleDeleteClick(product._id)}
-                                                style={{ width: "100%" }}
-                                            >
-                                                Delete
-                                            </Button>
-                                        </>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                </Row>
-            </Container>
-        </Container>
         </>
     );
 }

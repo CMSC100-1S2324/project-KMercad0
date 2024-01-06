@@ -9,6 +9,8 @@ export default function Dashboard() {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [productDetails, setProductDetails] = useState([]);
+    const [summarySorter, setSummarySorter] = useState(null);
     const [soldOrders, setSoldOrders] = useState([]);
     const [total, setTotal] = useState(0);
     const [direction, setDirection] = useState(1);
@@ -47,6 +49,17 @@ export default function Dashboard() {
                 });
         }
     }, [_id, type]);
+
+    useEffect(() => {
+        if (type === "admin") {
+            fetch("http://localhost:3001/get-orders")
+                .then((response) => response.json())
+                .then((body) => {
+                    const sortedOrders = sortOrdersByCriteria(body.orders, summarySorter);
+                    setOrders(sortedOrders);
+                });
+        }
+    }, [type, summarySorter]);
 
     useEffect(() => {
         soldOrders.forEach((order) => {
@@ -252,6 +265,50 @@ export default function Dashboard() {
         }
     }
 
+    function getOrderStatus(status) {
+        //console.log(status)
+        switch (status) {
+            case 0:
+                return "Pending";
+            case 1:
+                return "Completed";
+            case 2:
+                return "Cancelled";
+            default:
+                return "Unknown";
+        }
+    }
+
+    function sortOrdersByCriteria(orders, sorter) {
+        if (sorter === "monthly") {
+            return orders.sort((a, b) => {
+                const monthA = new Date(a.dateOrdered).getMonth();
+                const monthB = new Date(b.dateOrdered).getMonth();
+                return monthA - monthB;
+            });
+        } else if (sorter === "yearly") {
+            return orders.sort((a, b) => {
+                const yearA = new Date(a.dateOrdered).getFullYear();
+                const yearB = new Date(b.dateOrdered).getFullYear();
+                return yearA - yearB;
+            });
+        }
+
+        return orders;
+    }
+
+    function getDateTime(dateTime) {
+        const date = new Date(dateTime);
+        //console.log(dateTime);
+
+        const month = date.getMonth() + 1;
+        const day = date.getDay();
+        const year = date.getFullYear();
+        const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+        return `${month}/${day}/${year} ${time}`;
+    }
+
     const productCardStyle = {
         width: "15rem",
         height: "auto",
@@ -335,7 +392,7 @@ export default function Dashboard() {
                                             height: "150px",
                                             objectFit: "cover",
                                             borderRadius: "10px",
-                                            marginLeft: "0"
+                                            marginLeft: "0",
                                         }}
                                         variant="top"
                                         src={product.imageurl}
@@ -437,7 +494,7 @@ export default function Dashboard() {
                                                     style={{
                                                         flex: 1,
                                                         color: "lightgray",
-                                                        paddingBottom: "0"
+                                                        paddingBottom: "0",
                                                     }}
                                                 >
                                                     <div
@@ -527,11 +584,10 @@ export default function Dashboard() {
                         </h3>
                     </Col>
                     <Col>
-                        <DropdownButton variant="primary" title="Group By" size="24px">
-                            {/* <Dropdown.Item onClick={() => filterSummary(null)}>None</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("annual")}>Annual</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("month")}>Month</Dropdown.Item>
-                            <Dropdown.Item onClick={() => filterSummary("week")}>Week</Dropdown.Item> */}
+                        <DropdownButton variant="primary" title="Sort by" size="24px">
+                            <Dropdown.Item onClick={() => setSummarySorter(null)}>None</Dropdown.Item>
+                            <Dropdown.Item onClick={() => setSummarySorter("monthly")}>Monthly</Dropdown.Item>
+                            <Dropdown.Item onClick={() => setSummarySorter("yearly")}>Yearly</Dropdown.Item>
                         </DropdownButton>
                     </Col>
                 </Row>
@@ -540,22 +596,25 @@ export default function Dashboard() {
                         <thead>
                             <tr style={{ fontWeight: "bold", fontSize: "20px" }}>
                                 <th>Transaction ID</th>
-                                <th>Product Name</th>
+                                <th>Product ID</th>
                                 <th>Order Quantity</th>
                                 <th>Order Status</th>
-                                <th>Order By</th>
+                                <th>Order By User ID</th>
                                 <th>Date Ordered</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
-                            {soldOrders.map((order, index) => (
+                        <tbody>
+                            {orders.map((order, index) => (
                                 <tr key={index}>
-                                    <th>{productNames[index]}</th>
-                                    <th>{order.quantity}</th>
-                                    <th>{order.price}</th>
+                                    <td>{order._id}</td>
+                                    <td>{order.productID}</td>
+                                    <td>{order.quantity}</td>
+                                    <td>{getOrderStatus(order.status)}</td>
+                                    <td>{order.userID}</td>
+                                    <td>{getDateTime(order.dateOrdered)}</td>
                                 </tr>
                             ))}
-                        </tbody> */}
+                        </tbody>
                     </Table>
                 </Row>
             </Container>
