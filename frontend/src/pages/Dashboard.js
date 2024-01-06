@@ -422,7 +422,7 @@ export default function Dashboard() {
                                                 <Card.Img
                                                     style={{
                                                         width: "100%",
-                                                        height: "auto",
+                                                        height: "100px",
                                                         objectFit: "cover",
                                                         borderRadius: "10px",
                                                     }}
