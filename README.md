@@ -60,8 +60,6 @@ the following statuses: All, Pending, Completed, and Cancelled.
 descending order by the following categories: Title, Name, Type, Price, and Quantity. Moreover, the Merchant has the option 
 to add a new product, as well as edit and delete products currently in the inventory.
 
-![image](https://github.com/CMSC100-1S2324/project-KMercad0/assets/125257074/01fab1f3-578f-411c-b42d-7ba3176e21bb)
-
 ### c. Shop (Customer View)
 - The Customer View contains two pages: Dashboard and Manage Orders. The dashboard contains all products available in the shop. 
 Product listings can be sorted in ascending and descending order by the following categories: None, Title, Type, Price, and Stock. 
