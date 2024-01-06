@@ -35,7 +35,7 @@ export default function Login(props) {
 
     const outerContainerStyle = {
         //style for outer container
-        borderRadius: "8px",
+        borderRadius: "20px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         background: "rgba(255, 255, 255, 0.8)",
         padding: "20px",
