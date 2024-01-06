@@ -307,15 +307,22 @@ export default function Dashboard() {
                 <Row>
                     {products.map((product, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{  
-                                width: "100%",       
-                                height: "150px",      
-                                objectFit: "cover", 
-                                borderRadius: "10px" }} variant="top" src={product.imageurl} />
+                            <Card.Img
+                                style={{
+                                    width: "100%",
+                                    height: "150px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                }}
+                                variant="top"
+                                src={product.imageurl}
+                            />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
-                                <Card.Title style = {{ color: "#198754" }}><strong>{product.title}</strong></Card.Title>
+                                <Card.Title style={{ color: "#198754" }}>
+                                    <strong>{product.title}</strong>
+                                </Card.Title>
                                 <Card.Text>Description: {product.name}</Card.Text>
-                                <Card.Text>Type: {product.type === 1 ? "Crop" : "Poultry"}</Card.Text>
+                                <Card.Text>Type: {product.type}</Card.Text>
                                 <Card.Text>Price: {product.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Stock: {product.quantity}</Card.Text>
                                 <Button
@@ -380,25 +387,31 @@ export default function Dashboard() {
 
                         return quantity !== 0 ? (
                             <Card key={index} className="d-flex" style={productCardStyle}>
-                             <Card.Img style={{  
-                                width: "100%",       
-                                height: "150px",      
-                                objectFit: "cover", 
-                                borderRadius: "10px" }} variant="top" src={product.imageurl} />
-                            <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
-                                <Card.Title style={{ color: "#198754" }}><strong>{product.title}</strong></Card.Title>
-                                <Card.Text>Price: {price.toFixed(2)}</Card.Text>
-                                <Card.Text>Quantity: {quantity}</Card.Text>
-                                <Button
-                                    variant="outline-danger"
-                                    onClick={() => removeFromCart(product._id)}
-                                    style={{ width: "fit-content" }}
-                                >
-                                    Remove from Cart
-                                </Button>
-                            </Card.Body>
-                        </Card>
-                        
+                                <Card.Img
+                                    style={{
+                                        width: "100%",
+                                        height: "150px",
+                                        objectFit: "cover",
+                                        borderRadius: "10px",
+                                    }}
+                                    variant="top"
+                                    src={product.imageurl}
+                                />
+                                <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
+                                    <Card.Title style={{ color: "#198754" }}>
+                                        <strong>{product.title}</strong>
+                                    </Card.Title>
+                                    <Card.Text>Price: {price.toFixed(2)}</Card.Text>
+                                    <Card.Text>Quantity: {quantity}</Card.Text>
+                                    <Button
+                                        variant="outline-danger"
+                                        onClick={() => removeFromCart(product._id)}
+                                        style={{ width: "fit-content" }}
+                                    >
+                                        Remove from Cart
+                                    </Button>
+                                </Card.Body>
+                            </Card>
                         ) : null;
                     })}
                 </Row>
