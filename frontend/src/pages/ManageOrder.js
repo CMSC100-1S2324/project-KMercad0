@@ -7,13 +7,15 @@ export default function ManageOrder() {
     const orderStatus = ["Pending", "Completed", "Cancelled"];
 
     const [orders, setOrders] = useState([]);
-    const [productNames, setProductNames] = useState([]);
-    const [userNames, setUserNames] = useState([]);
     const [ordersCopy, setOrdersCopy] = useState([]);
     const [productDetails, setProductDetails] = useState([]);
-    console.log(productDetails)
-    const imageUrls = productDetails.map(product => product.imageurl);
-    
+    const [userDetails, setUserDetails] = useState([]);
+    const [filterName, setFilterName] = useState(null);
+
+    const imageUrls = productDetails.map((product) => product.imageurl);
+    const productNames = productDetails.map((product) => product.title);
+    const userNames = userDetails.map((user) => `${user.fname} ${user.lname}`);
+
     useEffect(() => {
         type !== "admin"
             ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
@@ -31,53 +33,43 @@ export default function ManageOrder() {
     }, [_id, type]);
 
     useEffect(() => {
-        orders.forEach((order) => {
-            fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
-                .then((response) => response.json())
-                .then((body) => {
-                    setProductNames((prevProductNames) => [...prevProductNames, body.product.title]);
-                });
+        const fetchProductAndUserDetails = async () => {
+            const productPromises = orders.map((order) =>
+                fetch(`http://localhost:3001/get-product-of-order/${order._id}`)
+                    .then((response) => response.json())
+                    .then((body) => body.product)
+            );
 
-            fetch(`http://localhost:3001/get-user-of-order/${order._id}`)
-                .then((response) => response.json())
-                .then((body) => {
-                    setUserNames((prevUserNames) => [...prevUserNames, `${body.user.fname} ${body.user.lname}`]);
-                });
-        });
-    }, [orders]);
+            const userPromises = orders.map((order) =>
+                fetch(`http://localhost:3001/get-user-of-order/${order._id}`)
+                    .then((response) => response.json())
+                    .then((body) => body.user)
+            );
 
-    useEffect(() => {
-        const fetchProductDetails = async () => {
-            const productDetailsArray = [];
-    
-            for (const order of orders) {
-                const productResponse = await fetch(`http://localhost:3001/get-product-of-order/${order._id}`);
-                const productBody = await productResponse.json();
-                productDetailsArray.push(productBody.product);
-            }
-    
-            setProductDetails(productDetailsArray);
+            const [productResults, userResults] = await Promise.all([
+                Promise.all(productPromises),
+                Promise.all(userPromises),
+            ]);
+
+            setProductDetails(productResults);
+            setUserDetails(userResults);
         };
-    
-        fetchProductDetails();
-    }, [orders]);
-    
-    useEffect(() => {}, [orders]);
 
-    function updateOrders() {
-        type !== "admin"
-            ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body.orders);
-                      setOrdersCopy(body.orders);
-                  })
-            : fetch("http://localhost:3001/get-orders")
-                  .then((response) => response.json())
-                  .then((body) => {
-                      setOrders(body.orders);
-                      setOrdersCopy(body.orders);
-                  });
+        fetchProductAndUserDetails();
+    }, [orders]);
+
+    async function updateOrders() {
+        const orderPromises =
+            type !== "admin"
+                ? fetch(`http://localhost:3001/get-user-orders/${_id}`)
+                      .then((response) => response.json())
+                      .then((body) => body.orders)
+                : fetch("http://localhost:3001/get-orders")
+                      .then((response) => response.json())
+                      .then((body) => body.orders);
+
+        const orderResults = await orderPromises;
+        return orderResults;
     }
 
     function changeStatus(orderID, productID, quantity, status) {
@@ -94,7 +86,7 @@ export default function ManageOrder() {
                     if (status === 2) {
                         restockQuantity(productID, quantity);
                     }
-                    updateOrders();
+                    updateOrders().then((orderResults) => reapplyFiltering(orderResults));
                     console.log("Successfully changed status!");
                 } else {
                     console.log("Change status failed");
@@ -129,8 +121,21 @@ export default function ManageOrder() {
         })
             .then((response) => response.json())
             .then((body) => {
-                updateOrders();
+                updateOrders().then((orderResults) => reapplyFiltering(orderResults));
             });
+    }
+
+    function reapplyFiltering(orderResults) {
+        const unfilteredOrders = [...orderResults];
+
+        if (filterName !== null) {
+            let filteredOrders = unfilteredOrders.filter((item) => item.status === filterName);
+            setOrders(filteredOrders);
+            setOrdersCopy(orderResults);
+            return;
+        }
+        setOrders(unfilteredOrders);
+        setOrdersCopy(orderResults);
     }
 
     function filterOrders(filterName) {
@@ -138,9 +143,11 @@ export default function ManageOrder() {
 
         if (filterName !== null) {
             let filteredOrders = unfilteredOrders.filter((item) => item.status === filterName);
+            setFilterName(filterName);
             setOrders(filteredOrders);
             return;
         }
+        setFilterName(filterName);
         setOrders(unfilteredOrders);
     }
 
@@ -191,11 +198,16 @@ export default function ManageOrder() {
                 <Row>
                     {orders.map((order, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{  
-                                width: "100%",       
-                                height: "150px",      
-                                objectFit: "cover", 
-                                borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
+                            <Card.Img
+                                style={{
+                                    width: "100%",
+                                    height: "150px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                }}
+                                variant="top"
+                                src={imageUrls[index]}
+                            />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
                                 <Card.Title style={{ color: "#198754" }}>{productNames[index]}</Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
@@ -247,13 +259,20 @@ export default function ManageOrder() {
                 <Row>
                     {orders.map((order, index) => (
                         <Card key={index} className="d-flex" style={productCardStyle}>
-                            <Card.Img style={{  
-                                width: "100%",       
-                                height: "150px",      
-                                objectFit: "cover", 
-                                borderRadius: "10px" }} variant="top" src={imageUrls[index]} />
+                            <Card.Img
+                                style={{
+                                    width: "100%",
+                                    height: "150px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                }}
+                                variant="top"
+                                src={imageUrls[index]}
+                            />
                             <Card.Body className="d-flex flex-column" style={{ flex: 1, color: "lightgray" }}>
-                                <Card.Title style={{ color: "#198754" }}><strong>{productNames[index]}</strong></Card.Title>
+                                <Card.Title style={{ color: "#198754" }}>
+                                    <strong>{productNames[index]}</strong>
+                                </Card.Title>
                                 <Card.Text>Price: {order.price.toFixed(2)}</Card.Text>
                                 <Card.Text>Quantity: {order.quantity}</Card.Text>
                                 <Card.Text>Status: {orderStatus[order.status]}</Card.Text>
