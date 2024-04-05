@@ -1,0 +1,73 @@
+[{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642bf"
+  },
+  "title": "Native Chicken",
+  "name": "Darag",
+  "type": "Poultry",
+  "imageurl": "https://ispweb.pcaarrd.dost.gov.ph/wp-content/uploads/2021/11/Darag-1-scaled.jpg",
+  "price": 40.5,
+  "quantity": 500,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642c1"
+  },
+  "title": "Duck",
+  "name": "Pecking Duck",
+  "type": "Poultry",
+  "imageurl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Victoria%2CLagunajf3443_07.JPG/2560px-Victoria%2CLagunajf3443_07.JPG",
+  "price": 100.5,
+  "quantity": 50,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642c3"
+  },
+  "title": "Quail",
+  "name": "Quail",
+  "type": "Poultry",
+  "imageurl": "https://3.bp.blogspot.com/_iw3Vvd1jqmA/Rv7Yz9zbaGI/AAAAAAAAAgY/DUyn3quyyZE/w1200-h630-p-k-no-nu/quail.JPG",
+  "price": 65.25,
+  "quantity": 200,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642bb"
+  },
+  "title": "Rice",
+  "name": "Palay",
+  "type": "Crop",
+  "imageurl": "https://www.bworldonline.com/wp-content/uploads/2021/11/palay-rice.jpg",
+  "price": 345.4,
+  "quantity": 150,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf75a642bd"
+  },
+  "title": "Banana",
+  "name": "Lakatan Variety Banana",
+  "type": "Crop",
+  "imageurl": "https://uproot.ph/wp-content/uploads/2020/04/banana-lakatan.jpg",
+  "price": 125.3,
+  "quantity": 96,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656aa76148fceacf55a642bd"
+  },
+  "title": "Lettuce",
+  "name": "Lettuce",
+  "type": "Crop",
+  "imageurl": " https://www.organics.ph/cdn/shop/products/lettuce-green-ice-300grams-fruits-vegetables-fresh-produce-816404_600x600_crop_center.jpg?v=1601484012 ",
+  "price": 125.3,
+  "quantity": 96,
+  "__v": 0
+}
+]
